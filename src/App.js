@@ -1,14 +1,12 @@
 import React, { Fragment } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { NavBarComponent } from "./components/NavBarComponent";
-import { RouterConfig } from "./routes/RouterConfig";
+import { UserLayout } from "./components/userLayout";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <NavBarComponent />
-        <RouterConfig />
+        <UserLayout />
       </BrowserRouter>
     </>
   );

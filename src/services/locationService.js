@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_GET_ALL_LOCATIONS } from "./CONSTANTS";
+import { API_GET_ALL_LOCATIONS } from "../constants";
 
 export const getAllLocations = async () => {
   try {
