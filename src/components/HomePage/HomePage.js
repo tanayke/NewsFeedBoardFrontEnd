@@ -1,15 +1,19 @@
 import React from "react";
-import { Tabs, Tab } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import { ArticlesTab } from "./ArticlesTab";
+import { CategoriesComponent } from "./CategoriesComponent";
 
 export const HomePage = () => (
   <div className="pt-5">
-    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-      <Tab eventKey="home" title="Your Feed">
-        articles
-      </Tab>
-      <Tab eventKey="profile" title="Trending">
-        trending articles
-      </Tab>
-    </Tabs>
+    <Container>
+      <Row>
+        <Col md={8}>
+          <ArticlesTab />
+        </Col>
+        <Col md={4}>
+          <CategoriesComponent />
+        </Col>
+      </Row>
+    </Container>
   </div>
 );

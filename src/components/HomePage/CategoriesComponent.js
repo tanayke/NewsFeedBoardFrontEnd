@@ -1,8 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
+import { getAllCategories } from "../../services";
 
-const CategoriesComponent = (props) => <div className="pt-5">categories</div>;
-
-CategoriesComponent.propTypes = {};
-
-export default CategoriesComponent;
+export const CategoriesComponent = () => {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    getAllCategories().then((data) => setCategories(data));
+  }, []);
+  return (
+    <div>
+      Categories
+      <hr />
+      {categories.map((category) => (
+        <Button variant="light" key={category.id} className="m-2">
+          {category.name}
+        </Button>
+      ))}
+      <hr />
+    </div>
+  );
+};
