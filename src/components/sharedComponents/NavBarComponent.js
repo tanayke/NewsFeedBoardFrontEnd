@@ -8,12 +8,12 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import { HOME, WRITE } from "../routes/CONSTANTS";
+import { HOME, LANDING, REGISTER, WRITE } from "../../constants";
 
 export const NavBarComponent = () => (
   <Navbar bg="light" expand="lg">
     <Navbar.Brand>
-      <Link to={HOME}>News Board</Link>
+      <Link to={LANDING}>News Board</Link>
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
@@ -25,7 +25,9 @@ export const NavBarComponent = () => (
           <Link to={WRITE}>Write</Link>
         </Nav.Link>
         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-          <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+          <NavDropdown.Item>
+            <Link to={REGISTER}>Register</Link>
+          </NavDropdown.Item>
           <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
           <NavDropdown.Divider />
