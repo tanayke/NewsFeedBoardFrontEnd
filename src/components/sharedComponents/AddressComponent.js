@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import { Form, FormControl, FormGroup, FormRow, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { VAR_ARRAY_STATES } from "../../constants";
-import {
-  getAllLocations,
-  addLocation,
-} from "../../services/locationService";
+import { getAllLocations, addLocation } from "../../services/locationService";
 
 export const AddressComponent = () => {
-
   const [formData, setFormData] = useState({
     locality: "",
     city: "",
@@ -33,7 +29,11 @@ export const AddressComponent = () => {
         setFlag(true);
       }
     }
-    setFormData(value === "other"? { ...formData, [name]: "" } : { ...formData, [name]: value });
+    setFormData(
+      value === "other"
+        ? { ...formData, [name]: "" }
+        : { ...formData, [name]: value }
+    );
   }
 
   function add() {
