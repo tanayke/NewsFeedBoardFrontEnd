@@ -5,8 +5,10 @@ import { getAllCategories } from "../../services";
 export const CategoriesComponent = () => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
-    getAllCategories().then((data) => setCategories(data));
+    // getAllCategories().then((data) => setCategories(data));
+  getAllCategories().then((data)=>setCategories(data));
   }, []);
+  console.log(categories)
   return (
     <div>
       Categories
