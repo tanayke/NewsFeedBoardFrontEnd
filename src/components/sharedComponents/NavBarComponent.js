@@ -8,7 +8,7 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import { HOME, LANDING, REGISTER, WRITE } from "../../constants";
+import { HOME, LANDING, REGISTER, WRITE, } from "../../constants";
 
 export const NavBarComponent = () => (
   <Navbar bg="light" expand="lg">
