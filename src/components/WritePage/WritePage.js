@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
+import { Formik, Form, Field } from 'formik';
+
 import * as Yup from "yup";
 
-import { getAllLocations } from "../../services/locationService";
-
+import { Button,FormLabel } from "react-bootstrap";
 import { getAllCategories } from "../../services/categoriesService";
 
 const SignupSchema = Yup.object().shape({
@@ -19,6 +20,13 @@ const SignupSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(100, "Too Long!")
     .required("Required"),
+    categoryId:Yup.number()
+    .required("Required"),
+    reporterId:Yup.number()
+    .required("Required"),
+    locationId:Yup.number()
+    .required("Required"),
+    
 });
 
 export const WritePage = () => {
@@ -34,8 +42,7 @@ export const WritePage = () => {
     locationId: 0,
   });
 
-  const [states, setStates] = useState(["Maharastra", "Goa", "Dehli"]);
-  const [locations, setLocations] = useState([]);
+  
   const [categories, setCategory] = useState([]);
 
   function handleInputChange({ target }) {
@@ -49,5 +56,49 @@ export const WritePage = () => {
     });
   }, []);
 
-  return <h1>WritePage</h1>;
+  return(
+    <div>
+    <h1>Article Form</h1>
+    <Formik
+      initialValues={{  
+        title: "",
+        description: "",
+        thumbnailImage: "",
+        categoryId: 0,
+        reporterId: 0,
+        locationId: 0,
+      }}
+      validationSchema={SignupSchema}
+      onSubmit={values => {
+        // same shape as initial values
+        console.log(values);
+      }}
+    >
+      {({ errors, touched }) => (
+        <Form>
+          <div className="form-group">
+            <FormLabel>Title</FormLabel>
+            <Field name="title" className="form-control"/>
+            {errors.title && touched.title ? (
+              <div>{errors.title}</div>
+            ) : null}
+          </div>
+          <div className="form-group">
+          <FormLabel>Description</FormLabel>
+          <Field name="description" className="form-control" />
+          {errors.description && touched.description ? (
+            <div>{errors.description}</div>
+          ) : null}
+          </div>
+          <div className="form-group">
+          <FormLabel>Select Image</FormLabel><br/>
+          <Field type="file" name="thumbnailImage"  className="form-file" />
+          {/* {errors.thumbnailImage && touched.thumbnailImage ? <div>{errors.thumbnailImage}</div> : null} */}
+          </div>
+          <Button type="submit">Submit</Button>
+        </Form>
+      )}
+    </Formik>
+  </div>
+  );
 };

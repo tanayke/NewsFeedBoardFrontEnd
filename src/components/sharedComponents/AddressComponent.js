@@ -26,10 +26,7 @@ export const AddressComponent = () => {
         if(data.length)
         {
           setCities(data);
-          // if(data.length === 1 )
-          //   setFilteredCities(data) ;
-          // else 
-            setFilteredCities(data.filter((v,i) => data.map((val)=> val.city).indexOf(v.city) === i ));
+           setFilteredCities(data.filter((v,i) => data.map((val)=> val.city).indexOf(v.city) === i ));
         }
         else
         {
@@ -45,7 +42,8 @@ export const AddressComponent = () => {
         setLocalityFlag(true);
       }
     } else if (name === "locality") {
-      setFilteredLocality(cities.filter((v,i) => cities.map((val)=> val.locality).indexOf(v.locality) === i ));
+
+      // setFilteredLocality(cities.filter((v,i) => cities.map((val)=> val.locality).indexOf(v.locality) === i ));
         
       console.log(cities);
       if (value === "other") {
@@ -112,10 +110,7 @@ export const AddressComponent = () => {
               name="city"
               onChange={handleInputChange}
             >
-           {/* {cities.filter((v,i) => cities.map((val)=> val.city).indexOf(v.city) === i ) => (
-                <option key={c.id}>{c.city}</option>
-              ))} */}
-              {filterdCities
+             {filterdCities
                .map((c) => (
                 <option key={c.id}>{c.city}</option>
               ))}
@@ -145,7 +140,7 @@ export const AddressComponent = () => {
               name="locality"
               onChange={handleInputChange}
             >
-              {filterdLocality
+              {cities
                 .filter((c) => c.city === formData.city)
                 .map((filteredLocality) => (
                   <option key={filteredLocality.id}>
