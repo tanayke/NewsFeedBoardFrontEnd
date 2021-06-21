@@ -8,7 +8,8 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import { HOME, LANDING, REGISTER, WRITE } from "../../constants";
+
+import { HOME, LANDING, REGISTER, WRITE ,ADDRESS } from "../../constants";
 
 export const NavBarComponent = () => (
   <Navbar bg="light" expand="lg">
@@ -23,6 +24,9 @@ export const NavBarComponent = () => (
         </Nav.Link>
         <Nav.Link>
           <Link to={WRITE}>Write</Link>
+        </Nav.Link>
+         <Nav.Link>
+          <Link to={ADDRESS}>Address</Link>
         </Nav.Link>
         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
           <NavDropdown.Item>

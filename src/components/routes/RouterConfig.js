@@ -6,6 +6,8 @@ import { HomePage } from "../homePage";
 import { LandingPage } from "../landingPage";
 import { RegitrationComponent } from "../landingPage/RegitrationComponent";
 import { WritePage } from "../writePage";
+import { AddressComponent } from "../sharedComponents";
+
 import {
   ADMIN,
   ARTICLE,
@@ -13,6 +15,7 @@ import {
   LANDING,
   REGISTER,
   WRITE,
+  ADDRESS
 } from "../../constants";
 
 export const RouterConfig = () => (
@@ -23,6 +26,7 @@ export const RouterConfig = () => (
       <Route exact path={ADMIN} component={AdminPage} />
       <Route exact path={WRITE} component={WritePage} />
       <Route exact path={ARTICLE} component={ArticlePage} />
+       <Route exact path={ADDRESS} component={AddressComponent} />
       <Route path={REGISTER}>
         <RegitrationComponent />
       </Route>
