@@ -10,30 +10,50 @@ export const AddressComponent = () => {
     state: "",
   });
 
-  const [flag, setFlag] = useState(false);
+  const [cityFlag, setCityFlag] = useState(false);
+  const [localityFlag, setLocalityFlag] = useState(false);
 
   const [cities, setCities] = useState([]);
+  const [filterdCities, setFilteredCities] = useState([]);
+  const [filterdLocality, setFilteredLocality] = useState([]);
+ 
 
   function handleInputChange({ target }) {
     const { name, value } = target;
     if (name === "state") {
       getAllLocations(value).then((data) => {
-        setCities(data);
+        console.log(data);
+        if(data.length)
+        {
+          setCities(data);
+          // if(data.length === 1 )
+          //   setFilteredCities(data) ;
+          // else 
+            setFilteredCities(data.filter((v,i) => data.map((val)=> val.city).indexOf(v.city) === i ));
+        }
+        else
+        {
+          setCityFlag(true);
+          setLocalityFlag(true);
+        }
+       
       });
     } else if (name === "city") {
       if (value === "other") {
-        setFlag(true);
+        console.log("in city");
+        setCityFlag(true);
+        setLocalityFlag(true);
       }
     } else if (name === "locality") {
+      setFilteredLocality(cities.filter((v,i) => cities.map((val)=> val.locality).indexOf(v.locality) === i ));
+        
+      console.log(cities);
       if (value === "other") {
-        setFlag(true);
+        setLocalityFlag(true);
       }
     }
-    setFormData(
-      value === "other"
-        ? { ...formData, [name]: "" }
-        : { ...formData, [name]: value }
-    );
+    setFormData(value === "other"? { ...formData, [name]: "" } : { ...formData, [name]: value });
+    
   }
 
   function add() {
@@ -44,6 +64,11 @@ export const AddressComponent = () => {
       data ? alert("Location Added") : null;
       console.log(data);
     });
+  }
+
+  function clickMe(){
+   console.log(cities);
+   console.log(filterdCities);
   }
   const { locality, city, state } = formData;
 
@@ -65,7 +90,7 @@ export const AddressComponent = () => {
           </Form.Control>
         </Form.Group>
 
-        {flag ? (
+        {cityFlag ? (
           <Form.Group controlId="formGridCity2">
             <Form.Label>Enter City</Form.Label>
             <Form.Control
@@ -87,7 +112,11 @@ export const AddressComponent = () => {
               name="city"
               onChange={handleInputChange}
             >
-              {cities.map((c) => (
+           {/* {cities.filter((v,i) => cities.map((val)=> val.city).indexOf(v.city) === i ) => (
+                <option key={c.id}>{c.city}</option>
+              ))} */}
+              {filterdCities
+               .map((c) => (
                 <option key={c.id}>{c.city}</option>
               ))}
               <option>other</option>
@@ -95,7 +124,7 @@ export const AddressComponent = () => {
           </Form.Group>
         )}
 
-        {flag ? (
+        {  localityFlag  ? (
           <Form.Group controlId="formGridLocality2">
             <Form.Label>Enter Locality</Form.Label>
             <Form.Control
@@ -116,7 +145,7 @@ export const AddressComponent = () => {
               name="locality"
               onChange={handleInputChange}
             >
-              {cities
+              {filterdLocality
                 .filter((c) => c.city === formData.city)
                 .map((filteredLocality) => (
                   <option key={filteredLocality.id}>
@@ -127,12 +156,14 @@ export const AddressComponent = () => {
             </Form.Control>
           </Form.Group>
         )}
-        {flag ? (
+        {localityFlag ? (
           <Button variant="primary" type="submit" onClick={add}>
             Add Location
           </Button>
         ) : null}
       </Form.Row>
+
+      <Button onClick={clickMe}>Click me </Button>
     </>
   );
 };

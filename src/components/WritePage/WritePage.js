@@ -44,9 +44,6 @@ export const WritePage = () => {
   }
 
   useEffect(() => {
-    getAllLocations().then((data) => {
-      setLocations(data);
-    });
     getAllCategories().then((data) => {
       setCategory(data);
     });
