@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import PropTypes from "prop-types";
 import { VAR_ARRAY_STATES } from "../../constants";
 import { getAllLocations, addLocation } from "../../services/locationService";
 
-export const AddressComponent = () => {
-  const [formData, setFormData] = useState({
+export const AddressComponent = ({locationFormData,setLocationFormData}) => {
+  
+  const [formData,setFormData]=useState({
     locality: "",
     city: "",
     state: "",
-  });
+  }
+    );
 
   const [cityFlag, setCityFlag] = useState(false);
   const [localityFlag, setLocalityFlag] = useState(false);
@@ -22,11 +25,13 @@ export const AddressComponent = () => {
     const { name, value } = target;
     if (name === "state") {
       getAllLocations(value).then((data) => {
-        console.log(data);
+       
         if(data.length)
         {
           setCities(data);
-           setFilteredCities(data.filter((v,i) => data.map((val)=> val.city).indexOf(v.city) === i ));
+          setFilteredCities(data.filter((v,i) => data.map((val)=> val.city).indexOf(v.city) === i ));
+          setCityFlag(false);
+          setLocalityFlag(false);
         }
         else
         {
@@ -37,7 +42,7 @@ export const AddressComponent = () => {
       });
     } else if (name === "city") {
       if (value === "other") {
-        console.log("in city");
+        
         setCityFlag(true);
         setLocalityFlag(true);
       }
@@ -45,29 +50,27 @@ export const AddressComponent = () => {
 
       // setFilteredLocality(cities.filter((v,i) => cities.map((val)=> val.locality).indexOf(v.locality) === i ));
         
-      console.log(cities);
+      
       if (value === "other") {
         setLocalityFlag(true);
       }
     }
-    setFormData(value === "other"? { ...formData, [name]: "" } : { ...formData, [name]: value });
+    setLocationFormData(value === "other"? { ...locationFormData, [name]: "" } : { ...locationFormData, [name]: value });
     
   }
 
   function add() {
-    console.log("in Add Function");
-    console.log(formData);
-    addLocation(formData).then((data) => {
+   
+    
+    addLocation(locationFormData).then((data) => {
       // eslint-disable-next-line no-unused-expressions
       data ? alert("Location Added") : null;
-      console.log(data);
+      
     });
   }
 
-  function clickMe(){
-   console.log(cities);
-   console.log(filterdCities);
-  }
+ 
+  
   const { locality, city, state } = formData;
 
   return (
@@ -110,6 +113,7 @@ export const AddressComponent = () => {
               name="city"
               onChange={handleInputChange}
             >
+              <option> </option>
              {filterdCities
                .map((c) => (
                 <option key={c.id}>{c.city}</option>
@@ -140,10 +144,11 @@ export const AddressComponent = () => {
               name="locality"
               onChange={handleInputChange}
             >
+              <option> </option>
               {cities
-                .filter((c) => c.city === formData.city)
+                .filter((c) => c.city === locationFormData.city)
                 .map((filteredLocality) => (
-                  <option key={filteredLocality.id}>
+                  <option key={filteredLocality.id} value={filteredLocality.id}>
                     {filteredLocality.locality}
                   </option>
                 ))}
@@ -151,14 +156,25 @@ export const AddressComponent = () => {
             </Form.Control>
           </Form.Group>
         )}
+         </Form.Row>
         {localityFlag ? (
+          <Form.Group >
+          <Form.Label />
           <Button variant="primary" type="submit" onClick={add}>
             Add Location
           </Button>
+      
+          </Form.Group>
         ) : null}
-      </Form.Row>
+     
 
-      <Button onClick={clickMe}>Click me </Button>
+     
     </>
   );
+};
+
+AddressComponent.propTypes = {
+
+  city:PropTypes.string.isRequired,
+ 
 };
