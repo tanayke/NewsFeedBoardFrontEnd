@@ -1,15 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import { Tabs, Tab } from "react-bootstrap";
+import YourFeedComponent from "./YourFeedComponent";
 
-export const ArticlesTab = () => (
-  <div>
-    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-      <Tab eventKey="home" title="Your Feed">
-        articles
-      </Tab>
-      <Tab eventKey="profile" title="Trending">
-        trending articles
-      </Tab>
-    </Tabs>
-  </div>
+export const ArticlesTab = () => {
+
+const [key, setKey] = useState('home');
+
+return (
+  <Tabs
+    id="controlled-tab-example"
+    activeKey={key}
+    onSelect={(k) => setKey(k)}
+  >
+    <Tab eventKey="home" title="Your Feed" >
+    <YourFeedComponent/>
+    </Tab>
+    <Tab eventKey="trending" title="Trending">
+    something
+    </Tab>
+   
+  </Tabs>
 );
+
+}

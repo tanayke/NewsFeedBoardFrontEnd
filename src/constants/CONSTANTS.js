@@ -10,7 +10,7 @@ export const ADDRESS="/address";
 const BASE_API = "http://localhost:5500/api/";
 export const API_GET_ALL_LOCATIONS = `${BASE_API}locations`;
 export const API_GET_ALL_CATEGORIES = `${BASE_API}categories`;
-
+export const API_GET_ALL_ARTICLES = `${BASE_API}articles`
 
 export const VAR_ARRAY_STATES =[ "Andhra Pradesh",
                 "Arunachal Pradesh",

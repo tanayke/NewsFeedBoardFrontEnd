@@ -5,7 +5,7 @@ import { CategoriesComponent } from "./CategoriesComponent";
 
 export const HomePage = () => (
   <div className="pt-5">
-    <Container>
+    <Container >
       <Row>
         <Col md={8}>
           <ArticlesTab />
