@@ -1,45 +1,31 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Pagination } from "react-bootstrap";
 import { getAllArticles } from "../../services";
+import NewsCardsComponent from "./NewsCardsComponent";
 
 const YourFeedComponent = (props) => {
   const [articles, setArticles] = useState([]);
   useEffect(() => {
-    getAllArticles().then((data) => setArticles(data));
+    getAllArticles().then((data) => {
+      data.sort((first, second) => {
+        if (second.uploadDateTime > first.uploadDateTime) return 1;
+        if (second.uploadDateTime < first.uploadDateTime) return -1;
+        return 0;
+      });
+      setArticles(data, () => {
+        console.log(articles);
+      });
+    });
   }, []);
   return (
     <>
       <div className="p-3">
-        {articles.map((article) => (
-          <Card key={article.id} style={{ width: "100%", margin: "1rem" }}>
-            <Card.Body>
-              <Container>
-                <Row>
-                  <Col md={7}>
-                    <Card.Text>
-                      {`${article.reporter.name} at ${article.location.locality}, ${article.location.city}`}{" "}
-                    </Card.Text>
-                    <Card.Title>{article.title}</Card.Title>
-                    <Card.Text>{article.description}</Card.Text>
-                    <Card.Text className="text-muted">
-                      {article.uploadDateTime}
-                    </Card.Text>
-                  </Col>
-                  <Col md={5}>
-                    <Row>
-                      <Card.Img
-                        variant="top"
-                        src={`http://localhost:5500${article.thumbnailImage}`}
-                      />
-                    </Row>
-                    <Row>{article.category.name}</Row>
-                  </Col>
-                </Row>
-              </Container>
-            </Card.Body>
-          </Card>
-        ))}
+        <NewsCardsComponent articles={articles} />
+        <Pagination size="lg" className="justify-content-md-center">
+          <Pagination.Prev />
+          <Pagination.Next />
+        </Pagination>
       </div>
     </>
   );
