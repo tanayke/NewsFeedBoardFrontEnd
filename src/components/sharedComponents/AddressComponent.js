@@ -24,8 +24,8 @@ export const AddressComponent = ({locationFormData,setLocationFormData}) => {
   function handleInputChange({ target }) {
     const { name, value } = target;
     if (name === "state") {
+
       getAllLocations(value).then((data) => {
-       
         if(data.length)
         {
           setCities(data);
@@ -47,10 +47,7 @@ export const AddressComponent = ({locationFormData,setLocationFormData}) => {
         setLocalityFlag(true);
       }
     } else if (name === "locality") {
-
-      // setFilteredLocality(cities.filter((v,i) => cities.map((val)=> val.locality).indexOf(v.locality) === i ));
-        
-      
+     
       if (value === "other") {
         setLocalityFlag(true);
       }

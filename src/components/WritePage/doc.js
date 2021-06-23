@@ -22,7 +22,7 @@ export const SignupForm = () => {
     data.delete("locality");
     data.append("reporterId", 2);
     data.append("locationId", locationFormData.locality);
-
+    console.log(data);
     addArticle(data).then((response) => {
       console.log(response);
     });

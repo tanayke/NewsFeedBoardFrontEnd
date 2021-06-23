@@ -11,6 +11,8 @@ const BASE_API = "http://localhost:5500/api/";
 export const API_GET_ALL_LOCATIONS = `${BASE_API}locations`;
 export const API_GET_ALL_CATEGORIES = `${BASE_API}categories`;
 export const API_GET_ALL_ARTICLE = `${BASE_API}articles`;
+export const API_GET_ALL_CARD = `${BASE_API}cards`;
+
 
 
 export const VAR_ARRAY_STATES =["", "Andhra Pradesh",

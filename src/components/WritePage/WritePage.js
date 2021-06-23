@@ -1,16 +1,38 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from "react";
 
-import { Formik, Form, Field, useFormik } from "formik";
+import {
+  Formik,
+  Form,
+  Field,
+  useFormik,
+  ErrorMessage,
+  FieldArray,
+} from "formik";
 
 import * as Yup from "yup";
 
-import { Button, FormLabel } from "react-bootstrap";
+import { Modal, Button, FormLabel, Card } from "react-bootstrap";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
 import { AddressComponent } from "../sharedComponents";
+// import { SignupForm } from "./doc";
+import { WriteCardModal } from "./writeCardModal";
+import { InviteFriends } from "./addCards";
+import { InviteFriend } from "./addCardsDemo";
 
-import { SignupForm } from "./doc";
-
+const initialValues = {
+  friends: [
+    {
+      name: "",
+      email: "",
+    },
+  ],
+};
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, "Too Short!")
@@ -24,6 +46,12 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const WritePage = () => {
+  const [flag, setFlag] = useState(false);
+  const [articleId, setArticleId] = useState();
+
+  const [cards, setCards] = useState([]);
+  const [modalShow, setModalShow] = useState(false);
+
   const myForm = useRef(null);
   const [locationFormData, setLocationFormData] = useState({
     locality: "",
@@ -32,26 +60,19 @@ export const WritePage = () => {
   });
   const [categories, setCategory] = useState([]);
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   const data = new FormData(myForm.current);
-  //   data.delete("state");
-  //   data.delete("city");
-  //   data.delete("locality");
-  //   data.append("reporterId", 2);
-  //   data.append("locationId", locationFormData.locality);
-
-  //   addArticle(data).then((response) => {
-  //     console.log(response);
-  //   });
-  // };
-
   useEffect(() => {
     getAllCategories().then((data) => {
       setCategory(data);
     });
   }, []);
+
+  function showCard() {
+    cards.forEach((card) => {
+      for (const value of card.values()) {
+        console.log(value);
+      }
+    });
+  }
 
   return (
     <div>
@@ -62,7 +83,7 @@ export const WritePage = () => {
           description: "",
           thumbnailImage: "",
           category: 0,
-          reporterId: 1,
+          reporterId: 0,
           location: 0,
         }}
         validationSchema={SignupSchema}
@@ -71,10 +92,11 @@ export const WritePage = () => {
           data.delete("state");
           data.delete("city");
           data.delete("locality");
-          data.append("reporterId", 2);
+          data.append("reporterId", 1);
           data.append("locationId", locationFormData.locality);
-
           addArticle(data).then((response) => {
+            if (response) setFlag(true);
+            setArticleId(response.id);
             console.log(response);
           });
         }}
@@ -88,7 +110,12 @@ export const WritePage = () => {
             </div>
             <div className="form-group">
               <FormLabel>Description</FormLabel>
-              <Field as="textarea" rows={3} name="description" className="form-control" />
+              <Field
+                as="textarea"
+                rows={3}
+                name="description"
+                className="form-control"
+              />
               {errors.description && touched.description ? (
                 <div>{errors.description}</div>
               ) : null}
@@ -117,7 +144,7 @@ export const WritePage = () => {
             <div className="form-group">
               <FormLabel>Select Category</FormLabel>
               <br />
-              <Field name="category" as="select">
+              <Field name="categoryId" as="select">
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
@@ -125,7 +152,33 @@ export const WritePage = () => {
                 ))}
               </Field>
             </div>
-            <Button type="submit">Submit</Button>
+            {cards.forEach((card) => {
+              for (const value of card.values()) {
+                <Card body>{value}</Card>;
+              }
+            })}
+            <div className="form-group">
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+
+              <Button onClick={() => setModalShow(true)}>Add More </Button>
+            </div>
+
+            <WriteCardModal
+              cards={cards}
+              setCards={setCards}
+              modalShow={modalShow}
+              setModalShow={setModalShow}
+              articleId={articleId}
+              //  onHide={() => setModalShow(false)}
+            />
+            {/* <InviteFriends  cards={cards}
+              setCards={setCards}/> */}
+
+            {/* <InviteFriend/> */}
+
+            <Button onClick={showCard}>Show Cards</Button>
           </Form>
         )}
       </Formik>
