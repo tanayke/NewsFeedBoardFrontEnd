@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 
-import { HOME, LANDING, REGISTER, WRITE ,ADDRESS } from "../../constants";
+import { HOME, LANDING, REGISTER, WRITE ,ADDRESS ,ARTICLE } from "../../constants";
 
 export const NavBarComponent = () => (
   <Navbar bg="light" expand="lg">
@@ -27,6 +27,9 @@ export const NavBarComponent = () => (
         </Nav.Link>
          <Nav.Link>
           <Link to={ADDRESS}>Address</Link>
+        </Nav.Link>
+        <Nav.Link>
+          <Link to={ARTICLE}>Article</Link>
         </Nav.Link>
         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
           <NavDropdown.Item>
