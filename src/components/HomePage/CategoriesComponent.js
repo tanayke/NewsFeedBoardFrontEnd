@@ -1,21 +1,32 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { getAllCategories } from "../../services";
 
-export const CategoriesComponent = () => {
+export const CategoriesComponent = ({ categoryId, handleCategoryChange }) => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     getAllCategories().then((data) => setCategories(data));
-  }, []);
+    console.log(categoryId);
+  }, [categoryId]);
+
   return (
     <div>
-      Categories
-      <hr />
-      {categories.map((category) => (
-        <Button variant="light" key={category.id} className="m-2">
-          {category.name}
-        </Button>
-      ))}
+      <Form.Group>
+        <Form.Label>by Categories</Form.Label>
+        <Form.Control
+          as="select"
+          onChange={handleCategoryChange}
+          value={categoryId}
+        >
+          <option>All</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
       <hr />
     </div>
   );

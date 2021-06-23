@@ -1,10 +1,15 @@
 import axios from "axios";
-import { API_GET_ALL_ARTICLES} from "../constants";
+import { API_GET_ALL_ARTICLES } from "../constants";
 
 export const getAllArticles = async (...filters) => {
-  const { categoryId, locationId, search} = filters;
+  let [categoryId, locationId] = filters;
+  console.log(categoryId, locationId);
+  if (categoryId === "All") categoryId = undefined;
+  if (locationId === "All") locationId = undefined;
   try {
-    const respone = await axios.get(API_GET_ALL_ARTICLES);
+    const respone = await axios.get(API_GET_ALL_ARTICLES, {
+      params: { categoryId, locationId },
+    });
     console.log(respone.data);
     return respone.data;
   } catch (err) {
