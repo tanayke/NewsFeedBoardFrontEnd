@@ -12,6 +12,7 @@ export const API_GET_ALL_LOCATIONS = `${BASE_API}locations`;
 export const API_GET_ALL_CATEGORIES = `${BASE_API}categories`;
 export const API_GET_ALL_ARTICLES = `${BASE_API}articles`
 export const API_GET_ALL_CARDS = `${BASE_API}cards`;
+export const BASE_URL = "http://localhost:5500/"; 
 
 export const VAR_ARRAY_STATES =[ "Andhra Pradesh",
                 "Arunachal Pradesh",
