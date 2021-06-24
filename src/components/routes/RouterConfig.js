@@ -1,11 +1,13 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { AdminPage } from "../adminPage";
-import { ArticlePage } from "../articlePage";
-import { HomePage } from "../homePage";
-import { LandingPage } from "../landingPage";
-import { RegitrationComponent } from "../landingPage/RegitrationComponent";
-import { WritePage } from "../writePage";
+import { AdminPage } from "../AdminPage";
+import { ArticlePage } from "../ArticlePage";
+import { HomePage } from "../HomePage";
+import { LandingPage } from "../LandingPage";
+import { RegistrationPage } from "../LandingPage/RegistrationPage/RegistrationPage";
+import { LoginPage } from "../LandingPage/LoginPage/LoginPage";
+
+import { WritePage } from "../WritePage";
 import { AddressComponent } from "../sharedComponents";
 
 import {
@@ -15,8 +17,9 @@ import {
   LANDING,
   REGISTER,
   WRITE,
-  ADDRESS
-} from "../../constants";
+  ADDRESS,
+  LOGIN,
+} from "../../constants/CONSTANTS";
 
 export const RouterConfig = () => (
   <div>
@@ -26,10 +29,9 @@ export const RouterConfig = () => (
       <Route exact path={ADMIN} component={AdminPage} />
       <Route exact path={WRITE} component={WritePage} />
       <Route exact path={ARTICLE} component={ArticlePage} />
-       <Route exact path={ADDRESS} component={AddressComponent} />
-      <Route path={REGISTER}>
-        <RegitrationComponent />
-      </Route>
+      <Route exact path={ADDRESS} component={AddressComponent} />
+      <Route exact path={REGISTER} component={RegistrationPage} />
+      <Route exact path={LOGIN} component={LoginPage} />
     </Switch>
   </div>
 );
