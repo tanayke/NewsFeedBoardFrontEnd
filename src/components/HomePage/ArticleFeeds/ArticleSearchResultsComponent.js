@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { Pagination } from "react-bootstrap";
-import { getAllArticles } from "../../services";
-import NewsCardsComponent from "./NewsCardsComponent";
+import NewsCardsComponent from "../Utilities/NewsCardsComponent";
 
-const YourFeedComponent = ({ articles }) => {
+export const ArticleSearchResultsComponent = ({ articles }) => {
   articles.sort((first, second) => {
     if (second.uploadDateTime > first.uploadDateTime) return 1;
     if (second.uploadDateTime < first.uploadDateTime) return -1;
@@ -15,6 +13,8 @@ const YourFeedComponent = ({ articles }) => {
   return (
     <>
       <div className="p-3">
+        Search Results
+        <hr />
         <NewsCardsComponent articles={articles} />
         <Pagination size="lg" className="justify-content-md-center">
           <Pagination.Prev />
@@ -24,7 +24,3 @@ const YourFeedComponent = ({ articles }) => {
     </>
   );
 };
-
-YourFeedComponent.propTypes = {};
-
-export default YourFeedComponent;

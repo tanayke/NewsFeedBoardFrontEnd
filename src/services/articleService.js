@@ -16,3 +16,15 @@ export const getAllArticles = async (...filters) => {
     return err;
   }
 };
+
+export const getAllArticlesForSearchInput = async (searchInput) => {
+  try {
+    const respone = await axios.get(`${API_GET_ALL_ARTICLES}/search`, {
+      params: { search: searchInput },
+    });
+    console.log(respone.data);
+    return respone.data;
+  } catch (err) {
+    return err;
+  }
+};

@@ -3,8 +3,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Form, Container, Row, Col } from "react-bootstrap";
-import { VAR_ARRAY_STATES } from "../../constants";
-import { getAllLocations } from "../../services";
+import { VAR_ARRAY_STATES } from "../../../constants";
+import { getAllLocations } from "../../../services";
 
 export const LocationFilterComponent = ({
   locationId,
