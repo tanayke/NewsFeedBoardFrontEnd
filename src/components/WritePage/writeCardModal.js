@@ -11,6 +11,7 @@ export const WriteCardModal = ({
   modalShow,
   setModalShow,
   articleId,
+
   // onHide,
 }) => {
   const myForm = useRef(null);
@@ -47,6 +48,7 @@ export const WriteCardModal = ({
 
     setCards((oldCards) => [...oldCards, data]);
     setModalShow(false);
+    
   }
   function onHide(){
     setCounter(null);
