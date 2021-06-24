@@ -5,15 +5,20 @@ export const ARTICLE = "/article";
 export const ADMIN = "/admin";
 export const REGISTER = "/registeration";
 export const ADDRESS = "/address";
+export const LOGIN = "/login";
 
 /* eslint-disable import/prefer-default-export */
-const BASE_API = "http://localhost:5500/api/";
+export const BASE_API = "http://localhost:5500/api/";
 export const API_GET_ALL_LOCATIONS = `${BASE_API}locations`;
 export const API_GET_ALL_CATEGORIES = `${BASE_API}categories`;
 export const API_GET_ALL_ARTICLES = `${BASE_API}articles`;
 export const API_GET_ALL_CARDS = `${BASE_API}cards`;
+export const API_GET_ALL_USERS = `${BASE_API}users`;
+export const API_POST_USERS = `${BASE_API}users`;
+export const API_AUTHENTICATE_USER = `${BASE_API}auth`;
+export const API_GET_AUTHENTICATED_USER = `${BASE_API}auth`;
+
 export const VAR_ARRAY_STATES = [
-  "All",
   "Andhra Pradesh",
   "Arunachal Pradesh",
   "Assam",

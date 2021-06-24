@@ -4,9 +4,9 @@ import { AdminPage } from "../adminPage";
 import { ArticlePage } from "../articlePage";
 import { HomePage } from "../homePage";
 import { LandingPage } from "../landingPage";
-import { RegitrationComponent } from "../landingPage/RegitrationComponent";
 import { WritePage } from "../writePage";
-import { SelectLocation } from "../sharedComponents";
+import { RegistrationPage } from "../LandingPage/RegistrationPage/RegistrationPage";
+import { LoginPage } from "../LandingPage/LoginPage/LoginPage";
 
 import {
   ADMIN,
@@ -15,8 +15,9 @@ import {
   LANDING,
   REGISTER,
   WRITE,
-  ADDRESS
-} from "../../constants";
+  ADDRESS,
+  LOGIN,
+} from "../../constants/CONSTANTS";
 
 export const RouterConfig = () => (
   <div>
@@ -26,10 +27,9 @@ export const RouterConfig = () => (
       <Route exact path={ADMIN} component={AdminPage} />
       <Route exact path={WRITE} component={WritePage} />
       <Route exact path={ARTICLE} component={ArticlePage} />
-       <Route exact path={ADDRESS} component={SelectLocation} />
-      <Route path={REGISTER}>
-        <RegitrationComponent />
-      </Route>
+      <Route exact path={ADDRESS} component={AddressComponent} />
+      <Route exact path={REGISTER} component={RegistrationPage} />
+      <Route exact path={LOGIN} component={LoginPage} />
     </Switch>
   </div>
 );
