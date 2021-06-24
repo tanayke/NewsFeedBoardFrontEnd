@@ -5,44 +5,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { getArticleCards } from "../../services";
 import {ArticleCards} from './ArticleCards';
-import { BASE_URL } from "../../constants";
-
-function RenderContent(data) {
-  const { type, content } = data;
-  if (type === "IMAGE") {
-    return (
-      <>
-        <Col xs={2} />
-        <Col>
-          <img src={BASE_URL + content} alt="img" width={600} height={400} />
-        </Col>
-        <Col xs={2} />
-      </>
-    );
-  }
-  if (type === "TEXT") {
-    return (
-      <>
-        <Col xs={2} />
-        <Col className="mr-3">
-          <p>{content}</p>
-        </Col>
-        <Col xs={2} />
-      </>
-    );
-  }
-  return (
-    <>
-      <Col xs={2} />
-      <Col>
-        <video width="500" height="280" controls autoPlay="false">
-          <source src={BASE_URL + content} type="video/mp4" />
-        </video>
-      </Col>
-      <Col xs={2} />
-    </>
-  );
-}
+import { ArticleReport } from './ArticleReport';
 
 export const ArticlePage = () => {
   const [cards, setCards] = useState([]);
@@ -64,7 +27,7 @@ export const ArticlePage = () => {
             <small className="ml-3">john marshal</small>
           </Row>
         </Col>
-        <Col xs={2} />
+        <Col xs={3}><ArticleReport/></Col>
       </Row>
       {cards.map((data) => (
         <Row key={data.id} className="justify-content-md-center mt-3">

@@ -16,8 +16,8 @@ export const ArticleCards=({data})=>{
           return (
             <>
               <Col xs={2} />
-              <Col>
-                <img src={BASE_URL + content} alt="img" width={650} height={500} />
+              <Col className="ml-5">
+                <img src={BASE_URL + content} alt="img" width={500} height={400} />
               </Col>
               <Col xs={2} />
             </>
@@ -37,8 +37,8 @@ export const ArticleCards=({data})=>{
         return (
           <>
             <Col xs={2} />
-            <Col>
-              <video width="500" height="280" controls>
+            <Col className="ml-5">
+              <video width="500" height="400" controls>
                 <source src={BASE_URL + content} type="video/mp4" />
               </video>
             </Col>
