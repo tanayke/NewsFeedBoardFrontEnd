@@ -11,13 +11,21 @@ export const getAllArticles = async (...filters) => {
     return err;
   }
 };
-// eslint-disable-next-line consistent-return
 export const getArticleCards = async (id) => {
   try{
     const response = await axios.get(`${API_GET_ALL_CARDS}/${id}`);
     console.log(response.data);
     return response.data;
   }catch (err) {
+    return err;
+  }
+}
+export const getArticle = async (id) => {
+  try{
+    const response =await axios.get(`${API_GET_ALL_ARTICLES}/${id}`);
+    console.log(response.data);
+    return response.data
+  }catch(err) {
     return err;
   }
 }
