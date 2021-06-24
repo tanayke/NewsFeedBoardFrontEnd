@@ -2,37 +2,48 @@
 /* eslint-disable prefer-template */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
-import React, { useState ,useRef} from "react";
+import React, { useState, useRef } from "react";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 
 const initialValues = {
   cards: [
     {
       type: "",
-      content:"",
+      content: "",
     },
   ],
 };
 
-export const InviteFriends = ({cards,setCards}) => {
+const selectComponent = ({ field, handleCardsInputChange, card }) => {
+  const { onChange } = field;
+  return (
+    <select onChange={handleCardsInputChange} value={card.type}>
+      <option value="text">Text</option>
+      <option value="image">Image</option>
+      <option value="video">Video</option>
+    </select>
+  );
+};
+
+export const InviteFriends = ({ cards, setCards }) => {
   const myForm = useRef(null);
   const [card, setCard] = useState({
-    type: "",
+    type: "image",
     content: "",
     cardsOrder: 0,
     articleId: 0,
   });
-  const [flag,setFlag]=useState();
+  // const [flag, setFlag] = useState();
 
   function handleCardsInputChange({ target }) {
-    
+    console.log(target);
     const { name, value } = target;
-    if(value=== "image" || value === "video")
-      setFlag(true);
-    else
-      setFlag(false);
-  
-    console.log(name + "" + value);
+    setCard({...card,[name]:value});
+    console.log(name , value);
+  //  if( value === "image" || value === "video")
+  //   setFlag(true)
+  // else
+  //   setFlag(false)
   }
   function handleSubmit() {
     const data = new FormData(myForm.current);
@@ -41,15 +52,13 @@ export const InviteFriends = ({cards,setCards}) => {
       console.log(value);
     }
   }
-  
-  const { type} = card;
 
+  const { type } = card;
+  
   return (
     <div>
       <h1>Invite cards</h1>
-      <Formik
-        initialValues={initialValues}
-      >
+      <Formik initialValues={initialValues}>
         {({ values }) => (
           <Form ref={myForm}>
             <FieldArray name="cards">
@@ -59,57 +68,66 @@ export const InviteFriends = ({cards,setCards}) => {
                     values.cards.map((friend, index) => (
                       <div className="row" key={index}>
                         <div className="col">
-                          <label htmlFor="type">Select Type</label>
-                          <Field
+                          <label htmlFor={`friends.${index}.type`}>Select Type</label>
+                          <Field name={`friends.${index}.type`} as="select">
+                            {/* <selectComponent handleCardsInputChange={handleCardsInputChange} card={card} /> */}
+                            {({ field }) => {
+                              const { onChange } = field;
+                              return (
+                                <select
+                                  name="type"
+                                  onChange={handleCardsInputChange}
+                                  value={card.type}
+                                >
+                                  <option value="text">Text</option>
+                                  <option value="image">Image</option>
+                                  <option value="video">Video</option>
+                                </select>
+                              );
+                            }}
+                          </Field>
+                          {/* <Field 
                             name="type"
                             as="select"
-                            value={type}
-                            onChange={handleCardsInputChange}
+                            // value={type}
+                            // onChange={handleCardsInputChange}
                           >
                             <option value="video">Video</option>
                             <option value="text">Text</option>
                             <option value="image">Image</option>
                             
-                          </Field>
+                          </Field> */}
+
+                          <Field />
                           <ErrorMessage
-                            name="type"
+                            name={`friends.${index}.type`}
                             component="div"
                             className="field-error"
                           />
                         </div>
-
-                        {flag ? (
+                        {type==="image" || type==="video" ? (
                           <div className="col">
-                            <label htmlFor="content">Select File</label>
-                            <Field
-                              name="content"
-                              type="file"
-                             
-                            />
+                            <label htmlFor={`friends.${index}.content`}>Select File</label>
+                            <Field name="content" type="file" value={card.content}
+                              onChange={handleCardsInputChange}/>
                             <ErrorMessage
-                              name="content"
+                              name={`friends.${index}.content`}
                               component="div"
                               className="field-error"
+                              
                             />
                           </div>
                         ) : (
                           <div className="col">
-                            <label htmlFor="content">Enter Text</label>
-                            <Field
-                              as="textarea"
-                              rows={3}
-                              name="content"
-                             
-                            />
+                            <label htmlFor={`friends.${index}.content`}>Enter Text</label>
+                            <Field as="textarea" rows={3} name={`friends.${index}.content`} />
                             <ErrorMessage
-                              name="content"
+                              name={`friends.${index}.content`}
                               component="div"
                               className="field-error"
                             />
                           </div>
                         )}
-
-                                               
                         <div className="col">
                           <button
                             type="button"
@@ -124,8 +142,7 @@ export const InviteFriends = ({cards,setCards}) => {
                   <button
                     type="button"
                     className="secondary"
-                    onClick={() => {push({ type: '', content: '' })
-                                       }}
+                    onClick={() => push({ type: "", content: "" })}
                   >
                     Add Card
                   </button>

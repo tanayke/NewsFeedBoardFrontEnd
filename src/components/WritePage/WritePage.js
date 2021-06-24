@@ -19,11 +19,13 @@ import * as Yup from "yup";
 import { Modal, Button, FormLabel, Card } from "react-bootstrap";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
-import { AddressComponent } from "../sharedComponents";
+import { SelectLocation } from "../sharedComponents";
 // import { SignupForm } from "./doc";
 import { WriteCardModal } from "./writeCardModal";
 import { InviteFriends } from "./addCards";
 import { InviteFriend } from "./addCardsDemo";
+import {CardsComponent } from "./cardsComponent";
+import { AddNewLocation } from "../sharedComponents/AddNewLocation";
 
 const initialValues = {
   friends: [
@@ -46,14 +48,14 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const WritePage = () => {
-  const [flag, setFlag] = useState(false);
+  const [isNewLocation, setNewLocation] = useState(false);
   const [articleId, setArticleId] = useState();
 
   const [cards, setCards] = useState([]);
   const [modalShow, setModalShow] = useState(false);
 
   const myForm = useRef(null);
-  const [locationFormData, setLocationFormData] = useState({
+  const [locationId, setLocationId] = useState({
     locality: "",
     city: "",
     state: "",
@@ -72,6 +74,9 @@ export const WritePage = () => {
         console.log(value);
       }
     });
+  }
+  function addNewLocation(){
+    setNewLocation(true);
   }
 
   return (
@@ -93,12 +98,16 @@ export const WritePage = () => {
           data.delete("city");
           data.delete("locality");
           data.append("reporterId", 1);
-          data.append("locationId", locationFormData.locality);
-          addArticle(data).then((response) => {
-            if (response) setFlag(true);
-            setArticleId(response.id);
-            console.log(response);
-          });
+          data.append("locationId", locationId);
+          console.log(locationId);
+          addArticle(data)
+            .then((response) => {
+              setArticleId(response.id);
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }}
       >
         {({ errors, touched }) => (
@@ -133,14 +142,19 @@ export const WritePage = () => {
                 <div>{errors.thumbnailImage}</div>
               ) : null}
             </div>
+
             <div className="form-group">
-              <FormLabel>Select Location</FormLabel>
-              <br />
-              <AddressComponent
-                locationFormData={locationFormData}
-                setLocationFormData={setLocationFormData}
-              />
+              <div className="form-row">
+                <div className="form-col">
+                  {isNewLocation ? (<AddNewLocation setLocationId={setLocationId}/>) : (<SelectLocation setLocationId={setLocationId} />)}
+                </div>
+
+                <div className="form-col">
+                  <Button onClick={addNewLocation}>Add Location</Button>
+                </div>
+              </div>
             </div>
+
             <div className="form-group">
               <FormLabel>Select Category</FormLabel>
               <br />
@@ -152,17 +166,16 @@ export const WritePage = () => {
                 ))}
               </Field>
             </div>
-            {cards.forEach((card) => {
-              for (const value of card.values()) {
-                <Card body>{value}</Card>;
-              }
-            })}
+
+            <CardsComponent cards={cards}/>
+
             <div className="form-group">
               <Button variant="primary" type="submit">
                 Submit
               </Button>
 
-              <Button onClick={() => setModalShow(true)}>Add More </Button>
+               <Button onClick={() => setModalShow(true)}>Add More </Button>
+              <Button onClick={showCard}> show Crads</Button> 
             </div>
 
             <WriteCardModal
@@ -171,14 +184,11 @@ export const WritePage = () => {
               modalShow={modalShow}
               setModalShow={setModalShow}
               articleId={articleId}
-              //  onHide={() => setModalShow(false)}
-            />
-            {/* <InviteFriends  cards={cards}
-              setCards={setCards}/> */}
+           />
+
+            {/* <InviteFriends cards={cards} setCards={setCards} /> */}
 
             {/* <InviteFriend/> */}
-
-            <Button onClick={showCard}>Show Cards</Button>
           </Form>
         )}
       </Formik>
