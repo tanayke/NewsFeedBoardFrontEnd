@@ -28,3 +28,16 @@ export const getAllArticlesForSearchInput = async (searchInput) => {
     return err;
   }
 };
+
+export const addArticle = async (data) => {
+  try {
+    const respone = await axios({
+      method: "post",
+      url: API_GET_ALL_ARTICLES,
+      data,
+    });
+    return respone.data;
+  } catch (error) {
+    return error;
+  }
+};
