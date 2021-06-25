@@ -23,11 +23,8 @@ export const RegistrationPage = () => {
     password: Yup.string()
       .min(6, "Password must be atleat 6 characters long")
       .required("Password is Required"),
-    role: Yup.string().is(
-      ["READER", "REPORTER"],
-      "Role must be READER or REPORTER"
-    ),
-    location: Yup.string(),
+    role: Yup.string().default("READER"),
+    // location: Yup.string().required("Location is Required"),
   });
 
   const [locations, setLocations] = useState([]);
@@ -48,15 +45,23 @@ export const RegistrationPage = () => {
           email: "",
           phone: "",
           password: "",
-          role: "",
-          location: "",
+          isReporter: false,
+          role: "READER",
+          state: "",
+          city: "",
+          locality: "",
         }}
         validationSchema={validate}
         onSubmit={(data) => {
           console.log("hi from onsubmit");
-          console.log(data);
+          console.log("formdata", data);
+          // eslint-disable-next-line prefer-const
+          let postData = data;
+          if (postData.isReporter) {
+            postData.role = "REPORTER";
+          }
           try {
-            postUser(data);
+            postUser(postData);
             // history.push(LOGIN);
           } catch (error) {
             console.log(error);
@@ -83,8 +88,14 @@ export const RegistrationPage = () => {
                 controlId="name"
               >
                 <Form.Label>Full Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter your full name" />
-                {touched.name && errors.name && <div>{errors.name}</div>}
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                />
+                {touched.name && errors.name && (
+                  <div style={{ color: "red" }}>{errors.name}</div>
+                )}
               </Form.Group>
               <Form.Group
                 name="email"
@@ -98,7 +109,9 @@ export const RegistrationPage = () => {
                 {/* <Form.Text className='text-muted'>
                   We will never share your email with anyone else.
                 </Form.Text> */}
-                {touched.email && errors.email && <div>{errors.email}</div>}
+                {touched.email && errors.email && (
+                  <div style={{ color: "red" }}>{errors.email}</div>
+                )}
               </Form.Group>
               <Form.Group
                 name="phone"
@@ -112,7 +125,11 @@ export const RegistrationPage = () => {
                 {/* <Form.Text className='text-muted'>
                   We will never share your Mobile Number with anyone else.
                 </Form.Text> */}
-                {touched.phone && errors.phone && <div>{errors.phone}</div>}
+                {touched.phone && errors.phone && (
+                  <div className="validation" style={{ color: "red" }}>
+                    {errors.phone}
+                  </div>
+                )}
               </Form.Group>
               <Form.Group
                 name="password"
@@ -124,59 +141,34 @@ export const RegistrationPage = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
                 {touched.password && errors.password && (
-                  <div>{errors.password}</div>
+                  <div style={{ color: "red" }}>{errors.password}</div>
                 )}
               </Form.Group>
+
               <Form.Group
-                name="role"
-                value={values.role}
+                name="isReporter"
+                value={values.isReporter}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 controlId="role"
               >
-                <Form.Label>Register As</Form.Label>
-                <Form.Control as="select">
-                  <option>--select your role--</option>
-                  <option value="REPORTER">Reporter</option>
-                  <option value="READER">Reader</option>
-                </Form.Control>
-                {touched.role && errors.role && <div>{errors.role}</div>}
-              </Form.Group>
-              <Form.Group
-                name="location"
-                value={values.location}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                controlId="location"
-              >
-                <Form.Label>Select Your Location</Form.Label>
-                <Form.Control as="select">
-                  <option>--select your loacality--</option>
-                  {locations.map((location) => (
-                    <>
-                      <option value={location.locality} key={location.id}>
-                        {location.locality}
-                      </option>
-                    </>
-                  ))}
-                </Form.Control>
-                {touched.location && errors.location && (
-                  <div>{errors.location}</div>
-                )}
+                <Form.Label>
+                  Do you want to Post News Articles and Stories?{" "}
+                </Form.Label>
+                <Form.Check
+                  name="isReporter"
+                  type="checkbox"
+                  label="Check here"
+                />
               </Form.Group>
 
               <Button className="btn mt-3" variant="primary" type="submit">
                 Submit
               </Button>
-              <Button
-                className="btn btn-danger mt-3 ml-3"
-                variant="danger"
-                type="reset"
-              >
-                Reset
-              </Button>
+              <br />
+
               <Link class=" ml-auto" to={LOGIN}>
-                Already a User? LogIn
+                Already a User? Login
               </Link>
             </Form>
           </div>

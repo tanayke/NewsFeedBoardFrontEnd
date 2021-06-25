@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import { ButtonGroup, Button } from "react-bootstrap";
 import { ArticleFeedComponent } from "./ArticleFeedComponent";
-import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContextProvider";
+import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
 
 export const ArticlesTab = () => {
   const { articleFilters, setArticleFilters } =
