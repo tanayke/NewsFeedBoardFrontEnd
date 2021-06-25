@@ -22,10 +22,12 @@ export const getArticleCards = async (id) => {
 }
 export const getArticle = async (id) => {
   try{
-    const response =await axios.get(`${API_GET_ALL_ARTICLES}/${id}`);
+    const response = await axios.get(`${API_GET_ALL_ARTICLES}/${id}`);
+    console.log('getarticle')
     console.log(response.data);
     return response.data
-  }catch(err) {
+  }
+  catch(err) {
     return err;
   }
 }
