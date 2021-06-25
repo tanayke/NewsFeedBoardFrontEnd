@@ -10,14 +10,14 @@ export const ArticlesTab = () => {
 
   const handleYourFeedClick = () => {
     setArticleFilters({
-      articleFilters,
-      trending: false,
+      ...articleFilters,
+      isTrending: false,
     });
   };
   const handleTrendingClick = () => {
     setArticleFilters({
-      articleFilters,
-      trending: true,
+      ...articleFilters,
+      isTrending: true,
     });
   };
   return (
