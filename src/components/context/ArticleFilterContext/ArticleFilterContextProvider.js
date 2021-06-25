@@ -6,8 +6,9 @@ import { ArticleFilterContext } from "./ArticleFilterContext";
 const ArticlesContextProvider = ({ children }) => {
   const [articleFilters, setArticleFilters] = useState({
     locationId: undefined,
-    filterId: undefined,
+    categoryId: undefined,
     search: undefined,
+    trending: false,
   });
 
   const value = {

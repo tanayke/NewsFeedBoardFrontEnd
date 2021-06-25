@@ -1,13 +1,22 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form } from "react-bootstrap";
 import { getAllCategories } from "../../../services";
+import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
 
 export const CategoriesComponent = ({ categoryId, handleCategoryChange }) => {
   const [categories, setCategories] = useState([]);
+
+  const { articleFilters, setArticleFilters } =
+    useContext(ArticleFilterContext);
+
   useEffect(() => {
     getAllCategories().then((data) => setCategories(data));
     console.log(categoryId);
+    setArticleFilters({
+      ...articleFilters,
+      categoryId,
+    });
   }, [categoryId]);
 
   return (
