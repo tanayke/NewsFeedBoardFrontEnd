@@ -7,6 +7,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { Button, FormLabel } from "react-bootstrap";
+import { serialize } from 'object-to-formdata';
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
 import { SelectLocation } from "../sharedComponents";
@@ -60,15 +61,38 @@ export const WritePage = () => {
     setNewLocation(true);
   }
 
-  function handleOnSubmit() {
-    const data = new FormData(myForm.current);
-    for (const value of data.values()) {
-      console.log(value);
-    }
+  function handleOnSubmit(d) {
+    
+    const object = d;
+    const options = {
+      indices: false,
+      nullsAsUndefineds: false,
+      booleansAsIntegers: false,
+      allowEmptyArrays: false,
+    };
+    
+    const formData = serialize(
+      object,
+   //   options, // optional
+    );
+    
+    // console.log(formData);
 
+    // for (const value of formData.values()) {
+    //  console.log(value);
+    //  }
+
+    const data = new FormData(myForm.current);
+    // for (const value of data.values()) {
+    //   console.log(value);
+    // }
+
+    
     data.append("reporterId", 1);
     data.append("isNewlocation", isNewLocation);
+    data.append("cardsData",formData);
 
+    console.log(JSON.stringify(Array.from(formData)));
     addArticle(data)
       .then((response) => {
         setArticleId(response.id);

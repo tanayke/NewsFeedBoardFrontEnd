@@ -35,7 +35,6 @@ export const SelectLocation = () => {
 
   useEffect(()=>{
     setFilteredCities(cities.filter((v,i) => cities.map((val)=> val.city).indexOf(v.city) === i ));
-      
   },[cities]);
 
 

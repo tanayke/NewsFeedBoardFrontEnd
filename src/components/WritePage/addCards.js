@@ -10,12 +10,10 @@ const initialValues = {
     {
       type: "",
       content: "",
-      cardOrder: 0,
+      cardOrder: "",
     },
   ],
 };
-
-
 
 export const AllCards = ({ values, setFieldValue }) => (
   <div>
@@ -52,6 +50,10 @@ export const AllCards = ({ values, setFieldValue }) => (
                 )}
 
                 <div className="col">
+                  <span name={`cards.${index}.cardOrder`} value={index} />
+                </div>
+
+                <div className="col">
                   <button
                     type="button"
                     className="secondary"
@@ -65,7 +67,7 @@ export const AllCards = ({ values, setFieldValue }) => (
           <button
             type="button"
             className="secondary"
-            onClick={() => push({ type: "text", content: "", cardOrder: 0 })}
+            onClick={() => push({ type: "text", content: "", cardOrder: ""})}
           >
             Add Card
           </button>
