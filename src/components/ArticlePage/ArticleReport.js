@@ -19,7 +19,7 @@ export const ArticleReport = () => {
     <>
       <div style={{ display: "block", width: 700, padding: 30 }}>
         <OverlayTrigger
-          placement="bottom"
+          placement="top"
           trigger="click"
           overlay={
             <Popover>

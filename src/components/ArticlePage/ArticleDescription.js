@@ -1,8 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
-import PropTypes from "prop-types";
-import { ArticleReport } from "./ArticleReport";
 import { getArticle } from "../../services";
 import { BASE_URL } from "../../constants";
 
@@ -44,15 +42,14 @@ export const ArticleDescription = () => {
               monthNames[date.getMonth()]
             } ${date.getDay()},${date.getFullYear()}`}</small>
           </Row>
-        </Col>
-        <Col xs={3}>
-          <ArticleReport />
+          <Row>
+            <small className="ml-3">Pune</small>
+          </Row>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-5">
         <Col xs={2} />
         <Col>
-          <p className="mb-0">{article.location.city}</p>
           <h2 className="ml-3">{article.title}</h2>
         </Col>
         <Col xs={2} />
