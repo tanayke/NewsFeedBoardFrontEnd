@@ -51,7 +51,8 @@ export const WritePage = () => {
     setNewLocation(true);
   }
 
-  function handleOnSubmit() {
+  function handleOnSubmit(formData) {
+    console.log(formData);
     const data = new FormData(myForm.current);
     for (const value of data.values()) {
       console.log(value);

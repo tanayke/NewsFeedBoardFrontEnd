@@ -24,8 +24,8 @@ export const AllCards = ({ values, setFieldValue }) => (
             values.cards.map((card, index) => (
               <div className="row" key={index}>
                 <div className="col">
-                  <label htmlFor={`cards.${index}.type`}>Select Type</label>
-                  <Field name={`cards.${index}.type`} as="select">
+                  <label htmlFor={`cards[${index}].type`}>Select Type</label>
+                  <Field name={`cards[${index}].type`} as="select">
                     <option value="text">Text</option>
                     <option value="image">Image</option>
                     <option value="video">Video</option>
@@ -33,19 +33,21 @@ export const AllCards = ({ values, setFieldValue }) => (
                 </div>
                 {card.type === "text" ? (
                   <div className="col">
-                    <label htmlFor={`cards.${index}.content`}>Enter Text</label>
+                    <label htmlFor={`cards[${index}].content`}>
+                      Enter Text
+                    </label>
                     <Field
-                      name={`cards.${index}.content`}
+                      name={`cards[${index}].content`}
                       type="textarea"
                       rows="3"
                     />
                   </div>
                 ) : (
                   <div className="col">
-                    <label htmlFor={`cards.${index}.content`}>
+                    <label htmlFor={`cards[${index}].content`}>
                       Select File
                     </label>
-                    <Field name={`cards.${index}.content`} type="file" />
+                    <Field name={`cards[${index}].content`} type="file" />
                   </div>
                 )}
 
@@ -57,7 +59,7 @@ export const AllCards = ({ values, setFieldValue }) => (
                   >
                     X
                   </button>
-                  <span name={`cards.${index}.cardOrder`} value={index} />
+                  <span name={`cards[${index}].cardOrder`} value={index} />
                 </div>
               </div>
             ))}
