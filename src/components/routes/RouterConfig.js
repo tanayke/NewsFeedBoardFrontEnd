@@ -1,22 +1,13 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { AdminPage } from "../AdminPage";
-import { ArticlePage } from "../ArticlePage";
-import { HomePage } from "../HomePage";
-import { LandingPage } from "../LandingPage";
-import { RegitrationComponent } from "../LandingPage/RegitrationComponent";
-import { WritePage } from "../WritePage";
+import { AdminPage } from "../adminPage";
+import { ArticlePage } from "../articlePage";
+import { HomePage } from "../homePage";
+import { LandingPage } from "../landingPage";
+import { WritePage } from "../writePage";
 import { AddressComponent } from "../sharedComponents";
 
-import {
-  ADMIN,
-  ARTICLE,
-  HOME,
-  LANDING,
-  REGISTER,
-  WRITE,
-  ADDRESS
-} from "../../constants";
+import { ADMIN, ARTICLE, HOME, LANDING, WRITE, ADDRESS } from "../../constants";
 
 export const RouterConfig = () => (
   <div>
@@ -26,10 +17,7 @@ export const RouterConfig = () => (
       <Route exact path={ADMIN} component={AdminPage} />
       <Route exact path={WRITE} component={WritePage} />
       <Route exact path={ARTICLE} component={ArticlePage} />
-       <Route exact path={ADDRESS} component={AddressComponent} />
-      <Route path={REGISTER}>
-        <RegitrationComponent />
-      </Route>
+      <Route exact path={ADDRESS} component={AddressComponent} />
     </Switch>
   </div>
 );

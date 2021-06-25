@@ -5,8 +5,8 @@ import React from "react";
 import { Col } from "react-bootstrap";
 import { BASE_URL } from "../../constants";
 
-export const ArticleCards = ({ data }) => {
-  const { content,type } = data;
+export const ArticleCards = ({ card }) => {
+  const { content, type } = card;
   if (type === "IMAGE") {
     return (
       <>
