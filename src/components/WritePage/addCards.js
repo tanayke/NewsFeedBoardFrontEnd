@@ -14,18 +14,7 @@ const initialValues = {
   ],
 };
 
-const selectComponent = ({ field, handleCardsInputChange, card }) => {
-  const { onChange } = field;
-  return (
-    <select onChange={handleCardsInputChange} value={card.type}>
-      <option value="text">Text</option>
-      <option value="image">Image</option>
-      <option value="video">Video</option>
-    </select>
-  );
-};
-
-export const InviteFriends = ({ cards, setCards }) => {
+export const InviteFriends = () => {
   const myForm = useRef(null);
   const [card, setCard] = useState({
     type: "image",
@@ -38,12 +27,12 @@ export const InviteFriends = ({ cards, setCards }) => {
   function handleCardsInputChange({ target }) {
     console.log(target);
     const { name, value } = target;
-    setCard({...card,[name]:value});
-    console.log(name , value);
-  //  if( value === "image" || value === "video")
-  //   setFlag(true)
-  // else
-  //   setFlag(false)
+    setCard({ ...card, [name]: value });
+    console.log(name, value);
+    //  if( value === "image" || value === "video")
+    //   setFlag(true)
+    // else
+    //   setFlag(false)
   }
   function handleSubmit() {
     const data = new FormData(myForm.current);
@@ -54,7 +43,7 @@ export const InviteFriends = ({ cards, setCards }) => {
   }
 
   const { type } = card;
-  
+
   return (
     <div>
       <h1>Invite cards</h1>
@@ -62,13 +51,15 @@ export const InviteFriends = ({ cards, setCards }) => {
         {({ values }) => (
           <Form ref={myForm}>
             <FieldArray name="cards">
-              {({ insert, remove, push }) => (
+              {({ remove, push }) => (
                 <div>
                   {values.cards.length > 0 &&
                     values.cards.map((friend, index) => (
                       <div className="row" key={index}>
                         <div className="col">
-                          <label htmlFor={`friends.${index}.type`}>Select Type</label>
+                          <label htmlFor={`friends.${index}.type`}>
+                            Select Type
+                          </label>
                           <Field name={`friends.${index}.type`} as="select">
                             {/* <selectComponent handleCardsInputChange={handleCardsInputChange} card={card} /> */}
                             {({ field }) => {
@@ -105,22 +96,33 @@ export const InviteFriends = ({ cards, setCards }) => {
                             className="field-error"
                           />
                         </div>
-                        {type==="image" || type==="video" ? (
+                        {type === "image" || type === "video" ? (
                           <div className="col">
-                            <label htmlFor={`friends.${index}.content`}>Select File</label>
-                            <Field name="content" type="file" value={card.content}
-                              onChange={handleCardsInputChange}/>
+                            <label htmlFor={`friends.${index}.content`}>
+                              Select File
+                            </label>
+                            <Field
+                              name="content"
+                              type="file"
+                              value={card.content}
+                              onChange={handleCardsInputChange}
+                            />
                             <ErrorMessage
                               name={`friends.${index}.content`}
                               component="div"
                               className="field-error"
-                              
                             />
                           </div>
                         ) : (
                           <div className="col">
-                            <label htmlFor={`friends.${index}.content`}>Enter Text</label>
-                            <Field as="textarea" rows={3} name={`friends.${index}.content`} />
+                            <label htmlFor={`friends.${index}.content`}>
+                              Enter Text
+                            </label>
+                            <Field
+                              as="textarea"
+                              rows={3}
+                              name={`friends.${index}.content`}
+                            />
                             <ErrorMessage
                               name={`friends.${index}.content`}
                               component="div"

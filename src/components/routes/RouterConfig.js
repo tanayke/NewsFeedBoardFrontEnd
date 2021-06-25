@@ -5,8 +5,8 @@ import { ArticlePage } from "../articlePage";
 import { HomePage } from "../homePage";
 import { LandingPage } from "../landingPage";
 import { WritePage } from "../writePage";
-import { RegistrationPage } from "../LandingPage/RegistrationPage/RegistrationPage";
-import { LoginPage } from "../LandingPage/LoginPage/LoginPage";
+import { RegistrationPage } from "../landingPage/RegistrationPage";
+import { LoginPage } from "../landingPage/LoginPage";
 
 import {
   ADMIN,
@@ -15,7 +15,6 @@ import {
   LANDING,
   REGISTER,
   WRITE,
-  ADDRESS,
   LOGIN,
 } from "../../constants/CONSTANTS";
 
@@ -27,7 +26,6 @@ export const RouterConfig = () => (
       <Route exact path={ADMIN} component={AdminPage} />
       <Route exact path={WRITE} component={WritePage} />
       <Route exact path={ARTICLE} component={ArticlePage} />
-      <Route exact path={ADDRESS} component={AddressComponent} />
       <Route exact path={REGISTER} component={RegistrationPage} />
       <Route exact path={LOGIN} component={LoginPage} />
     </Switch>

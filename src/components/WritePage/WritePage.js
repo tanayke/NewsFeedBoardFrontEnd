@@ -5,36 +5,19 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from "react";
 
-import {
-  Formik,
-  Form,
-  Field,
-  useFormik,
-  ErrorMessage,
-  FieldArray,
-} from "formik";
+import { Formik, Form, Field } from "formik";
 
 import * as Yup from "yup";
 
-import { Modal, Button, FormLabel, Card } from "react-bootstrap";
+import { Button, FormLabel } from "react-bootstrap";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
 import { SelectLocation } from "../sharedComponents";
 // import { SignupForm } from "./doc";
 import { WriteCardModal } from "./writeCardModal";
-import { InviteFriends } from "./addCards";
-import { InviteFriend } from "./addCardsDemo";
-import {CardsComponent } from "./cardsComponent";
+import { CardsComponent } from "./cardsComponent";
 import { AddNewLocation } from "../sharedComponents/AddNewLocation";
 
-const initialValues = {
-  friends: [
-    {
-      name: "",
-      email: "",
-    },
-  ],
-};
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, "Too Short!")
@@ -75,7 +58,7 @@ export const WritePage = () => {
       }
     });
   }
-  function addNewLocation(){
+  function addNewLocation() {
     setNewLocation(true);
   }
 
@@ -146,7 +129,11 @@ export const WritePage = () => {
             <div className="form-group">
               <div className="form-row">
                 <div className="form-col">
-                  {isNewLocation ? (<AddNewLocation setLocationId={setLocationId}/>) : (<SelectLocation setLocationId={setLocationId} />)}
+                  {isNewLocation ? (
+                    <AddNewLocation setLocationId={setLocationId} />
+                  ) : (
+                    <SelectLocation setLocationId={setLocationId} />
+                  )}
                 </div>
 
                 <div className="form-col">
@@ -167,15 +154,15 @@ export const WritePage = () => {
               </Field>
             </div>
 
-            <CardsComponent cards={cards}/>
+            <CardsComponent cards={cards} />
 
             <div className="form-group">
               <Button variant="primary" type="submit">
                 Submit
               </Button>
 
-               <Button onClick={() => setModalShow(true)}>Add More </Button>
-              <Button onClick={showCard}> show Crads</Button> 
+              <Button onClick={() => setModalShow(true)}>Add More </Button>
+              <Button onClick={showCard}> show Crads</Button>
             </div>
 
             <WriteCardModal
@@ -184,7 +171,7 @@ export const WritePage = () => {
               modalShow={modalShow}
               setModalShow={setModalShow}
               articleId={articleId}
-           />
+            />
 
             {/* <InviteFriends cards={cards} setCards={setCards} /> */}
 

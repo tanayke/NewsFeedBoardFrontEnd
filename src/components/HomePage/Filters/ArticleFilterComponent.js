@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { CategoriesComponent } from "./CategoriesComponent";
 import { LocationFilterComponent } from "./LocationFilterComponent";

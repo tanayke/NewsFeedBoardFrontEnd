@@ -2,11 +2,9 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useRef } from "react";
-import { Form, FormLabel, Modal, Button, Badge } from "react-bootstrap";
-import { addCards } from "../../services";
+import { Form, Modal, Button } from "react-bootstrap";
 
 export const WriteCardModal = ({
-  cards,
   setCards,
   modalShow,
   setModalShow,
@@ -15,7 +13,7 @@ export const WriteCardModal = ({
 }) => {
   const myForm = useRef(null);
   const [cardOrder, setCardOrder] = useState(0);
-  const [counter,setCounter]=useState(null);
+  const [counter, setCounter] = useState(null);
   const [card, setCard] = useState({
     type: "image",
     content: "",
@@ -30,9 +28,9 @@ export const WriteCardModal = ({
   function saveCard() {
     //   if(cardOrder === 0)
     //     setCounter(1);
-    //   else 
+    //   else
     //     setCounter(counter+1);
-    
+
     // setCardOrder(cardOrder + 1);
     const data = new FormData(myForm.current);
     data.append("cardOrder", cardOrder);
@@ -48,7 +46,7 @@ export const WriteCardModal = ({
     setCards((oldCards) => [...oldCards, data]);
     setModalShow(false);
   }
-  function onHide(){
+  function onHide() {
     setCounter(null);
     setModalShow(false);
   }
@@ -66,7 +64,6 @@ export const WriteCardModal = ({
   //   });
   // }
 
-  
   const { type, content } = card;
   return (
     <Modal
