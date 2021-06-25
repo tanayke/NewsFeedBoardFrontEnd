@@ -5,7 +5,9 @@ import { getArticle } from "../../services";
 import { BASE_URL } from "../../constants";
 
 export const ArticleDescription = () => {
-  const [article, setArticle] = useState({});
+  const [article, setArticle] = useState({
+    user:{},location:{},category:{}
+  });
   const monthNames = [
     "January",
     "February",
@@ -29,7 +31,7 @@ export const ArticleDescription = () => {
   const date = new Date(article.uploadDateTime);
   console.log(JSON.stringify(date));
   console.log(article);
-  return (
+    return (
     <>
       <Row>
         <Col xs={2} className="mt-5" />
