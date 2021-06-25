@@ -7,7 +7,7 @@ import { LandingPage } from "../landingPage";
 import { WritePage } from "../writePage";
 import { RegistrationPage } from "../landingPage/RegistrationPage";
 import { LoginPage } from "../landingPage/LoginPage";
-
+import { SearchResultsComponent } from "../searchResultes/SearchResultsComponent";
 import {
   ADMIN,
   ARTICLE,
@@ -16,6 +16,7 @@ import {
   REGISTER,
   WRITE,
   LOGIN,
+  ROUTE_SEARCH,
 } from "../../constants/CONSTANTS";
 
 export const RouterConfig = () => (
@@ -28,6 +29,7 @@ export const RouterConfig = () => (
       <Route exact path={ARTICLE} component={ArticlePage} />
       <Route exact path={REGISTER} component={RegistrationPage} />
       <Route exact path={LOGIN} component={LoginPage} />
+      <Route path={ROUTE_SEARCH} component={SearchResultsComponent} />
     </Switch>
   </div>
 );

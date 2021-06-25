@@ -4,8 +4,8 @@ export const WRITE = "/write";
 export const ARTICLE = "/article";
 export const ADMIN = "/admin";
 export const REGISTER = "/registeration";
-export const ADDRESS = "/address";
 export const LOGIN = "/login";
+export const ROUTE_SEARCH = "/search";
 
 /* eslint-disable import/prefer-default-export */
 export const BASE_API = "http://localhost:5500/api/";
