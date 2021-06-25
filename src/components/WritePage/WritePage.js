@@ -4,19 +4,24 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from "react";
-
 import { Formik, Form, Field } from "formik";
-
 import * as Yup from "yup";
-
 import { Button, FormLabel } from "react-bootstrap";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
 import { SelectLocation } from "../sharedComponents";
-// import { SignupForm } from "./doc";
-import { WriteCardModal } from "./writeCardModal";
-import { CardsComponent } from "./cardsComponent";
+import { AllCards } from "./addCards";
 import { AddNewLocation } from "../sharedComponents/AddNewLocation";
+
+const InitialValues = {
+  title: "",
+  description: "",
+  thumbnailImage: "",
+  category: 0,
+  reporterId: 0,
+  location: 0,
+  cards: [],
+};
 
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
@@ -32,17 +37,8 @@ const SignupSchema = Yup.object().shape({
 
 export const WritePage = () => {
   const [isNewLocation, setNewLocation] = useState(false);
-  const [articleId, setArticleId] = useState();
-
-  const [cards, setCards] = useState([]);
-  const [modalShow, setModalShow] = useState(false);
-
   const myForm = useRef(null);
-  const [locationId, setLocationId] = useState({
-    locality: "",
-    city: "",
-    state: "",
-  });
+
   const [categories, setCategory] = useState([]);
 
   useEffect(() => {
@@ -51,49 +47,37 @@ export const WritePage = () => {
     });
   }, []);
 
-  function showCard() {
-    cards.forEach((card) => {
-      for (const value of card.values()) {
-        console.log(value);
-      }
-    });
-  }
   function addNewLocation() {
     setNewLocation(true);
+  }
+
+  function handleOnSubmit() {
+    const data = new FormData(myForm.current);
+    for (const value of data.values()) {
+      console.log(value);
+    }
+
+    data.append("reporterId", 1);
+    data.append("isNewlocation", isNewLocation);
+
+    addArticle(data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
     <div>
       <h1>Article Form</h1>
       <Formik
-        initialValues={{
-          title: "",
-          description: "",
-          thumbnailImage: "",
-          category: 0,
-          reporterId: 0,
-          location: 0,
-        }}
+        initialValues={InitialValues}
         validationSchema={SignupSchema}
-        onSubmit={(values) => {
-          const data = new FormData(myForm.current);
-          data.delete("state");
-          data.delete("city");
-          data.delete("locality");
-          data.append("reporterId", 1);
-          data.append("locationId", locationId);
-          console.log(locationId);
-          addArticle(data)
-            .then((response) => {
-              setArticleId(response.id);
-              console.log(response);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }}
+        onSubmit={handleOnSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, values, setFieldValue }) => (
           <Form ref={myForm}>
             <div className="form-group">
               <FormLabel>Title</FormLabel>
@@ -129,16 +113,14 @@ export const WritePage = () => {
             <div className="form-group">
               <div className="form-row">
                 <div className="form-col">
-                  {isNewLocation ? (
-                    <AddNewLocation setLocationId={setLocationId} />
-                  ) : (
-                    <SelectLocation setLocationId={setLocationId} />
-                  )}
+                  {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
                 </div>
 
-                <div className="form-col">
-                  <Button onClick={addNewLocation}>Add Location</Button>
-                </div>
+                {isNewLocation ? null : (
+                  <div className="form-col">
+                    <Button onClick={addNewLocation}>Add New Location</Button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -154,33 +136,16 @@ export const WritePage = () => {
               </Field>
             </div>
 
-            <CardsComponent cards={cards} />
-
             <div className="form-group">
               <Button variant="primary" type="submit">
                 Submit
               </Button>
-
-              <Button onClick={() => setModalShow(true)}>Add More </Button>
-              <Button onClick={showCard}> show Crads</Button>
             </div>
 
-            <WriteCardModal
-              cards={cards}
-              setCards={setCards}
-              modalShow={modalShow}
-              setModalShow={setModalShow}
-              articleId={articleId}
-            />
-
-            {/* <InviteFriends cards={cards} setCards={setCards} /> */}
-
-            {/* <InviteFriend/> */}
+            <AllCards values={values} setFieldValue={setFieldValue} />
           </Form>
         )}
       </Formik>
     </div>
-
-    // <SignupForm/>
   );
 };
