@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 
 import { getAllLocations } from "../../services/locationService";
 
-export const SelectLocation = ({setLocationId}) => {
+export const SelectLocation = () => {
   
   const [formData,setFormData]=useState({
     locality: "",
@@ -11,30 +11,20 @@ export const SelectLocation = ({setLocationId}) => {
     state: "",
    
   }
-    );
+ );
 
- 
   const [locations,setLocations]=useState([]);
   const [stateLocation,setStateLcation] =useState([]); 
   const [cities, setCities] = useState([]);
   const [filterdCities, setFilteredCities] = useState([]);
- 
- 
 
   function handleInputChange({ target }) {
     const { name, value } = target;
     if ( name === "state") {
       setCities(locations.filter((c) => c.state === value));
     }
-    if(name === "locality")
-      setLocationId(value)
-
     setFormData({...formData,[name]:value});
-    console.log(name,value);
    }
-
- 
-  
 
   useEffect(() => {
     getAllLocations().then((data) => {
@@ -52,7 +42,6 @@ export const SelectLocation = ({setLocationId}) => {
   return (
     <>
       <Form.Row>
-       
         <Form.Group controlId="formGridState">
          <Form.Control
             as="select"
@@ -68,8 +57,6 @@ export const SelectLocation = ({setLocationId}) => {
             ))}
           </Form.Control>
         </Form.Group>
-
-        
           <Form.Group controlId="formGridCity1">
             <Form.Control
               as="select"
@@ -84,10 +71,9 @@ export const SelectLocation = ({setLocationId}) => {
                .map((c) => (
                 <option key={c.id}>{c.city}</option>
               ))}
-             
             </Form.Control>
           </Form.Group>
-           
+
           <Form.Group controlId="formGridLocality1">
             <Form.Control
               as="select"
@@ -105,13 +91,9 @@ export const SelectLocation = ({setLocationId}) => {
                     {filteredLocality.locality}
                   </option>
                 ))}
-           
             </Form.Control>
           </Form.Group>
-        
          </Form.Row>
-       
-     
     </>
   );
 };

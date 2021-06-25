@@ -4,17 +4,12 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from "react";
-import {
-  Formik,
-  Form,
-  Field,
- } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import {  Button, FormLabel } from "react-bootstrap";
+import { Button, FormLabel } from "react-bootstrap";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
 import { SelectLocation } from "../sharedComponents";
-import { WriteCardModal } from "./writeCardModal";
 import { AllCards } from "./addCards";
 import { AddNewLocation } from "../sharedComponents/AddNewLocation";
 
@@ -25,8 +20,7 @@ const InitialValues = {
   category: 0,
   reporterId: 0,
   location: 0,
-  cards: [    ],
- 
+  cards: [],
 };
 
 const SignupSchema = Yup.object().shape({
@@ -45,7 +39,7 @@ export const WritePage = () => {
   const [isNewLocation, setNewLocation] = useState(false);
   const [articleId, setArticleId] = useState();
   const [cards, setCards] = useState([]);
-  const [isNewCard,setNewCard]=useState(false);
+  const [isNewCard, setNewCard] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const myForm = useRef(null);
 
@@ -62,23 +56,19 @@ export const WritePage = () => {
     });
   }, []);
 
-
-  function addNewLocation(){
+  function addNewLocation() {
     setNewLocation(true);
   }
-  
-  function handleOnSubmit(){
 
+  function handleOnSubmit() {
     const data = new FormData(myForm.current);
     for (const value of data.values()) {
       console.log(value);
-   }
-    data.delete("state");
-    data.delete("city");
-    data.delete("locality");
+    }
+
     data.append("reporterId", 1);
-    data.append("locationId", locationId);
-    console.log(locationId);
+    data.append("isNewlocation", isNewLocation);
+
     addArticle(data)
       .then((response) => {
         setArticleId(response.id);
@@ -86,7 +76,7 @@ export const WritePage = () => {
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   }
 
   return (
@@ -97,7 +87,7 @@ export const WritePage = () => {
         validationSchema={SignupSchema}
         onSubmit={handleOnSubmit}
       >
-        {({ errors, touched,values }) => (
+        {({ errors, touched, values, setFieldValue }) => (
           <Form ref={myForm}>
             <div className="form-group">
               <FormLabel>Title</FormLabel>
@@ -133,12 +123,14 @@ export const WritePage = () => {
             <div className="form-group">
               <div className="form-row">
                 <div className="form-col">
-                  {isNewLocation ? (<AddNewLocation setLocationId={setLocationId}/>) : (<SelectLocation setLocationId={setLocationId} />)}
+                  {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
                 </div>
 
-                <div className="form-col">
-                  <Button onClick={addNewLocation}>Add Location</Button>
-                </div>
+                {isNewLocation ? null : (
+                  <div className="form-col">
+                    <Button onClick={addNewLocation}>Add New Location</Button>
+                  </div>
+                )  }
               </div>
             </div>
 
@@ -160,7 +152,7 @@ export const WritePage = () => {
               </Button>
             </div>
 
-            <AllCards values={values}/>
+            <AllCards values={values} setFieldValue={setFieldValue} />
           </Form>
         )}
       </Formik>
