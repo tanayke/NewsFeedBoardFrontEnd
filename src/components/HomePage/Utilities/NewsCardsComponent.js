@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card, Container, Row, Col } from "react-bootstrap";
+import { ArticlesContext } from "../../context/ArticlesContext/ArticlesContext";
+import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
+import { getAllArticles } from "../../../services";
 
-const NewsCardsComponent = (props) => {
-  const { articles } = props;
-  return articles.map((article) => (
+const NewsCardsComponent = () => {
+  const [articleFeed, setArticleFeed] = useState([]);
+
+  const { articleFilters } = useContext(ArticleFilterContext);
+  const { articles, setArticles } = useContext(ArticlesContext);
+
+  useEffect(() => {
+    console.log("hi");
+    getAllArticles(articleFilters).then((data) => {
+      setArticles(data);
+      setArticleFeed(data);
+    });
+  }, [articleFilters]);
+  useEffect(() => {
+    console.log(articles);
+  }, [articles]);
+
+  return articleFeed.map((article) => (
     <Card key={article.id} style={{ width: "100%", margin: "1rem" }}>
       <Card.Body>
         <Container>

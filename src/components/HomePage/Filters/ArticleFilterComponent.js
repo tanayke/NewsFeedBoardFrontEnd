@@ -14,17 +14,12 @@ export const ArticleFilterComponent = ({ filterArticles }) => {
   const handleLocationChange = ({ target }) => {
     setLocationId(target.value);
   };
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log(categoryId, locationId);
-    filterArticles(categoryId, locationId);
-  };
 
   return (
     <div>
       Filters
       <hr />
-      <Form onSubmit={handleFormSubmit}>
+      <Form>
         <CategoriesComponent
           categoryId={categoryId}
           handleCategoryChange={handleCategoryChange}
@@ -34,9 +29,6 @@ export const ArticleFilterComponent = ({ filterArticles }) => {
           handleLocationChange={handleLocationChange}
           setLocationId={setLocationId}
         />
-        <Button variant="primary" type="submit">
-          Filter
-        </Button>
       </Form>
     </div>
   );

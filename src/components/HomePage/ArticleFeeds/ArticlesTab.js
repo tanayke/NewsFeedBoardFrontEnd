@@ -11,7 +11,7 @@ export const ArticlesTab = () => {
   const handleYourFeedClick = () => {
     setArticleFilters({
       ...articleFilters,
-      isTrending: false,
+      isTrending: undefined,
     });
   };
   const handleTrendingClick = () => {

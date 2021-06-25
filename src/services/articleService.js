@@ -3,15 +3,14 @@ import { API_GET_ALL_ARTICLES } from "../constants";
 
 export const getAllArticles = async (filters) => {
   // eslint-disable-next-line prefer-const
-  let { categoryId, locationId, search, trending } = filters;
-  console.log(categoryId, locationId, search, trending);
+  let { categoryId, locationId, search, isTrending } = filters;
+  console.log(categoryId, locationId, search, isTrending);
   if (categoryId === "All") categoryId = undefined;
   if (locationId === "All") locationId = undefined;
   try {
     const respone = await axios.get(API_GET_ALL_ARTICLES, {
-      params: { categoryId, locationId, search, trending },
+      params: { categoryId, locationId, search, isTrending },
     });
-    console.log(respone.data);
     return respone.data;
   } catch (err) {
     return err;
