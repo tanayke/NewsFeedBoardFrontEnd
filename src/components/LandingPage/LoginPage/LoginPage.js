@@ -43,9 +43,13 @@ export const LoginPage = () => {
             authenticateUser(data).then((tokendata) => {
               sessionStorage.setItem("x-auth-token", tokendata.token);
               getAuthUser().then((userData) => {
-                console.log(userData);
+                // console.log(userData);
                 authUserContext.setUser(userData);
-                history.push(HOME);
+                if (!(userData === "Request failed with status code 401")) {
+                  history.push(HOME);
+                } else {
+                  alert("Invalid Credentials. Please Try Again");
+                }
               });
             });
           } catch (error) {
@@ -77,7 +81,9 @@ export const LoginPage = () => {
                 {/* <Form.Text className='text-muted'>
                 We will never share your email with anyone else.
               </Form.Text> */}
-                {touched.email && errors.email && <div>{errors.email}</div>}
+                {touched.email && errors.email && (
+                  <div style={{ color: "red" }}>{errors.email}</div>
+                )}
               </Form.Group>
 
               <Form.Group
@@ -90,7 +96,7 @@ export const LoginPage = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type='password' placeholder='Password' />
                 {touched.password && errors.password && (
-                  <div>{errors.password}</div>
+                  <div style={{ color: "red" }}>{errors.password}</div>
                 )}
               </Form.Group>
 
