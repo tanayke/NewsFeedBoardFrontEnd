@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable arrow-body-style */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form, Container, Row, Col } from "react-bootstrap";
 import { VAR_ARRAY_STATES } from "../../../constants";
 import { getAllLocations } from "../../../services";
+import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
 
 export const LocationFilterComponent = ({
   locationId,
@@ -18,15 +19,25 @@ export const LocationFilterComponent = ({
   });
 
   const [locations, setLocations] = useState([]);
+  const { articleFilters, setArticleFilters } =
+    useContext(ArticleFilterContext);
 
   const handleStateChange = ({ target }) => {
     setAddress({ ...address, state: target.value });
     setLocationId(undefined);
+    setArticleFilters({
+      ...articleFilters,
+      locationId: undefined,
+    });
   };
 
   useEffect(() => {
     getAllLocations(address.state).then((data) => {
       setLocations(data);
+    });
+    setArticleFilters({
+      ...articleFilters,
+      locationId,
     });
     console.log(locationId);
   }, [address, locationId]);
