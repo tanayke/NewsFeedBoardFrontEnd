@@ -1,24 +1,37 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
-import { Tabs, Tab } from "react-bootstrap";
-import TrendingComponent from "./TrendingComponent";
-import YourFeedComponent from "./YourFeedComponent";
+import React, { useContext } from "react";
+import { ButtonGroup, Button } from "react-bootstrap";
+import { ArticleFeedComponent } from "./ArticleFeedComponent";
+import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
 
-export const ArticlesTab = ({ articles }) => {
-  const [key, setKey] = useState("home");
+export const ArticlesTab = () => {
+  const { articleFilters, setArticleFilters } =
+    useContext(ArticleFilterContext);
 
+  const handleYourFeedClick = () => {
+    setArticleFilters({
+      articleFilters,
+      trending: false,
+    });
+  };
+  const handleTrendingClick = () => {
+    setArticleFilters({
+      articleFilters,
+      trending: true,
+    });
+  };
   return (
-    <Tabs
-      id="controlled-tab-example"
-      activeKey={key}
-      onSelect={(k) => setKey(k)}
-    >
-      <Tab eventKey="home" title="Your Feed">
-        <YourFeedComponent articles={articles} />
-      </Tab>
-      <Tab eventKey="trending" title="Trending">
-        <TrendingComponent articles={articles} />
-      </Tab>
-    </Tabs>
+    <>
+      <ButtonGroup>
+        <Button onClick={handleYourFeedClick} variant="light">
+          Your Feed
+        </Button>
+        <Button onClick={handleTrendingClick} variant="light">
+          Tredfing
+        </Button>
+      </ButtonGroup>
+      <hr />
+      <ArticleFeedComponent />
+    </>
   );
 };
