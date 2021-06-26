@@ -1,5 +1,4 @@
-export const LANDING = "/";
-export const HOME = "/home";
+export const HOME = "/";
 export const WRITE = "/write";
 export const ARTICLE = "/article";
 export const ADMIN = "/admin";
@@ -17,7 +16,6 @@ export const API_GET_ALL_CARDS = `${BASE_API}cards`;
 export const API_GET_ALL_USERS = `${BASE_API}users`;
 export const API_POST_USERS = `${BASE_API}users`;
 export const API_AUTHENTICATE_USER = `${BASE_API}auth`;
-export const API_GET_AUTHENTICATED_USER = `${BASE_API}auth`;
 
 export const VAR_ARRAY_STATES = [
   "Andhra Pradesh",

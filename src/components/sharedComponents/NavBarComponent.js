@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
-import { HOME, LANDING, REGISTER, WRITE } from "../../constants";
+import { HOME, REGISTER, WRITE } from "../../constants";
 import { SearchButtonComponent } from "./SearchButtonComponent";
 
 export const NavBarComponent = () => {
@@ -10,7 +10,7 @@ export const NavBarComponent = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand>
-        <Link to={LANDING}>News Board</Link>
+        <Link to={HOME}>News Board</Link>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
