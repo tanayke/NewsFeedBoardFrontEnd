@@ -58,6 +58,9 @@ export const WritePage = () => {
   }, []);
 
   function addNewLocation() {
+    if(isNewLocation)
+      setNewLocation(false);
+    else
     setNewLocation(true);
   }
 
@@ -124,7 +127,11 @@ export const WritePage = () => {
                   {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
                 </div>
 
-                {isNewLocation ? null : (
+                {isNewLocation ? (
+                  <div className="form-col">
+                  <Button onClick={addNewLocation}>Select Location</Button>
+                </div>
+                ) : (
                   <div className="form-col">
                     <Button onClick={addNewLocation}>Add New Location</Button>
                   </div>

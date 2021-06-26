@@ -34,7 +34,7 @@ export const AddNewLocation = () => {
             type="text"
             value={locationData.city}
             name="city"
-            placeHolder="Enter State"
+            placeHolder="Enter City"
             onChange={handleInputChange}
           />
         </Form.Group>
