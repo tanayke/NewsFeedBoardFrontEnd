@@ -29,7 +29,7 @@ export const postUser = async (formdata) => {
     return response.data;
   } catch (err) {
     console.log(err.response.data);
-    return err;
+    return err.reponse;
   }
 };
 

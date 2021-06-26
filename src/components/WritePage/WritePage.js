@@ -48,18 +48,15 @@ export const WritePage = () => {
   }, []);
 
   function addNewLocation() {
-    setNewLocation(true);
+    if (isNewLocation) setNewLocation(false);
+    else setNewLocation(true);
   }
 
-  function handleOnSubmit(formData) {
-    console.log(formData);
+  function handleOnSubmit(d) {
     const data = new FormData(myForm.current);
-    for (const value of data.values()) {
-      console.log(value);
-    }
-
     data.append("reporterId", 1);
     data.append("isNewlocation", isNewLocation);
+    data.append("cards", JSON.stringify(d.cards));
 
     addArticle(data)
       .then((response) => {
@@ -117,7 +114,11 @@ export const WritePage = () => {
                   {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
                 </div>
 
-                {isNewLocation ? null : (
+                {isNewLocation ? (
+                  <div className="form-col">
+                    <Button onClick={addNewLocation}>Select Location</Button>
+                  </div>
+                ) : (
                   <div className="form-col">
                     <Button onClick={addNewLocation}>Add New Location</Button>
                   </div>
