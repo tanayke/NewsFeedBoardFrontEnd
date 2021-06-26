@@ -62,38 +62,11 @@ export const WritePage = () => {
   }
 
   function handleOnSubmit(d) {
-    
-    const object = d;
-    const options = {
-      indices: false,
-      nullsAsUndefineds: false,
-      booleansAsIntegers: false,
-      allowEmptyArrays: false,
-    };
-    
-    const formData = serialize(
-      myForm.current
-     // object,
-   //   options, // optional
-    );
-    
-     console.log(formData);
-
-    for (const value of formData.values()) {
-     console.log(value);
-     }
-
     const data = new FormData(myForm.current);
-    // for (const value of data.values()) {
-    //   console.log(value);
-    // }
-
-    
     data.append("reporterId", 1);
     data.append("isNewlocation", isNewLocation);
-    data.append("cardsData",formData);
-
-    console.log(JSON.stringify(Array.from(formData)));
+    data.append("cards",JSON.stringify(d.cards));
+  
     addArticle(data)
       .then((response) => {
         setArticleId(response.id);
@@ -157,7 +130,7 @@ export const WritePage = () => {
                   </div>
                 )  }
               </div>
-            </div>
+            </div> 
 
             <div className="form-group">
               <FormLabel>Select Category</FormLabel>
