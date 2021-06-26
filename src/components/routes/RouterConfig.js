@@ -21,6 +21,8 @@ import { GuardedRoute } from "./GuardedRoute";
 export const RouterConfig = () => (
   <div>
     <Switch>
+      <Route exact path="/" component={HomePage} />
+
       <Route exact path={HOME} component={HomePage} />
       <GuardedRoute path={ADMIN} component={AdminPage} roles={["ADMIN"]} />
       <GuardedRoute
