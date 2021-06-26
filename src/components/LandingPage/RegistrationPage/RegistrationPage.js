@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Formik } from "formik";
-import { Form, Button } from "react-bootstrap";
-
+import React, { useEffect, useRef, useState } from "react";
+import { Formik, ErrorMessage } from "formik";
+import { Form, Button, FloatingLabel } from "react-bootstrap";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { postUser } from "../../../services/userService";
 
-import { LOGIN } from "../../../constants/CONSTANTS";
-import { getAllLocations } from "../../../services/locationService"; // eslint-disable-next-line arrow-body-style
+import * as App from "../../../App";
+import { VAR_ARRAY_STATES, LOGIN } from "../../../constants/CONSTANTS";
+import {
+  getAllLocations,
+  addLocation,
+} from "../../../services/locationService"; // eslint-disable-next-line arrow-body-style
+import { AddNewLocation } from "../../sharedComponents/AddNewLocation";
+import { SelectLocation } from "../../sharedComponents/SelectLocation";
 
 export const RegistrationPage = () => {
   const validate = Yup.object({
@@ -35,7 +40,21 @@ export const RegistrationPage = () => {
     });
   }, []);
 
-  console.log(locations.locality);
+  let formData;
+
+  function getFormData() {
+    return formData;
+  }
+  const history = useHistory();
+
+  const [isNewLocation, setNewLocation] = useState(false);
+
+  function addNewLocation() {
+    if (isNewLocation) setNewLocation(false);
+    else setNewLocation(true);
+  }
+
+  const registrationForm = useRef(null);
 
   return (
     <div>
@@ -54,15 +73,31 @@ export const RegistrationPage = () => {
         validationSchema={validate}
         onSubmit={(data) => {
           console.log("hi from onsubmit");
-          console.log("formdata", data);
+          //  console.log("formdata", data);
+          console.log("reg", registrationForm.current);
+          const data1 = new FormData(registrationForm.current);
+
+          data1.append("isNewLocation", isNewLocation);
+
+          // eslint-disable-next-line no-restricted-syntax
+          for (const val of data1.keys()) {
+            console.log(val);
+          }
           // eslint-disable-next-line prefer-const
-          let postData = data;
-          if (postData.isReporter) {
-            postData.role = "REPORTER";
+          let object = {};
+
+          data1.forEach((value, key) => {
+            object[key] = value;
+          });
+
+          console.log("formdatatojson", object);
+
+          if (object.isReporter) {
+            object.role = "REPORTER";
           }
           try {
-            postUser(postData);
-            // history.push(LOGIN);
+            postUser(object);
+            history.push(LOGIN);
           } catch (error) {
             console.log(error);
           }
@@ -77,35 +112,43 @@ export const RegistrationPage = () => {
           touched,
         }) => (
           <div>
-            <Form onSubmit={handleSubmit} className="col-md-6">
+            <Form
+              ref={registrationForm}
+              onSubmit={handleSubmit}
+              className='col-md-6'
+            >
               <h2>Registration</h2>
 
               <Form.Group
-                name="name"
+                name='name'
                 value={values.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId="name"
+                controlId='name'
               >
                 <Form.Label>Full Name</Form.Label>
                 <Form.Control
-                  type="text"
-                  name="name"
-                  placeholder="Enter your full name"
+                  type='text'
+                  name='name'
+                  placeholder='Enter your full name'
                 />
                 {touched.name && errors.name && (
                   <div style={{ color: "red" }}>{errors.name}</div>
                 )}
               </Form.Group>
               <Form.Group
-                name="email"
+                name='email'
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId="email"
+                controlId='email'
               >
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Control
+                  type='email'
+                  placeholder='Enter email'
+                  name='email'
+                />
                 {/* <Form.Text className='text-muted'>
                   We will never share your email with anyone else.
                 </Form.Text> */}
@@ -114,60 +157,74 @@ export const RegistrationPage = () => {
                 )}
               </Form.Group>
               <Form.Group
-                name="phone"
+                name='phone'
                 value={values.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId="phone"
+                controlId='phone'
               >
                 <Form.Label>Phone</Form.Label>
-                <Form.Control type="phone" placeholder="Enter Mobile Number" />
+                <Form.Control
+                  type='phone'
+                  placeholder='Enter Mobile Number'
+                  name='phone'
+                />
                 {/* <Form.Text className='text-muted'>
                   We will never share your Mobile Number with anyone else.
                 </Form.Text> */}
                 {touched.phone && errors.phone && (
-                  <div className="validation" style={{ color: "red" }}>
+                  <div className='validation' style={{ color: "red" }}>
                     {errors.phone}
                   </div>
                 )}
               </Form.Group>
               <Form.Group
-                name="password"
+                name='password'
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId="password"
+                controlId='password'
               >
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control
+                  type='password'
+                  placeholder='Password'
+                  name='password'
+                />
                 {touched.password && errors.password && (
                   <div style={{ color: "red" }}>{errors.password}</div>
                 )}
               </Form.Group>
 
               <Form.Group
-                name="isReporter"
+                name='isReporter'
                 value={values.isReporter}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId="role"
+                controlId='role'
               >
                 <Form.Label>
                   Do you want to Post News Articles and Stories?{" "}
                 </Form.Label>
                 <Form.Check
-                  name="isReporter"
-                  type="checkbox"
-                  label="Check here"
+                  name='isReporter'
+                  type='checkbox'
+                  label='Check here'
                 />
               </Form.Group>
 
-              <Button className="btn mt-3" variant="primary" type="submit">
+              <Form.Group>
+                {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
+
+                <Button onClick={addNewLocation}> Add New Location</Button>
+              </Form.Group>
+
+              <Button className='btn mt-3' variant='primary' type='submit'>
                 Submit
               </Button>
               <br />
 
-              <Link class=" ml-auto" to={LOGIN}>
+              <Link class=' ml-auto' to={LOGIN}>
                 Already a User? Login
               </Link>
             </Form>

@@ -17,6 +17,7 @@ export const getAllUsers = async () => {
     console.log(response.data);
     return response.data;
   } catch (err) {
+    console.log(err.response.data);
     return err;
   }
 };
@@ -27,6 +28,7 @@ export const postUser = async (formdata) => {
     console.log(response.data);
     return response.data;
   } catch (err) {
+    console.log(err.response.data);
     return err;
   }
 };

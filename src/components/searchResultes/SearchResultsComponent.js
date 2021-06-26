@@ -7,7 +7,7 @@ export const SearchResultsComponent = () => {
   const { articleFilters } = useContext(ArticleFilterContext);
   return (
     <>
-      <div className="pt-5">
+      <div className='pt-5'>
         <Container>
           <Row>
             <Col md={8}>

@@ -67,18 +67,18 @@ export const LoginPage = () => {
           touched,
         }) => (
           <div>
-            <Form onSubmit={handleSubmit} className="col-md-6">
+            <Form onSubmit={handleSubmit} className='col-md-6'>
               <h2>LogIn</h2>
 
               <Form.Group
-                name="email"
+                name='email'
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId="email"
+                controlId='email'
               >
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Control type='email' placeholder='Enter email' />
                 {/* <Form.Text className='text-muted'>
                 We will never share your email with anyone else.
               </Form.Text> */}
@@ -88,20 +88,20 @@ export const LoginPage = () => {
               </Form.Group>
 
               <Form.Group
-                name="password"
+                name='password'
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId="password"
+                controlId='password'
               >
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type='password' placeholder='Password' />
                 {touched.password && errors.password && (
                   <div style={{ color: "red" }}>{errors.password}</div>
                 )}
               </Form.Group>
 
-              <Button className="btn mt-3" variant="primary" type="submit">
+              <Button className='btn mt-3' variant='primary' type='submit'>
                 Submit
               </Button>
 
