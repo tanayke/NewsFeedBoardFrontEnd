@@ -13,6 +13,7 @@ export const NavBarComponent = () => {
     setAuthtoken(sessionStorage.getItem("x-auth-token"));
     history.push(LOGIN);
   };
+
   return (
     <Navbar bg="light" expand="lg" fixed="top" sticky>
       <Navbar.Brand>
@@ -26,9 +27,6 @@ export const NavBarComponent = () => {
           </Nav.Link>
           <Nav.Link>
             <Link to={WRITE}>Write</Link>
-          </Nav.Link>
-          <Nav.Link>
-            <Link to={REGISTER}>REGISTER</Link>
           </Nav.Link>
           <Nav.Link>
             <Link to={LOGIN}>LOGIN</Link>
