@@ -45,12 +45,12 @@ export const SelectLocation = () => {
   return (
     <>
       <Form.Row>
-        <Form.Group controlId='state'>
+        <Form.Group controlId="state">
           <Form.Control
-            as='select'
-            defaultValue='Choose'
+            as="select"
+            defaultValue="Choose"
             value={formData.state}
-            name='state'
+            name="state"
             onChange={handleInputChange}
             required
           >
@@ -60,12 +60,12 @@ export const SelectLocation = () => {
             ))}
           </Form.Control>
         </Form.Group>
-        <Form.Group controlId='city'>
+        <Form.Group controlId="city">
           <Form.Control
-            as='select'
-            defaultValue='Choose'
+            as="select"
+            defaultValue="Choose"
             value={formData.city}
-            name='city'
+            name="city"
             onChange={handleInputChange}
             required
           >
@@ -76,12 +76,12 @@ export const SelectLocation = () => {
           </Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='locality'>
+        <Form.Group controlId="locality">
           <Form.Control
-            as='select'
-            defaultValue='Choose'
+            as="select"
+            defaultValue="Choose"
             value={formData.locality}
-            name='locality'
+            name="locality"
             onChange={handleInputChange}
             required
           >

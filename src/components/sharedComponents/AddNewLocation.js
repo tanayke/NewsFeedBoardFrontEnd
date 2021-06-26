@@ -18,33 +18,33 @@ export const AddNewLocation = () => {
     <Form.Row>
       <Form.Group>
         <Form.Control
-          as='input'
-          type='text'
+          as="input"
+          type="text"
           value={locationData.state}
-          name='state'
-          placeHolder='Enter State'
+          name="state"
+          placeHolder="Enter State"
           onChange={handleInputChange}
         />
       </Form.Group>
 
       <Form.Group>
         <Form.Control
-          as='input'
-          type='text'
+          as="input"
+          type="text"
           value={locationData.city}
-          name='city'
-          placeHolder='Enter State'
+          name="city"
+          placeHolder="Enter State"
           onChange={handleInputChange}
         />
       </Form.Group>
 
       <Form.Group>
         <Form.Control
-          as='input'
-          type='text'
+          as="input"
+          type="text"
           value={locationData.locality}
-          name='locality'
-          placeHolder='Enter locality'
+          name="locality"
+          placeHolder="Enter locality"
           onChange={handleInputChange}
         />
       </Form.Group>

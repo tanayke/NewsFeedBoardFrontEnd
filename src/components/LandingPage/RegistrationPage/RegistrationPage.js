@@ -115,39 +115,39 @@ export const RegistrationPage = () => {
             <Form
               ref={registrationForm}
               onSubmit={handleSubmit}
-              className='col-md-6'
+              className="col-md-6"
             >
               <h2>Registration</h2>
 
               <Form.Group
-                name='name'
+                name="name"
                 value={values.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId='name'
+                controlId="name"
               >
                 <Form.Label>Full Name</Form.Label>
                 <Form.Control
-                  type='text'
-                  name='name'
-                  placeholder='Enter your full name'
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
                 />
                 {touched.name && errors.name && (
                   <div style={{ color: "red" }}>{errors.name}</div>
                 )}
               </Form.Group>
               <Form.Group
-                name='email'
+                name="email"
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId='email'
+                controlId="email"
               >
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
-                  type='email'
-                  placeholder='Enter email'
-                  name='email'
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
                 />
                 {/* <Form.Text className='text-muted'>
                   We will never share your email with anyone else.
@@ -157,39 +157,39 @@ export const RegistrationPage = () => {
                 )}
               </Form.Group>
               <Form.Group
-                name='phone'
+                name="phone"
                 value={values.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId='phone'
+                controlId="phone"
               >
                 <Form.Label>Phone</Form.Label>
                 <Form.Control
-                  type='phone'
-                  placeholder='Enter Mobile Number'
-                  name='phone'
+                  type="phone"
+                  placeholder="Enter Mobile Number"
+                  name="phone"
                 />
                 {/* <Form.Text className='text-muted'>
                   We will never share your Mobile Number with anyone else.
                 </Form.Text> */}
                 {touched.phone && errors.phone && (
-                  <div className='validation' style={{ color: "red" }}>
+                  <div className="validation" style={{ color: "red" }}>
                     {errors.phone}
                   </div>
                 )}
               </Form.Group>
               <Form.Group
-                name='password'
+                name="password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId='password'
+                controlId="password"
               >
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  type='password'
-                  placeholder='Password'
-                  name='password'
+                  type="password"
+                  placeholder="Password"
+                  name="password"
                 />
                 {touched.password && errors.password && (
                   <div style={{ color: "red" }}>{errors.password}</div>
@@ -197,19 +197,19 @@ export const RegistrationPage = () => {
               </Form.Group>
 
               <Form.Group
-                name='isReporter'
+                name="isReporter"
                 value={values.isReporter}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                controlId='role'
+                controlId="role"
               >
                 <Form.Label>
                   Do you want to Post News Articles and Stories?{" "}
                 </Form.Label>
                 <Form.Check
-                  name='isReporter'
-                  type='checkbox'
-                  label='Check here'
+                  name="isReporter"
+                  type="checkbox"
+                  label="Check here"
                 />
               </Form.Group>
 
@@ -219,12 +219,12 @@ export const RegistrationPage = () => {
                 <Button onClick={addNewLocation}> Add New Location</Button>
               </Form.Group>
 
-              <Button className='btn mt-3' variant='primary' type='submit'>
+              <Button className="btn mt-3" variant="primary" type="submit">
                 Submit
               </Button>
               <br />
 
-              <Link class=' ml-auto' to={LOGIN}>
+              <Link class=" ml-auto" to={LOGIN}>
                 Already a User? Login
               </Link>
             </Form>
