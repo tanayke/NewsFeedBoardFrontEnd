@@ -22,9 +22,19 @@ export const RouterConfig = () => (
   <div>
     <Switch>
       <Route exact path={HOME} component={HomePage} />
-      <GuardedRoute path={ADMIN} component={AdminPage} auth />
-      <GuardedRoute exact path={WRITE} component={WritePage} auth />
-      <Route exact path={ARTICLE} component={ArticlePage} />
+      <GuardedRoute path={ADMIN} component={AdminPage} roles={["ADMIN"]} />
+      <GuardedRoute
+        exact
+        path={WRITE}
+        component={WritePage}
+        roles={["REPORTER"]}
+      />
+      <GuardedRoute
+        exact
+        path={ARTICLE}
+        component={ArticlePage}
+        roles={["REPORTER", "READER"]}
+      />
       <Route exact path={REGISTER} component={RegistrationPage} />
       <Route exact path={LOGIN} component={LoginPage} />
       <Route path={ROUTE_SEARCH} component={SearchResultsComponent} />
