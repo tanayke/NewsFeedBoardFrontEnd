@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Navbar, Nav, Button } from "react-bootstrap";
 
-import { HOME, REGISTER, WRITE, LOGIN } from "../../constants";
+import { HOME, REGISTER, WRITE, LOGIN,ARTICLE } from "../../constants";
 import { SearchButtonComponent } from "./SearchButtonComponent";
 import { setAuthtoken } from "../../utils/setAuthToken";
 
@@ -32,6 +32,9 @@ export const NavBarComponent = () => {
           </Nav.Link>
           <Nav.Link>
             <Link to={LOGIN}>LOGIN</Link>
+          </Nav.Link>
+          <Nav.Link>
+            <Link to={ARTICLE}>ARTICLE</Link>
           </Nav.Link>
           <Button onClick={handleOnClickLogOut} variant="danger">
             LogOut

@@ -13,12 +13,12 @@ export const ArticlePage = () => {
     fontFamily: "Times New Roman, Times,serif",
   };
   useEffect(() => {
-    getAllCardsByArticleId(13).then((data) => {
+    getAllCardsByArticleId(2).then((data) => {
       setCards(data);
     });
   }, []);
   useEffect(() => {
-    getArticle(13).then((data) => {
+    getArticle(2).then((data) => {
       setArticle(data);
       console.log(data);
     });
@@ -28,14 +28,14 @@ export const ArticlePage = () => {
       <Container className="mt-2" style={defStyles}>
         <ArticleDescription article={article} />
         {cards.map((data) => (
-          <Row key={data.id} className="justify-content-md-center mt-5">
+          <Row key={data.id}>
             <ArticleCards card={data} />
           </Row>
         ))}
         <Row>
-          <Col xs={2} />
+          <Col xs={4} />
           <Col />
-          <Col xs={2}>
+          <Col xs={7}>
             <ArticleReport />
           </Col>
         </Row>

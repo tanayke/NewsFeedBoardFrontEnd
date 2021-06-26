@@ -29,12 +29,8 @@ export const RouterConfig = () => (
         component={WritePage}
         roles={["REPORTER"]}
       />
-      <GuardedRoute
-        exact
-        path={ARTICLE}
-        component={ArticlePage}
-        roles={["REPORTER", "READER"]}
-      />
+
+      <Route exact path={ARTICLE} component={ArticlePage} />
       <Route exact path={REGISTER} component={RegistrationPage} />
       <Route exact path={LOGIN} component={LoginPage} />
       <Route path={ROUTE_SEARCH} component={SearchResultsComponent} />
