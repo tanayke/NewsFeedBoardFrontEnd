@@ -12,7 +12,7 @@ export const UserLayout = () => (
       <ArticleFilterContextProvider>
         <ArticlesContextProvider>
           <NavBarComponent />
-          <Container fluid="md">
+          <Container fluid="md" className="mt-5">
             <Row>
               <Col>
                 <RouterConfig />

@@ -14,7 +14,7 @@ export const NavBarComponent = () => {
     history.push(LOGIN);
   };
   return (
-    <Navbar bg="light" expand="lg" fixed="top">
+    <Navbar bg="light" expand="lg" fixed="top" sticky>
       <Navbar.Brand>
         <Link to={HOME}>News Board</Link>
       </Navbar.Brand>
