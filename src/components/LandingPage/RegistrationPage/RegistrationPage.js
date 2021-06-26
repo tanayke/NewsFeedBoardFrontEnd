@@ -73,7 +73,7 @@ export const RegistrationPage = () => {
         validationSchema={validate}
         onSubmit={(data) => {
           console.log("hi from onsubmit");
-          //  console.log("formdata", data);
+
           console.log("reg", registrationForm.current);
           const data1 = new FormData(registrationForm.current);
 
@@ -96,10 +96,10 @@ export const RegistrationPage = () => {
             object.role = "REPORTER";
           }
           try {
-            postUser(object);
-            history.push(LOGIN);
+            const response = postUser(object);
+            if (response.status === 200) history.push(LOGIN);
           } catch (error) {
-            console.log(error);
+            console.log(error.data);
           }
         }}
       >
