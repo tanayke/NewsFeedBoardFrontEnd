@@ -6,7 +6,7 @@ import { ArticleCards } from "./ArticleCards";
 import { ArticleDescription } from "./ArticleDescription";
 import { ArticleReport } from "./ArticleReport";
 
-export const ArticlePage = () => {
+export const ArticlePage = ({ match: { params } }) => {
   const [article, setArticle] = useState();
   const [cards, setCards] = useState([]);
   const defStyles = {
@@ -14,12 +14,12 @@ export const ArticlePage = () => {
     fontFamily: "Times New Roman, Times,serif",
   };
   useEffect(() => {
-    getAllCardsByArticleId(13).then((data) => {
+    getAllCardsByArticleId(params.articleId).then((data) => {
       setCards(data);
     });
   }, []);
   useEffect(() => {
-    getArticle(13).then((data) => {
+    getArticle(params.articleId).then((data) => {
       setArticle(data);
       console.log(data);
     });
@@ -49,7 +49,7 @@ export const ArticlePage = () => {
           <Row>
             <Col md={1} />
 
-            <Col md={10} className="text-left ml-5">
+            <Col md={10} className="text-left">
               <ArticleReport />
             </Col>
             {/* <Col className="text-right ml-5">
