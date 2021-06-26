@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import * as Yup from "yup";
-import { Formik, ErrorMessage } from "formik";
-import { Form, Button, FloatingLabel } from "react-bootstrap";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Formik } from "formik";
+import { Form, Button } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
 import { HOME, REGISTER } from "../../../constants";
 import { authenticateUser, getAuthUser } from "../../../services/userService";
 import { UserContext } from "../../context/UserContext/UserContext";
@@ -40,12 +40,13 @@ export const LoginPage = () => {
           console.log(data);
 
           try {
-            authenticateUser(data).then((tokendata) => {
-              sessionStorage.setItem("x-auth-token", tokendata.token);
-              getAuthUser().then((userData) => {
-                // console.log(userData);
-                authUserContext.setUser(userData);
-                if (!(userData === "Request failed with status code 401")) {
+            authenticateUser(data).then((response) => {
+              if (response.status === 200)
+                sessionStorage.setItem("x-auth-token", response.data.token);
+
+              getAuthUser().then((res) => {
+                if (res.status === 200) {
+                  authUserContext.setUser(res.data);
                   history.push(HOME);
                 } else {
                   alert("Invalid Credentials. Please Try Again");

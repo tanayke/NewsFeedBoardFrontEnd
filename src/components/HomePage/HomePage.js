@@ -1,21 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { ArticlesTab } from "./ArticlesTab";
-import { CategoriesComponent } from "./CategoriesComponent";
-import { UserContext } from "../context/UserContext/UserContext";
+import { ArticleFilterContext } from "../context/ArticleFilterContext/ArticleFilterContext";
+import { ArticlesTab } from "./ArticleFeeds/ArticlesTab";
+import { ArticleFilterComponent } from "./Filters/ArticleFilterComponent";
 
 export const HomePage = () => {
-  const currUser = useContext(UserContext);
-  console.log("from HomePage context ", currUser.user);
+  const { articleFilters, setArticleFilters } =
+    useContext(ArticleFilterContext);
+
+  useEffect(() => {
+    setArticleFilters({
+      ...articleFilters,
+      search: undefined,
+    });
+  }, []);
   return (
-    <div className='pt-5'>
+    <div className="pt-5">
       <Container>
         <Row>
           <Col md={8}>
             <ArticlesTab />
           </Col>
           <Col md={4}>
-            <CategoriesComponent />
+            <ArticleFilterComponent />
           </Col>
         </Row>
       </Container>

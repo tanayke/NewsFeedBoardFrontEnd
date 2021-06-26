@@ -3,8 +3,6 @@ import {
   API_GET_ALL_USERS,
   API_POST_USERS,
   API_AUTHENTICATE_USER,
-  BASE_API,
-  API_GET_AUTHENTICATED_USER,
 } from "../constants/CONSTANTS";
 
 // const authAxios = axios.create({
@@ -39,26 +37,26 @@ export const authenticateUser = async (data) => {
   try {
     const response = await axios.post(API_AUTHENTICATE_USER, data);
     console.log(response.data);
-    return response.data;
+    return response;
   } catch (error) {
-    console.log(error.response.data);
-    return error;
+    console.log(error.response);
+    return error.response;
   }
 };
 
 export const getAuthUser = async () => {
   try {
-    const response = await axios.get(API_GET_AUTHENTICATED_USER, {
+    const response = await axios.get(API_AUTHENTICATE_USER, {
       headers: {
         "x-auth-token": `${sessionStorage.getItem("x-auth-token")}`,
       },
     });
     // eslint-disable-next-line no-unused-expressions
     // response.data.headers["x-auth-token"];
-    console.log(response.data);
-    return response.data;
-  } catch (err) {
-    console.log(err.response.data);
-    return err.message;
+    console.log(response.status);
+    return response;
+  } catch (error) {
+    console.log(error.response);
+    return error.response;
   }
 };

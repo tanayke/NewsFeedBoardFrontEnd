@@ -1,2 +1,2 @@
-export { AddressComponent } from "./AddressComponent";
+export { SelectLocation  } from "./SelectLocation";
 export { NavBarComponent } from "./NavBarComponent";

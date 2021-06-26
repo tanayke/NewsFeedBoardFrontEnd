@@ -1,37 +1,33 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { AdminPage } from "../AdminPage";
-import { ArticlePage } from "../ArticlePage";
-import { HomePage } from "../HomePage";
-import { LandingPage } from "../LandingPage";
-import { RegistrationPage } from "../LandingPage/RegistrationPage/RegistrationPage";
-import { LoginPage } from "../LandingPage/LoginPage/LoginPage";
-
-import { WritePage } from "../WritePage";
-import { AddressComponent } from "../sharedComponents";
-
+import { AdminPage } from "../adminPage/AdminPage";
+import { ArticlePage } from "../articlePage/ArticlePage";
+import { HomePage } from "../homePage/HomePage";
+import { WritePage } from "../writePage";
+import { RegistrationPage } from "../landingPage/RegistrationPage";
+import { LoginPage } from "../landingPage/LoginPage";
+import { SearchResultsComponent } from "../searchResultes/SearchResultsComponent";
 import {
   ADMIN,
   ARTICLE,
   HOME,
-  LANDING,
   REGISTER,
   WRITE,
-  ADDRESS,
   LOGIN,
+  ROUTE_SEARCH,
 } from "../../constants/CONSTANTS";
+import { GuardedRoute } from "./GuardedRoute";
 
 export const RouterConfig = () => (
   <div>
     <Switch>
-      <Route exact path={LANDING} component={LandingPage} />
       <Route exact path={HOME} component={HomePage} />
-      <Route exact path={ADMIN} component={AdminPage} />
-      <Route exact path={WRITE} component={WritePage} />
+      <GuardedRoute path={ADMIN} component={AdminPage} auth />
+      <GuardedRoute exact path={WRITE} component={WritePage} auth />
       <Route exact path={ARTICLE} component={ArticlePage} />
-      <Route exact path={ADDRESS} component={AddressComponent} />
       <Route exact path={REGISTER} component={RegistrationPage} />
       <Route exact path={LOGIN} component={LoginPage} />
+      <Route path={ROUTE_SEARCH} component={SearchResultsComponent} />
     </Switch>
   </div>
 );

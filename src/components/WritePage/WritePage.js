@@ -1,10 +1,27 @@
-import React, { useEffect, useState } from "react";
-
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useEffect, useState, useRef } from "react";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-
-import { getAllLocations } from "../../services/locationService";
-
+import { Button, FormLabel } from "react-bootstrap";
 import { getAllCategories } from "../../services/categoriesService";
+import { addArticle } from "../../services/articleService";
+import { SelectLocation } from "../sharedComponents";
+import { AllCards } from "./addCards";
+import { AddNewLocation } from "../sharedComponents/AddNewLocation";
+
+const InitialValues = {
+  title: "",
+  description: "",
+  thumbnailImage: "",
+  category: 0,
+  reporterId: 0,
+  location: 0,
+  cards: [],
+};
 
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
@@ -15,42 +32,121 @@ const SignupSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(200, "Too Long!")
     .required("Required"),
-  thumbnailImage: Yup.string()
-    .min(2, "Too Short!")
-    .max(100, "Too Long!")
-    .required("Required"),
+  thumbnailImage: Yup.mixed().required("Required"),
 });
 
 export const WritePage = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    thumbnailImage: "",
-    viewCount: 0,
-    uploadDateTime: "",
-    isActive: "",
-    categoryId: 0,
-    reporterId: 0,
-    locationId: 0,
-  });
+  const [isNewLocation, setNewLocation] = useState(false);
+  const myForm = useRef(null);
 
-  const [states, setStates] = useState(["Maharastra", "Goa", "Dehli"]);
-  const [locations, setLocations] = useState([]);
   const [categories, setCategory] = useState([]);
 
-  function handleInputChange({ target }) {
-    const { name, value } = target;
-    setFormData({ ...formData, [name]: value });
-  }
-
   useEffect(() => {
-    getAllLocations().then((data) => {
-      setLocations(data);
-    });
     getAllCategories().then((data) => {
       setCategory(data);
     });
   }, []);
 
-  return <h1>WritePage</h1>;
+  function addNewLocation() {
+    setNewLocation(true);
+  }
+
+  function handleOnSubmit(formData) {
+    console.log(formData);
+    const data = new FormData(myForm.current);
+    for (const value of data.values()) {
+      console.log(value);
+    }
+
+    data.append("reporterId", 1);
+    data.append("isNewlocation", isNewLocation);
+
+    addArticle(data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  return (
+    <div>
+      <h1>Article Form</h1>
+      <Formik
+        initialValues={InitialValues}
+        validationSchema={SignupSchema}
+        onSubmit={handleOnSubmit}
+      >
+        {({ errors, touched, values, setFieldValue }) => (
+          <Form ref={myForm}>
+            <div className="form-group">
+              <FormLabel>Title</FormLabel>
+              <Field name="title" className="form-control" />
+              {errors.title && touched.title ? <div>{errors.title}</div> : null}
+            </div>
+            <div className="form-group">
+              <FormLabel>Description</FormLabel>
+              <Field
+                as="textarea"
+                rows={3}
+                name="description"
+                className="form-control"
+              />
+              {errors.description && touched.description ? (
+                <div>{errors.description}</div>
+              ) : null}
+            </div>
+            <div className="form-group">
+              <FormLabel>Select Image</FormLabel>
+              <br />
+              <Field
+                type="file"
+                name="thumbnailImage"
+                className="form-file"
+                isInvalid={!!errors.thumbnailImage}
+              />
+              {errors.thumbnailImage ? (
+                <div>{errors.thumbnailImage}</div>
+              ) : null}
+            </div>
+
+            <div className="form-group">
+              <div className="form-row">
+                <div className="form-col">
+                  {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
+                </div>
+
+                {isNewLocation ? null : (
+                  <div className="form-col">
+                    <Button onClick={addNewLocation}>Add New Location</Button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="form-group">
+              <FormLabel>Select Category</FormLabel>
+              <br />
+              <Field name="categoryId" as="select">
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </Field>
+            </div>
+
+            <div className="form-group">
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </div>
+
+            <AllCards values={values} setFieldValue={setFieldValue} />
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
 };
