@@ -46,11 +46,7 @@ export const authenticateUser = async (data) => {
 
 export const getAuthUser = async () => {
   try {
-    const response = await axios.get(API_AUTHENTICATE_USER, {
-      headers: {
-        "x-auth-token": `${sessionStorage.getItem("x-auth-token")}`,
-      },
-    });
+    const response = await axios.get(API_AUTHENTICATE_USER);
     // eslint-disable-next-line no-unused-expressions
     // response.data.headers["x-auth-token"];
     console.log(response.status);
