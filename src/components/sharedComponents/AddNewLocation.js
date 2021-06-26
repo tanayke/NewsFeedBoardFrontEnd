@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form ,Col} from "react-bootstrap";
 import { Field } from "formik";
 
 export const AddNewLocation = () => {
@@ -17,7 +17,7 @@ export const AddNewLocation = () => {
 
   return (
       <Form.Row>
-        <Form.Group>
+        <Form.Group as={Col}>
           <Form.Control
             as="input"
             type="text"
@@ -25,10 +25,11 @@ export const AddNewLocation = () => {
             name="state"
             placeHolder="Enter State"
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group as={Col}>
           <Form.Control
             as="input"
             type="text"
@@ -36,10 +37,11 @@ export const AddNewLocation = () => {
             name="city"
             placeHolder="Enter City"
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group as={Col}>
           <Form.Control
             as="input"
             type="text"
@@ -47,6 +49,7 @@ export const AddNewLocation = () => {
             name="locality"
             placeHolder="Enter locality"
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
       </Form.Row> 

@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form,Col } from "react-bootstrap";
 
 import { getAllLocations } from "../../services/locationService";
 
@@ -30,7 +30,7 @@ export const SelectLocation = () => {
     getAllLocations().then((data) => {
       setLocations(data);
       setStateLcation(data);
-    //  setStateLcation(data.filter((v,i) => data.map((val)=> val.state).indexOf(v.state) === i ));
+      setStateLcation(data.filter((v,i) => data.map((val)=> val.state).indexOf(v.state) === i ));
     });
   }, []);
 
@@ -43,7 +43,7 @@ export const SelectLocation = () => {
   return (
     <>
       <Form.Row>
-        <Form.Group controlId="formGridState">
+        <Form.Group controlId="state" as={Col}>
          <Form.Control
             as="select"
             defaultValue="Choose"
@@ -58,7 +58,7 @@ export const SelectLocation = () => {
             ))}
           </Form.Control>
         </Form.Group>
-          <Form.Group controlId="formGridCity1">
+          <Form.Group controlId="city" as={Col}>
             <Form.Control
               as="select"
               defaultValue="Choose"
@@ -75,7 +75,7 @@ export const SelectLocation = () => {
             </Form.Control>
           </Form.Group>
 
-          <Form.Group controlId="formGridLocality1">
+          <Form.Group controlId="locality" as={Col}>
             <Form.Control
               as="select"
               defaultValue="Choose"
