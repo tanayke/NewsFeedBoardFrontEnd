@@ -24,12 +24,12 @@ export const NavBarComponent = () => {
   const handleOnClickLogOut = () => {
     sessionStorage.removeItem("x-auth-token");
     setAuthtoken(sessionStorage.getItem("x-auth-token"));
-    setUser();
+    setUser({});
     history.push(LOGIN);
   };
 
   useEffect(() => {
-    if (user) {
+    if (user.id) {
       switch (user.role) {
         case "READER":
           setNavBarArray(NAVBAR_READER);
@@ -59,7 +59,7 @@ export const NavBarComponent = () => {
               <Link to={path}>{path.substring(1).toUpperCase()}</Link>
             </Nav.Link>
           ))}
-          {user ? (
+          {user.id ? (
             <Button onClick={handleOnClickLogOut} variant="danger">
               LogOut
             </Button>
