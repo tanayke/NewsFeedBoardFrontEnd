@@ -19,6 +19,7 @@ export const getAllUsers = async () => {
     console.log(response.data);
     return response.data;
   } catch (err) {
+    console.log(err.response.data);
     return err;
   }
 };
@@ -29,6 +30,7 @@ export const postUser = async (formdata) => {
     console.log(response.data);
     return response.data;
   } catch (err) {
+    console.log(err.response.data);
     return err;
   }
 };
@@ -39,7 +41,7 @@ export const authenticateUser = async (data) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data);
     return error;
   }
 };
@@ -56,7 +58,7 @@ export const getAuthUser = async () => {
     console.log(response.data);
     return response.data;
   } catch (err) {
-    console.log(err.data);
+    console.log(err.response.data);
     return err.message;
   }
 };

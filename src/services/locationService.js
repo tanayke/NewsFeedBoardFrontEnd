@@ -2,10 +2,11 @@ import axios from "axios";
 
 import { API_GET_ALL_LOCATIONS } from "../constants";
 
-
 export const getAllLocations = async (state) => {
   try {
-    const respone = await axios.get(API_GET_ALL_LOCATIONS,{params:{state}});
+    const respone = await axios.get(API_GET_ALL_LOCATIONS, {
+      params: { state: state === "All" ? undefined : state },
+    });
     return respone.data;
   } catch (err) {
     return err;
@@ -21,17 +22,17 @@ export const getAllCities = async (states) => {
   }
 };
 
-export const addLocation =async (data)=>{
+export const addLocation = async (data) => {
   try {
     console.log(data);
-    console.log("in Add Service"); 
+    console.log("in Add Service");
     const respone = await axios({
-      method: 'post',
+      method: "post",
       url: API_GET_ALL_LOCATIONS,
-      data
+      data,
     });
     return respone.data;
   } catch (error) {
     return error;
   }
-}
+};

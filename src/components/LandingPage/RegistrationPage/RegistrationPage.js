@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Button, FloatingLabel } from "react-bootstrap";
 import * as Yup from "yup";
-import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { postUser } from "../../../services/userService";
 
@@ -12,6 +11,8 @@ import {
   getAllLocations,
   addLocation,
 } from "../../../services/locationService"; // eslint-disable-next-line arrow-body-style
+import { AddNewLocation } from "../../sharedComponents/AddNewLocation";
+import { SelectLocation } from "../../sharedComponents/SelectLocation";
 
 export const RegistrationPage = () => {
   const validate = Yup.object({
@@ -39,7 +40,6 @@ export const RegistrationPage = () => {
     });
   }, []);
 
-  console.log(locations.locality);
   let formData;
 
   function getFormData() {
@@ -47,48 +47,14 @@ export const RegistrationPage = () => {
   }
   const history = useHistory();
 
-  const [formDataAdd, setFormData] = useState({
-    locality: "",
-    city: "",
-    state: "",
-  });
+  const [isNewLocation, setNewLocation] = useState(false);
 
-  const [flag, setFlag] = useState(false);
-
-  const [cities, setCities] = useState([]);
-
-  function handleInputChange({ target }) {
-    const { name, value } = target;
-    if (name === "state") {
-      getAllLocations(value).then((data) => {
-        setCities(data);
-      });
-    } else if (name === "city") {
-      if (value === "other") {
-        setFlag(true);
-      }
-    } else if (name === "locality") {
-      if (value === "other") {
-        setFlag(true);
-      }
-    }
-    setFormData(
-      value === "other"
-        ? { ...formDataAdd, [name]: "" }
-        : { ...formDataAdd, [name]: value }
-    );
+  function addNewLocation() {
+    if (isNewLocation) setNewLocation(false);
+    else setNewLocation(true);
   }
 
-  function add() {
-    console.log("in Add Function");
-    console.log(formDataAdd);
-    addLocation(formDataAdd).then((data) => {
-      // eslint-disable-next-line no-unused-expressions
-      data ? alert("Location Added") : null;
-      console.log(data);
-    });
-  }
-  const { locality, city, state } = formDataAdd;
+  const registrationForm = useRef(null);
 
   return (
     <div>
@@ -107,15 +73,31 @@ export const RegistrationPage = () => {
         validationSchema={validate}
         onSubmit={(data) => {
           console.log("hi from onsubmit");
-          console.log("formdata", data);
+          //  console.log("formdata", data);
+          console.log("reg", registrationForm.current);
+          const data1 = new FormData(registrationForm.current);
+
+          data1.append("isNewLocation", isNewLocation);
+
+          // eslint-disable-next-line no-restricted-syntax
+          for (const val of data1.keys()) {
+            console.log(val);
+          }
           // eslint-disable-next-line prefer-const
-          let postData = data;
-          if (postData.isReporter) {
-            postData.role = "REPORTER";
+          let object = {};
+
+          data1.forEach((value, key) => {
+            object[key] = value;
+          });
+
+          console.log("formdatatojson", object);
+
+          if (object.isReporter) {
+            object.role = "REPORTER";
           }
           try {
-            postUser(postData);
-            // history.push(LOGIN);
+            postUser(object);
+            history.push(LOGIN);
           } catch (error) {
             console.log(error);
           }
@@ -130,7 +112,11 @@ export const RegistrationPage = () => {
           touched,
         }) => (
           <div>
-            <Form onSubmit={handleSubmit} className='col-md-6'>
+            <Form
+              ref={registrationForm}
+              onSubmit={handleSubmit}
+              className='col-md-6'
+            >
               <h2>Registration</h2>
 
               <Form.Group
@@ -158,7 +144,11 @@ export const RegistrationPage = () => {
                 controlId='email'
               >
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type='email' placeholder='Enter email' />
+                <Form.Control
+                  type='email'
+                  placeholder='Enter email'
+                  name='email'
+                />
                 {/* <Form.Text className='text-muted'>
                   We will never share your email with anyone else.
                 </Form.Text> */}
@@ -174,7 +164,11 @@ export const RegistrationPage = () => {
                 controlId='phone'
               >
                 <Form.Label>Phone</Form.Label>
-                <Form.Control type='phone' placeholder='Enter Mobile Number' />
+                <Form.Control
+                  type='phone'
+                  placeholder='Enter Mobile Number'
+                  name='phone'
+                />
                 {/* <Form.Text className='text-muted'>
                   We will never share your Mobile Number with anyone else.
                 </Form.Text> */}
@@ -192,7 +186,11 @@ export const RegistrationPage = () => {
                 controlId='password'
               >
                 <Form.Label>Password</Form.Label>
-                <Form.Control type='password' placeholder='Password' />
+                <Form.Control
+                  type='password'
+                  placeholder='Password'
+                  name='password'
+                />
                 {touched.password && errors.password && (
                   <div style={{ color: "red" }}>{errors.password}</div>
                 )}
@@ -215,101 +213,11 @@ export const RegistrationPage = () => {
                 />
               </Form.Group>
 
-              <>
-                <Form.Label>Select Your Location</Form.Label>
+              <Form.Group>
+                {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
 
-                <Form.Row>
-                  <Form.Group controlId='state'>
-                    <Form.Label>State</Form.Label>
-                    <Form.Control
-                      as='select'
-                      defaultValue='Choose'
-                      value={state}
-                      name='state'
-                      onChange={handleInputChange}
-                    >
-                      {VAR_ARRAY_STATES.map((s) => (
-                        <option key={s}>{s}</option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>{" "}
-                  {"\u00A0"}
-                  {"\u00A0"}
-                  {"\u00A0"}
-                  {flag ? (
-                    <Form.Group controlId='city'>
-                      <Form.Label>Enter City</Form.Label>
-                      <Form.Control
-                        as='input'
-                        type='text'
-                        value={city}
-                        name='city'
-                        placeHolder='Enter City'
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                  ) : (
-                    <Form.Group controlId='city'>
-                      <Form.Label>City</Form.Label>
-                      <Form.Control
-                        as='select'
-                        defaultValue='Choose'
-                        value={city}
-                        name='city'
-                        onChange={handleInputChange}
-                      >
-                        {cities.map((c) => (
-                          <option key={c.id}>{c.city}</option>
-                        ))}
-                        <option>other</option>
-                      </Form.Control>
-                    </Form.Group>
-                  )}
-                  {"\u00A0"}
-                  {"\u00A0"}
-                  {"\u00A0"}
-                  {flag ? (
-                    <Form.Group controlId='locality'>
-                      <Form.Label>Enter Locality</Form.Label>
-                      <Form.Control
-                        as='input'
-                        type='text'
-                        value={locality}
-                        name='locality'
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                  ) : (
-                    <Form.Group controlId='locality'>
-                      <Form.Label>Locality</Form.Label>
-                      <Form.Control
-                        as='select'
-                        defaultValue='Choose'
-                        value={locality}
-                        name='locality'
-                        onChange={handleInputChange}
-                      >
-                        {cities
-                          .filter((c) => c.city === formData.city)
-                          .map((filteredLocality) => (
-                            <option key={filteredLocality.id}>
-                              {filteredLocality.locality}
-                            </option>
-                          ))}
-                        <option>other</option>
-                      </Form.Control>
-                    </Form.Group>
-                  )}
-                  {flag ? (
-                    <Button variant='primary' type='submit' onClick={add}>
-                      Add Location
-                    </Button>
-                  ) : null}
-                </Form.Row>
-                {touched.location && errors.location && (
-                  <div style={{ color: "red" }}>{errors.location}</div>
-                )}
-              </>
+                <Button onClick={addNewLocation}> Add New Location</Button>
+              </Form.Group>
 
               <Button className='btn mt-3' variant='primary' type='submit'>
                 Submit
