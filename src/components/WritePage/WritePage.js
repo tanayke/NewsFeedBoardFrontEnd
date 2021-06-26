@@ -72,15 +72,16 @@ export const WritePage = () => {
     };
     
     const formData = serialize(
-      object,
+      myForm.current
+     // object,
    //   options, // optional
     );
     
-    // console.log(formData);
+     console.log(formData);
 
-    // for (const value of formData.values()) {
-    //  console.log(value);
-    //  }
+    for (const value of formData.values()) {
+     console.log(value);
+     }
 
     const data = new FormData(myForm.current);
     // for (const value of data.values()) {

@@ -29,12 +29,14 @@ export const SelectLocation = () => {
   useEffect(() => {
     getAllLocations().then((data) => {
       setLocations(data);
-      setStateLcation(data.filter((v,i) => data.map((val)=> val.state).indexOf(v.state) === i ));
+      setStateLcation(data);
+    //  setStateLcation(data.filter((v,i) => data.map((val)=> val.state).indexOf(v.state) === i ));
     });
   }, []);
 
   useEffect(()=>{
     setFilteredCities(cities.filter((v,i) => cities.map((val)=> val.city).indexOf(v.city) === i ));
+      
   },[cities]);
 
 
