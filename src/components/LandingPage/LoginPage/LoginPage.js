@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { Form, Button } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import { HOME, REGISTER } from "../../../constants";
+import { ADMIN, HOME, REGISTER, WRITE } from "../../../constants";
 import { authenticateUser, getAuthUser } from "../../../services/userService";
 import { UserContext } from "../../context/UserContext/UserContext";
 import { setAuthtoken } from "../../../utils/setAuthToken";
@@ -48,7 +48,16 @@ export const LoginPage = () => {
               getAuthUser().then((res) => {
                 if (res.status === 200) {
                   authUserContext.setUser(res.data);
-                  history.push(HOME);
+                  switch (res.data.role) {
+                    case "ADMIN":
+                      history.push(ADMIN);
+                      break;
+                    case "REPORTER":
+                      history.push(WRITE);
+                      break;
+                    default:
+                      history.push(HOME);
+                  }
                 } else {
                   alert("Invalid Credentials. Please Try Again");
                 }

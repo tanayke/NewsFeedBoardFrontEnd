@@ -1,3 +1,4 @@
+// route paths
 export const HOME = "/";
 export const WRITE = "/write";
 export const ARTICLE = "/article";
