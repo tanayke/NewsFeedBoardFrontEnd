@@ -15,3 +15,13 @@ export const addCards = async (data) => {
     return error;
   }
 };
+
+export const getAllCardsByArticleId = async (articleId) => {
+  try {
+    const response = await axios.get(`${API_GET_ALL_CARDS}/${articleId}`);
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
