@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { HOME, REGISTER } from "../../../constants";
 import { authenticateUser, getAuthUser } from "../../../services/userService";
 import { UserContext } from "../../context/UserContext/UserContext";
+import { setAuthtoken } from "../../../utils/setAuthToken";
 
 // eslint-disable-next-line arrow-body-style
 
@@ -43,7 +44,7 @@ export const LoginPage = () => {
             authenticateUser(data).then((response) => {
               if (response.status === 200)
                 sessionStorage.setItem("x-auth-token", response.data.token);
-
+              setAuthtoken(sessionStorage.getItem("x-auth-token"));
               getAuthUser().then((res) => {
                 if (res.status === 200) {
                   authUserContext.setUser(res.data);

@@ -1,14 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+import { Navbar, Nav, Button } from "react-bootstrap";
 
-import { HOME, REGISTER, WRITE } from "../../constants";
+import { HOME, REGISTER, WRITE, LOGIN } from "../../constants";
 import { SearchButtonComponent } from "./SearchButtonComponent";
+import { setAuthtoken } from "../../utils/setAuthToken";
 
 export const NavBarComponent = () => {
-  const handleSearchOnClick = ({ target }) => {};
+  const history = useHistory();
+  const handleOnClickLogOut = () => {
+    sessionStorage.removeItem("x-auth-token");
+    setAuthtoken(sessionStorage.getItem("x-auth-token"));
+    history.push(LOGIN);
+  };
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" fixed="top">
       <Navbar.Brand>
         <Link to={HOME}>News Board</Link>
       </Navbar.Brand>
@@ -21,20 +27,15 @@ export const NavBarComponent = () => {
           <Nav.Link>
             <Link to={WRITE}>Write</Link>
           </Nav.Link>
-
-          <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-            <NavDropdown.Item>
-              <Link to={REGISTER}>Register</Link>
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              Separated link
-            </NavDropdown.Item>
-          </NavDropdown>
+          <Nav.Link>
+            <Link to={REGISTER}>REGISTER</Link>
+          </Nav.Link>
+          <Nav.Link>
+            <Link to={LOGIN}>LOGIN</Link>
+          </Nav.Link>
+          <Button onClick={handleOnClickLogOut} variant="danger">
+            LogOut
+          </Button>
         </Nav>
         <SearchButtonComponent />
       </Navbar.Collapse>
