@@ -40,12 +40,13 @@ export const LoginPage = () => {
           console.log(data);
 
           try {
-            authenticateUser(data).then((tokendata) => {
-              sessionStorage.setItem("x-auth-token", tokendata.token);
-              getAuthUser().then((userData) => {
-                // console.log(userData);
-                authUserContext.setUser(userData);
-                if (!(userData === "Request failed with status code 401")) {
+            authenticateUser(data).then((response) => {
+              if (response.status === 200)
+                sessionStorage.setItem("x-auth-token", response.data.token);
+
+              getAuthUser().then((res) => {
+                if (res.status === 200) {
+                  authUserContext.setUser(res.data);
                   history.push(HOME);
                 } else {
                   alert("Invalid Credentials. Please Try Again");

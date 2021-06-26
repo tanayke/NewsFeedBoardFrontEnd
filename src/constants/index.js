@@ -2,7 +2,6 @@ export {
   HOME,
   WRITE,
   REGISTER,
-  LANDING,
   ADMIN,
   ARTICLE,
   API_GET_ALL_LOCATIONS,
