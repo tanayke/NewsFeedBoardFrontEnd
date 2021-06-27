@@ -25,7 +25,7 @@ export const RouterConfig = () => (
       <Route exact path="/" component={HomePage} />
 
       <Route exact path={HOME} component={HomePage} />
-      <Route path="*" component={NotFoundPage} />
+   
       <GuardedRoute path={ADMIN} component={AdminPage} roles={["ADMIN"]} />
       <GuardedRoute
         exact
@@ -43,6 +43,7 @@ export const RouterConfig = () => (
       <Route exact path={REGISTER} component={RegistrationPage} />
       <Route exact path={LOGIN} component={LoginPage} />
       <Route path={ROUTE_SEARCH} component={SearchResultsComponent} />
+         <Route  component={NotFoundPage} />
     </Switch>
   </div>
 );
