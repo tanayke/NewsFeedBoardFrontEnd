@@ -127,7 +127,6 @@ export const LoginPage = () => {
                 </Form>
               </Col>
               <Col sm={4} className="mt-5">
-                    <Image src="http://localhost:5500/login.png" width={400} height={700} />
               </Col>
             </Row>
 
