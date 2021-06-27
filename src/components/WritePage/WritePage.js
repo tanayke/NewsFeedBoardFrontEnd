@@ -163,8 +163,10 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from "react";
-import { Formik, Form, Field,getIn } from "formik";
+import { Formik, Form, Field, getIn } from "formik";
 import * as Yup from "yup";
+// eslint-disable-next-line camelcase
+import jwt_decode from "jwt-decode";
 import { Button, FormLabel, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { getAllCategories } from "../../services/categoriesService";
@@ -179,15 +181,15 @@ const InitialValues = {
   description: "",
   thumbnailImage: "",
   categoryId: "",
-  state:"",
-  city:"",
-  locality:"",
+  state: "",
+  city: "",
+  locality: "",
   reporterId: 0,
   // location: 0,
   cards: [
     {
-      type: 'TEXT',
-      content: '',
+      type: "TEXT",
+      content: "",
     },
   ],
 };
@@ -202,33 +204,34 @@ const SignupSchema = Yup.object().shape({
     .max(60, "Too Long!")
     .required("Enter Description!!"),
   categoryId: Yup.string().required("Select Category"),
-  state:Yup.string().min(3, "Too Short!")
-  .max(25, "Too Long!").required("State Required!!"),
-  city:Yup.string().min(2, "Too Short!")
-  .max(60, "Too Long!").required("City Required!!"),
-  locality:Yup.string()
-  .max(60, "Too Long!").required("Locality Required!!"),
+  state: Yup.string()
+    .min(3, "Too Short!")
+    .max(25, "Too Long!")
+    .required("State Required!!"),
+  city: Yup.string()
+    .min(2, "Too Short!")
+    .max(60, "Too Long!")
+    .required("City Required!!"),
+  locality: Yup.string().max(60, "Too Long!").required("Locality Required!!"),
   thumbnailImage: Yup.mixed().required("Select Image"),
-  cards: Yup.array()
-     .of(
-       Yup.object().shape({
-         type: Yup.string().required('Required'), 
-         content: Yup.string().required('Card Content Required!!'), 
-       })
-     )
+  cards: Yup.array().of(
+    Yup.object().shape({
+      type: Yup.string().required("Required"),
+      content: Yup.string().required("Card Content Required!!"),
+    })
+  ),
 });
 
 const ErrorMessage = ({ name }) => (
-  <div  style={{color:"red"}}>
-  <Field
-    name={name}
-    render={({ form }) => {
-      const error = getIn(form.errors, name);
-      const touch = getIn(form.touched, name);
-      return touch && error ? error : null;
-    }}
-    
-  />
+  <div style={{ color: "red" }}>
+    <Field
+      name={name}
+      render={({ form }) => {
+        const error = getIn(form.errors, name);
+        const touch = getIn(form.touched, name);
+        return touch && error ? error : null;
+      }}
+    />
   </div>
 );
 
@@ -237,7 +240,9 @@ export const WritePage = () => {
   const [isNewLocation, setNewLocation] = useState(false);
   const myForm = useRef(null);
   const [categories, setCategory] = useState([]);
-
+  const reporter = sessionStorage.getItem("x-auth-token")
+    ? jwt_decode(sessionStorage.getItem("x-auth-token")).user
+    : null;
   useEffect(() => {
     getAllCategories().then((data) => {
       setCategory(data);
@@ -251,7 +256,7 @@ export const WritePage = () => {
 
   function handleSubmit(d) {
     const data = new FormData(myForm.current);
-    data.append("reporterId", 1);
+    data.append("reporterId", reporter.id);
     data.append("isNewlocation", isNewLocation);
     data.append("cards", JSON.stringify(d.cards));
 
@@ -267,19 +272,20 @@ export const WritePage = () => {
 
   return (
     <div>
-      <h1 style={{textAlign:"center",marginTop:"8px"}}>Create News Article</h1>
+      <h1 style={{ textAlign: "center", marginTop: "8px" }}>
+        Create News Article
+      </h1>
       <Formik
         initialValues={InitialValues}
         validationSchema={SignupSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched, values, setFieldValue,handleChange }) => (
+        {({ errors, touched, values, setFieldValue, handleChange }) => (
           <Form ref={myForm}>
-            <div className="form-group" >
+            <div className="form-group">
               <FormLabel>Title</FormLabel>
               <Field name="title" className="form-control" />
               <ErrorMessage name="title" />
-             
             </div>
 
             <div className="form-group">
@@ -292,7 +298,6 @@ export const WritePage = () => {
                 ))}
               </Field>
               <ErrorMessage name="categoryId" />
-             
             </div>
 
             <div className="form-group">
@@ -304,7 +309,7 @@ export const WritePage = () => {
                 className="form-file"
                 isInvalid={!!errors.thumbnailImage}
               />
-            <ErrorMessage name="thumbnailImage" />
+              <ErrorMessage name="thumbnailImage" />
             </div>
 
             <div className="form-group">
@@ -316,9 +321,8 @@ export const WritePage = () => {
                 className="form-control"
               />
               <ErrorMessage name="description" />
-           
             </div>
-            
+
             {isNewLocation ? (
               <div className="form-group">
                 <Button onClick={addNewLocation}>Select Location</Button>
@@ -330,20 +334,36 @@ export const WritePage = () => {
             )}
 
             <div className="form-group">
-                  {isNewLocation ? <AddNewLocation handleChange={handleChange} errors={errors} touched={touched} /> : <SelectLocation handleChange={handleChange} errors={errors} touched={touched} />}
+              {isNewLocation ? (
+                <AddNewLocation
+                  handleChange={handleChange}
+                  errors={errors}
+                  touched={touched}
+                />
+              ) : (
+                <SelectLocation
+                  handleChange={handleChange}
+                  errors={errors}
+                  touched={touched}
+                />
+              )}
             </div>
 
-            <div className="form-group" >
-            <AllCards values={values} setFieldValue={setFieldValue} handleChange={handleChange} errors={errors} touched={touched} />
+            <div className="form-group">
+              <AllCards
+                values={values}
+                setFieldValue={setFieldValue}
+                handleChange={handleChange}
+                errors={errors}
+                touched={touched}
+              />
             </div>
 
-            <div className="form-group" style={{textAlign:"right"}}>
-              <Button variant="success" type="submit" size="lg" >
+            <div className="form-group" style={{ textAlign: "right" }}>
+              <Button variant="success" type="submit" size="lg">
                 Submit
               </Button>
             </div>
-
-            
           </Form>
         )}
       </Formik>
