@@ -1,6 +1,20 @@
 import React, { useState } from "react";
 import { Form ,Col} from "react-bootstrap";
-import { Field } from "formik";
+import { Field ,getIn} from "formik";
+
+const ErrorMessage = ({ name }) => (
+  <div  style={{color:"red"}}>
+  <Field
+    name={name}
+    render={({ form }) => {
+      const error = getIn(form.errors, name);
+      const touch = getIn(form.touched, name);
+      return touch && error ? error : null;
+    }}
+    
+  />
+  </div>
+);
 
 export const AddNewLocation = ({handleChange, errors, touched}) => {
     
@@ -27,8 +41,10 @@ export const AddNewLocation = ({handleChange, errors, touched}) => {
           handleChange(e);
           handleInputChange(e);
         }}
+        placeholder="Enter State"
      / >
-      {errors.state && touched.state ? <div>{errors.state}</div> : null}
+         <ErrorMessage name="state" />
+      
     </div>
 
     <div className="form-group mr-auto" >
@@ -40,8 +56,10 @@ export const AddNewLocation = ({handleChange, errors, touched}) => {
           handleChange(e);
           handleInputChange(e);
         }}
+        placeholder="Enter City"
      / >
-      {errors.city && touched.city ? <div>{errors.city}</div> : null}
+       <ErrorMessage name="city" />
+     
     </div>
 
     <div className="form-group mr-auto" >
@@ -53,8 +71,10 @@ export const AddNewLocation = ({handleChange, errors, touched}) => {
           handleChange(e);
           handleInputChange(e);
         }}
+        placeholder="Enter Locality"
      / >
-      {errors.locality && touched.locality ? <div>{errors.locality}</div> : null}
+       <ErrorMessage name="locality" />
+    
     </div>
     </div>
     </>

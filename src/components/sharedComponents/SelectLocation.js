@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Form, Col } from "react-bootstrap";
-import { Field } from "formik";
+import { Field ,getIn} from "formik";
 
 import { getAllLocations } from "../../services/locationService";
+
+const ErrorMessage = ({ name }) => (
+  <div  style={{color:"red"}}>
+  <Field
+    name={name}
+    render={({ form }) => {
+      const error = getIn(form.errors, name);
+      const touch = getIn(form.touched, name);
+      return touch && error ? error : null;
+    }}
+    
+  />
+  </div>
+);
 
 export const SelectLocation = ({ handleChange, errors, touched }) => {
   const [formData, setFormData] = useState({
@@ -63,7 +77,8 @@ export const SelectLocation = ({ handleChange, errors, touched }) => {
               <option key={s.id}>{s.state}</option>
             ))}
           </Field>
-          {errors.state && touched.state ? <div>{errors.state}</div> : null}
+          <ErrorMessage name="state" />
+        
         </div>
 
         <div className="form-group mr-auto">
@@ -83,7 +98,7 @@ export const SelectLocation = ({ handleChange, errors, touched }) => {
                 <option key={c.id}>{c.city}</option>
               ))}
           </Field>
-          {errors.city && touched.city ? <div>{errors.city}</div> : null}
+          <ErrorMessage name="city" />
         </div>
 
         
@@ -107,7 +122,7 @@ export const SelectLocation = ({ handleChange, errors, touched }) => {
                   </option>
                 ))}
           </Field>
-          {errors.locality && touched.locality ? <div>{errors.locality}</div> : null}
+          <ErrorMessage name="locality" />
         </div>
 
         {/*     

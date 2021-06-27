@@ -163,14 +163,16 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from "react";
-import { Formik, Form, Field, yupToFormErrors } from "formik";
+import { Formik, Form, Field,getIn } from "formik";
 import * as Yup from "yup";
 import { Button, FormLabel, Col } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
 import { SelectLocation } from "../sharedComponents";
 import { AllCards } from "./addCards";
 import { AddNewLocation } from "../sharedComponents/AddNewLocation";
+import { HOME } from "../../constants";
 
 const InitialValues = {
   title: "",
@@ -182,29 +184,58 @@ const InitialValues = {
   locality:"",
   reporterId: 0,
   // location: 0,
-  cards: [],
+  cards: [
+    {
+      type: 'TEXT',
+      content: '',
+    },
+  ],
 };
 
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, "Too Short!")
     .max(120, "Too Long!")
-    .required("Required"),
+    .required("Enter Title!!"),
   description: Yup.string()
     .min(2, "Too Short!")
     .max(60, "Too Long!")
-    .required("Required"),
-  categoryId: Yup.string().required("Required"),
-  state:Yup.string().required("Required!!"),
-  city:Yup.string().required("Required!!"),
-  locality:Yup.string().required("Required!!"),
-  thumbnailImage: Yup.mixed().required("Required"),
+    .required("Enter Description!!"),
+  categoryId: Yup.string().required("Select Category"),
+  state:Yup.string().min(3, "Too Short!")
+  .max(25, "Too Long!").required("State Required!!"),
+  city:Yup.string().min(2, "Too Short!")
+  .max(60, "Too Long!").required("City Required!!"),
+  locality:Yup.string()
+  .max(60, "Too Long!").required("Locality Required!!"),
+  thumbnailImage: Yup.mixed().required("Select Image"),
+  cards: Yup.array()
+     .of(
+       Yup.object().shape({
+         type: Yup.string().required('Required'), 
+         content: Yup.string().required('Card Content Required!!'), 
+       })
+     )
 });
 
+const ErrorMessage = ({ name }) => (
+  <div  style={{color:"red"}}>
+  <Field
+    name={name}
+    render={({ form }) => {
+      const error = getIn(form.errors, name);
+      const touch = getIn(form.touched, name);
+      return touch && error ? error : null;
+    }}
+    
+  />
+  </div>
+);
+
 export const WritePage = () => {
+  const history = useHistory();
   const [isNewLocation, setNewLocation] = useState(false);
   const myForm = useRef(null);
-
   const [categories, setCategory] = useState([]);
 
   useEffect(() => {
@@ -227,6 +258,7 @@ export const WritePage = () => {
     addArticle(data)
       .then((response) => {
         console.log(response);
+        history.push(HOME);
       })
       .catch((error) => {
         console.log(error);
@@ -235,7 +267,7 @@ export const WritePage = () => {
 
   return (
     <div>
-      <h1>Article Form</h1>
+      <h1 style={{textAlign:"center",marginTop:"8px"}}>Create News Article</h1>
       <Formik
         initialValues={InitialValues}
         validationSchema={SignupSchema}
@@ -243,23 +275,13 @@ export const WritePage = () => {
       >
         {({ errors, touched, values, setFieldValue,handleChange }) => (
           <Form ref={myForm}>
-            <div className="form-group">
+            <div className="form-group" >
               <FormLabel>Title</FormLabel>
               <Field name="title" className="form-control" />
-              {errors.title && touched.title ? <div>{errors.title}</div> : null}
+              <ErrorMessage name="title" />
+             
             </div>
-            <div className="form-group">
-              <FormLabel>Description</FormLabel>
-              <Field
-                as="textarea"
-                rows={3}
-                name="description"
-                className="form-control"
-              />
-              {errors.description && touched.description ? (
-                <div>{errors.description}</div>
-              ) : null}
-            </div>
+
             <div className="form-group">
               <Field name="categoryId" as="select" className="form-control">
                 <option>Select Category</option>
@@ -269,10 +291,10 @@ export const WritePage = () => {
                   </option>
                 ))}
               </Field>
-              {errors.categoryId && touched.categoryId ? (
-                <div>{errors.categoryId}</div>
-              ) : null}
+              <ErrorMessage name="categoryId" />
+             
             </div>
+
             <div className="form-group">
               <FormLabel>Select Thumbnail Image</FormLabel>
               <br />
@@ -282,17 +304,21 @@ export const WritePage = () => {
                 className="form-file"
                 isInvalid={!!errors.thumbnailImage}
               />
-              {errors.thumbnailImage ? (
-                <div>{errors.thumbnailImage}</div>
-              ) : null}
+            <ErrorMessage name="thumbnailImage" />
             </div>
 
             <div className="form-group">
-              
-                  {isNewLocation ? <AddNewLocation handleChange={handleChange} errors={errors} touched={touched} /> : <SelectLocation handleChange={handleChange} errors={errors} touched={touched} />}
-            
+              <FormLabel>Description</FormLabel>
+              <Field
+                as="textarea"
+                rows={2}
+                name="description"
+                className="form-control"
+              />
+              <ErrorMessage name="description" />
+           
             </div>
-
+            
             {isNewLocation ? (
               <div className="form-group">
                 <Button onClick={addNewLocation}>Select Location</Button>
@@ -304,11 +330,15 @@ export const WritePage = () => {
             )}
 
             <div className="form-group">
-            <AllCards values={values} setFieldValue={setFieldValue} />
+                  {isNewLocation ? <AddNewLocation handleChange={handleChange} errors={errors} touched={touched} /> : <SelectLocation handleChange={handleChange} errors={errors} touched={touched} />}
             </div>
 
-            <div className="form-group">
-              <Button variant="success" type="submit" size="lg" block>
+            <div className="form-group" >
+            <AllCards values={values} setFieldValue={setFieldValue} handleChange={handleChange} errors={errors} touched={touched} />
+            </div>
+
+            <div className="form-group" style={{textAlign:"right"}}>
+              <Button variant="success" type="submit" size="lg" >
                 Submit
               </Button>
             </div>
