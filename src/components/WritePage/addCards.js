@@ -97,7 +97,7 @@ const ErrorMessage = ({ name }) => (
   />
   </div>
 );
-let textContentLegth = 0;
+let textContentLegth = 1500;
 
 export const AllCards = ({
   values,
@@ -115,7 +115,7 @@ export const AllCards = ({
 
 
   const handleInputChange = (event) => {
-    textContentLegth += event.target.value.length;
+    textContentLegth -= event.target.value.length;
     console.log(textContentLegth);
   };
   return (
@@ -129,7 +129,7 @@ export const AllCards = ({
                 return (
                   <div className="justify-content-md-center" key={index} style={{border:"1px solid black",padding:"5px",margin:"5px"}}>
                     <div className="row-justify-content-md-center">
-                      <div className="form-group">
+                      <div className="form-group" style={{textAlign:"right"}}>
                         <div className="col">
                           <Button
                             variant="danger"
@@ -178,6 +178,7 @@ export const AllCards = ({
                                 selectDisable(arrayIndex);
                               }}
                             />
+                            {textContentLegth}
                             <ErrorMessage name={`cards.${index}.content`} />
                           </div>
                         </div>
