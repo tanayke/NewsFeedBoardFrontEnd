@@ -16,7 +16,7 @@ import {
   addLocation,
 } from "../../../services/locationService"; // eslint-disable-next-line arrow-body-style
 import { AddNewLocation } from "../../sharedComponents/AddNewLocation";
-import { SelectLocation } from "../../sharedComponents/SelectLocation";
+import { SelectLocation } from "../../sharedComponents";
 
 export const RegistrationPage = () => {
   const validate = Yup.object({

@@ -121,7 +121,7 @@ export const WritePage = () => {
         onSubmit={handleSubmit}
       >
         {({ errors, touched, values, setFieldValue, handleChange }) => (
-          <Form ref={myForm} style={{margin:"10px 150px"}}>
+          <Form ref={myForm} style={{ margin: "10px 150px" }}>
             <div className="form-group">
               <FormLabel>Title</FormLabel>
               <Field name="title" className="form-control" />
