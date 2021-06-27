@@ -42,6 +42,17 @@ export const addArticle = async (data) => {
   }
 };
 
+export const updateViewCount = (articleId) => {
+  try {
+    const respone = axios.patch(
+      `${API_GET_ALL_ARTICLES}/viewCount/${articleId}`
+    );
+    return respone;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 export const getArticle = async (articleId) => {
   try {
     const response = await axios.get(`${API_GET_ALL_ARTICLES}/${articleId}`);

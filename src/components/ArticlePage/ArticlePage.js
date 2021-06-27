@@ -7,6 +7,7 @@ import { getAllCardsByArticleId, getArticle } from "../../services";
 import { ArticleCards } from "./ArticleCards";
 import { ArticleDescription } from "./ArticleDescription";
 import { ArticleReport } from "./ArticleReport";
+import { updateViewCount } from "../../services/articleService";
 
 export const ArticlePage = ({ match: { params } }) => {
   const [article, setArticle] = useState();
@@ -27,6 +28,9 @@ export const ArticlePage = ({ match: { params } }) => {
     getArticle(params.articleId).then((data) => {
       setArticle(data);
       console.log(data);
+    });
+    updateViewCount(params.articleId).then((response) => {
+      if (response.status === 200) console.log(response.data);
     });
   }, []);
   return !article ? null : (
