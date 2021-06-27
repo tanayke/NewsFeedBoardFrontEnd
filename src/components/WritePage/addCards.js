@@ -1,81 +1,4 @@
-// /* eslint-disable no-restricted-syntax */
-// /* eslint-disable prefer-template */
-// /* eslint-disable jsx-a11y/label-has-associated-control */
-// /* eslint-disable react/no-array-index-key */
-// import React, { useState, useEffect } from "react";
-// import { Field, FieldArray } from "formik";
 
-// const initialValues = {
-//   cards: [
-//     {
-//       type: "",
-//       content: "",
-//       cardOrder: "",
-//     },
-//   ],
-// };
-
-// export const AllCards = ({ values, setFieldValue }) => (
-//   <div>
-//     <FieldArray name="cards">
-//       {({ insert, remove, push }) => (
-//         <div>
-//           {
-//           values.cards.length > 0 &&
-//             values.cards.map((card, index) =>
-//              (
-//                 <div className="row" key={index}>
-//                   <div className="col">
-//                     <label htmlFor={`cards.${index}.type`}>Select Type</label>
-//                     <Field name={`cards.${index}.type`} as="select">
-//                       <option value="TEXT">Text</option>
-//                       <option value="IMAGE">Image</option>
-//                       <option value="VIDEO">Video</option>
-//                     </Field>
-//                   </div>
-//                   {card.type === "TEXT" ? (
-//                     <div className="col">
-//                       <label htmlFor={`cards.${index}.content`}>Enter Text</label>
-//                       <Field
-//                         name={`cards.${index}.content`}
-//                         type="textarea"
-//                         rows="3"
-//                       />
-//                     </div>
-//                   ) : (
-//                     <div className="col">
-//                       <label htmlFor={`cards.${index}.content`}>
-//                         Select File
-//                       </label>
-//                       <Field name={`cards.${index}.content`} type="file" />
-//                     </div>
-//                   )}
-
-//                   <div className="col">
-//                     <button
-//                       type="button"
-//                       className="secondary"
-//                       onClick={() => {console.log(index);remove(index)}}
-//                     >
-//                       X
-//                     </button>
-//                   </div>
-//                 </div>
-
-//               )
-//             )}
-//           <button
-//             type="button"
-//             className="secondary"
-//             onClick={() => push({ type: "TEXT", content: "",cardsOrder:0})}
-//           >
-//             Add Card
-//           </button>
-//         </div>
-//       )}
-//     </FieldArray>
-//   </div>
-// );
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable prefer-template */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -97,7 +20,9 @@ const ErrorMessage = ({ name }) => (
   />
   </div>
 );
-let textContentLegth = 0;
+let textContentLegth = 15;
+let wordlength=0;
+
 
 export const AllCards = ({
   values,
@@ -105,6 +30,14 @@ export const AllCards = ({
  
 }) => {
   let arrayIndex = null;
+  let isWordLegnthExceed=false;
+
+  const setMaxLength =()=>{
+    console.log(textContentLegth-=wordlength);
+    if(textContentLegth<2)
+      isWordLegnthExceed=true;
+  }
+
   const selectDisable = (index) => {
     if (index === null);
     else
@@ -113,10 +46,10 @@ export const AllCards = ({
         .setAttribute("disabled", "true");
   };
 
-
   const handleInputChange = (event) => {
-    textContentLegth += event.target.value.length;
-    console.log(textContentLegth);
+      const str =event.target.innerHTML;
+      console.log(str.length);
+      wordlength=str.length;
   };
   return (
     <div>
@@ -137,7 +70,7 @@ export const AllCards = ({
                               console.log(index);
                               remove(index);
                             }}
-                                                      >
+                          >
                             X
                           </Button>
                         </div>
@@ -154,7 +87,14 @@ export const AllCards = ({
                             className="form-control"
                             onChnage={handleChange}
                           >
-                            <option value="TEXT">Text</option>
+                            {textContentLegth<2 ? 
+                            (
+                              <option value="TEXT" disabled>Text</option>
+                            ):
+                            (
+                              <option value="TEXT">Text</option>
+                            )} 
+                            
                             <option value="IMAGE">Image</option>
                             <option value="VIDEO">Video</option>
                           </Field>
@@ -177,6 +117,7 @@ export const AllCards = ({
                                 handleInputChange(e);
                                 selectDisable(arrayIndex);
                               }}
+                              maxLength={textContentLegth}
                             />
                             <ErrorMessage name={`cards.${index}.content`} />
                           </div>
@@ -204,10 +145,21 @@ export const AllCards = ({
                   </div>
                 );
               })}
+             
+              <div className="row-justify-content-md-center">
+                <div className="form-group" style={{textAlign:"center",color:"red"}}>
+                    {textContentLegth<2  ? (
+                     <span>Content type text words limit is Acheived</span> 
+                   ) :null 
+                   }
+               
+                </div>
+              </div>
             <Button
               variant="primary"
               onClick={() => {
-                push({ type: "TEXT", content: "" });
+                push({ type: "IMAGE", content: "" });
+                setMaxLength();
               }}
             >
               Add Card
