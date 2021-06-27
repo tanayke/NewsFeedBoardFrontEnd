@@ -264,8 +264,8 @@ export const RegistrationPage = () => {
               <Col sm={4} className="mt-5">
                 <Image
                   src={`${BASE_URL}/login.png`}
-                  width={400}
-                  height={700}
+                  widht={300}
+                  height={500}
                   responsive
                 />
               </Col>
