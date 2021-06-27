@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { FaFacebookF, FaWhatsapp, FaLinkedinIn } from "react-icons/fa";
+// eslint-disable-next-line camelcase
+import jwt_decode from "jwt-decode";
 import { getAllCardsByArticleId, getArticle } from "../../services";
 import { ArticleCards } from "./ArticleCards";
 import { ArticleDescription } from "./ArticleDescription";
@@ -8,6 +10,9 @@ import { ArticleReport } from "./ArticleReport";
 
 export const ArticlePage = ({ match: { params } }) => {
   const [article, setArticle] = useState();
+  const user = sessionStorage.getItem("x-auth-token")
+    ? jwt_decode(sessionStorage.getItem("x-auth-token")).user
+    : null;
   const [cards, setCards] = useState([]);
   const defStyles = {
     fontSize: "22px",
@@ -49,8 +54,8 @@ export const ArticlePage = ({ match: { params } }) => {
           <Row>
             <Col md={1} />
 
-            <Col md={10} className="text-left">
-              <ArticleReport />
+            <Col md={10} className="text-center">
+              <ArticleReport articleId={params.articleId} userId={user.id} />
             </Col>
             {/* <Col className="text-right ml-5">
               <small className=" ml-3 ">

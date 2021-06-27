@@ -15,6 +15,7 @@ export const API_GET_ALL_CATEGORIES = `${BASE_API}categories`;
 export const API_GET_ALL_ARTICLES = `${BASE_API}articles`;
 export const API_GET_ALL_CARDS = `${BASE_API}cards`;
 export const API_GET_ALL_USERS = `${BASE_API}users`;
+export const API_ALL_REPORTS = `${BASE_API}reports`;
 export const API_POST_USERS = `${BASE_API}users`;
 export const API_AUTHENTICATE_USER = `${BASE_API}auth`;
 

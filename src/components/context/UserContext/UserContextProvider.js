@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 
 // eslint-disable-next-line arrow-body-style
@@ -10,7 +10,6 @@ const UserContextProvider = ({ children }) => {
     user,
     setUser,
   };
-
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
