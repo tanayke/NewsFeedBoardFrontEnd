@@ -82,6 +82,8 @@
 /* eslint-disable react/no-array-index-key */
 import React from "react";
 import { Field, FieldArray } from "formik";
+import { Button } from "react-bootstrap";
+
 
 const initialValues = {
   cards: [
@@ -114,55 +116,65 @@ export const AllCards = ({ values, setFieldValue }) =>{
             values.cards.map((card, index) => {
               arrayIndex=index;
               return  (
-                <div className="row" key={index}>
+               <div className="justify-content-md-center" key={index}>
+                <div className="row-justify-content-md-center" >
+                <div className="form-group">
+                  <div className="col">
+                    <Button
+                      variant="danger"
+                      onClick={() => {console.log(index);remove(index);}}
+                    >
+                      X
+                    </Button>
+                  </div>
+                  </div>
+                  <div className="form-group">
                   <div className="col">
                     <label htmlFor={`cards.${index}.type`}>Select Type</label>
-                    <Field name={`cards.${index}.type`} as="select" id={`cards.${index}.type`}>
+                    <Field name={`cards.${index}.type`} as="select" id={`cards.${index}.type`} className="form-control">
                       <option value="TEXT">Text</option>
                       <option value="IMAGE">Image</option>
                       <option value="VIDEO">Video</option>
                     </Field>
                   </div>
+                  </div>
                   {card.type === "TEXT" ? (
+                    <div className="form-group">
                     <div className="col">
                       <label htmlFor={`cards.${index}.content`}>Enter Text</label>
                       <Field
                         name={`cards.${index}.content`}
                         type="textarea"
                         rows="3"
+                        className="form-control"
                       />
                     </div>
+                    </div>
                   ) : (
+                    <div className="form-group">
                     <div className="col">
                       <label htmlFor={`cards.${index}.content`}>
                         Select File
                       </label>
-                      <Field name={`cards.${index}.content`} type="file" />
+                      <Field name={`cards.${index}.content`} type="file" className="form-control" />
+                    </div>
                     </div>
                   )}
-                  <div className="col">
-                    <button
-                      type="button"
-                      className="secondary"
-                      onClick={() => {console.log(index);remove(index)}}
-                    >
-                      X
-                    </button>
-                  </div>
+                 
+                </div>
                 </div>
               )
             }
             )}
-          <button
-            type="button"
-            className="secondary"
-            onClick={() => {push({ type: "TEXT", content: ""}) ; console.log(arrayIndex); selectDisable(arrayIndex)}}
+          <Button
+            variant="primary"
+            onClick={() => {push({ type: "TEXT", content: ""}) ; selectDisable(arrayIndex);}}
           >
             Add Card
-          </button>
+          </Button>
         </div>
       )}
     </FieldArray>
   </div>
 );
-                  }
+}

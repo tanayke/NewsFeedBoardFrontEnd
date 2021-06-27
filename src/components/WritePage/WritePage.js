@@ -61,7 +61,7 @@
 //   }
 
 //   function handleOnSubmit(d) {
-  
+
 //     console.log(d);
 //     console.log(JSON.stringify(d.cards));
 //     const data = new FormData(myForm.current);
@@ -163,9 +163,9 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState, useRef } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, yupToFormErrors } from "formik";
 import * as Yup from "yup";
-import { Button, FormLabel } from "react-bootstrap";
+import { Button, FormLabel, Col } from "react-bootstrap";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
 import { SelectLocation } from "../sharedComponents";
@@ -176,21 +176,28 @@ const InitialValues = {
   title: "",
   description: "",
   thumbnailImage: "",
-  category: 0,
+  categoryId: "",
+  state:"",
+  city:"",
+  locality:"",
   reporterId: 0,
-  location: 0,
+  // location: 0,
   cards: [],
 };
 
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, "Too Short!")
-    .max(20, "Too Long!")
+    .max(120, "Too Long!")
     .required("Required"),
   description: Yup.string()
     .min(2, "Too Short!")
-    .max(200, "Too Long!")
+    .max(60, "Too Long!")
     .required("Required"),
+  categoryId: Yup.string().required("Required"),
+  state:Yup.string().required("Required!!"),
+  city:Yup.string().required("Required!!"),
+  locality:Yup.string().required("Required!!"),
   thumbnailImage: Yup.mixed().required("Required"),
 });
 
@@ -211,7 +218,7 @@ export const WritePage = () => {
     else setNewLocation(true);
   }
 
-  function handleOnSubmit(d) {
+  function handleSubmit(d) {
     const data = new FormData(myForm.current);
     data.append("reporterId", 1);
     data.append("isNewlocation", isNewLocation);
@@ -232,9 +239,9 @@ export const WritePage = () => {
       <Formik
         initialValues={InitialValues}
         validationSchema={SignupSchema}
-        onSubmit={handleOnSubmit}
+        onSubmit={handleSubmit}
       >
-        {({ errors, touched, values, setFieldValue }) => (
+        {({ errors, touched, values, setFieldValue,handleChange }) => (
           <Form ref={myForm}>
             <div className="form-group">
               <FormLabel>Title</FormLabel>
@@ -254,7 +261,20 @@ export const WritePage = () => {
               ) : null}
             </div>
             <div className="form-group">
-              <FormLabel>Select Image</FormLabel>
+              <Field name="categoryId" as="select" className="form-control">
+                <option>Select Category</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </Field>
+              {errors.categoryId && touched.categoryId ? (
+                <div>{errors.categoryId}</div>
+              ) : null}
+            </div>
+            <div className="form-group">
+              <FormLabel>Select Thumbnail Image</FormLabel>
               <br />
               <Field
                 type="file"
@@ -268,42 +288,32 @@ export const WritePage = () => {
             </div>
 
             <div className="form-group">
-              <div className="form-row">
-                <div className="form-col">
-                  {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
-                </div>
+              
+                  {isNewLocation ? <AddNewLocation handleChange={handleChange} errors={errors} touched={touched} /> : <SelectLocation handleChange={handleChange} errors={errors} touched={touched} />}
+            
+            </div>
 
-                {isNewLocation ? (
-                  <div className="form-col">
-                    <Button onClick={addNewLocation}>Select Location</Button>
-                  </div>
-                ) : (
-                  <div className="form-col">
-                    <Button onClick={addNewLocation}>Add New Location</Button>
-                  </div>
-                )}
+            {isNewLocation ? (
+              <div className="form-group">
+                <Button onClick={addNewLocation}>Select Location</Button>
               </div>
+            ) : (
+              <div className="form-group">
+                <Button onClick={addNewLocation}>Add New Location</Button>
+              </div>
+            )}
+
+            <div className="form-group">
+            <AllCards values={values} setFieldValue={setFieldValue} />
             </div>
 
             <div className="form-group">
-              <FormLabel>Select Category</FormLabel>
-              <br />
-              <Field name="categoryId" as="select">
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </Field>
-            </div>
-
-            <div className="form-group">
-              <Button variant="primary" type="submit">
+              <Button variant="success" type="submit" size="lg" block>
                 Submit
               </Button>
             </div>
 
-            <AllCards values={values} setFieldValue={setFieldValue} />
+            
           </Form>
         )}
       </Formik>

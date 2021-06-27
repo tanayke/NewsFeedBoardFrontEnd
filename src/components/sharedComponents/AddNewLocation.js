@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form ,Col} from "react-bootstrap";
 import { Field } from "formik";
 
-export const AddNewLocation = () => {
+export const AddNewLocation = ({handleChange, errors, touched}) => {
     
   const [locationData, setLocationData] = useState({
     state: "",
@@ -16,42 +16,49 @@ export const AddNewLocation = () => {
   }
 
   return (
-      <Form.Row>
-        <Form.Group as={Col}>
-          <Form.Control
-            as="input"
-            type="text"
-            value={locationData.state}
-            name="state"
-            placeHolder="Enter State"
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
+<>
+    <div className="form-row">
+    <div className="form-group mr-auto" >
+      <Field
+         value={locationData.state}
+         name="state"
+         className="form-control"
+         onChange={(e) => {
+          handleChange(e);
+          handleInputChange(e);
+        }}
+     / >
+      {errors.state && touched.state ? <div>{errors.state}</div> : null}
+    </div>
 
-        <Form.Group as={Col}>
-          <Form.Control
-            as="input"
-            type="text"
-            value={locationData.city}
-            name="city"
-            placeHolder="Enter City"
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
+    <div className="form-group mr-auto" >
+      <Field
+         value={locationData.city}
+         name="city"
+         className="form-control"
+         onChange={(e) => {
+          handleChange(e);
+          handleInputChange(e);
+        }}
+     / >
+      {errors.city && touched.city ? <div>{errors.city}</div> : null}
+    </div>
 
-        <Form.Group as={Col}>
-          <Form.Control
-            as="input"
-            type="text"
-            value={locationData.locality}
-            name="locality"
-            placeHolder="Enter locality"
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-      </Form.Row> 
+    <div className="form-group mr-auto" >
+      <Field
+         value={locationData.locality}
+         name="locality"
+         className="form-control"
+         onChange={(e) => {
+          handleChange(e);
+          handleInputChange(e);
+        }}
+     / >
+      {errors.locality && touched.locality ? <div>{errors.locality}</div> : null}
+    </div>
+    </div>
+    </>
+
+      
   );
 };
