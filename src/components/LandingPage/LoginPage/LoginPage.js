@@ -78,7 +78,7 @@ export const LoginPage = () => {
         }) => (
           <div>
             <Row>
-              <Col sm={8}>
+              <Col sm={10}>
                 <Form onSubmit={handleSubmit} className='col-md-6'>
                   <h2 style={{ marginTop: "60%" }}>
                     <span>LOG</span>
@@ -130,8 +130,8 @@ export const LoginPage = () => {
                   </div>
                 </Form>
               </Col>
-              <Col sm={4} className='mt-5'>
-                <Image src={`${BASE_URL}/login.png`} widht={400} height={700} />
+              <Col sm={2} className='mt-5'>
+                <Image src={`${BASE_URL}/login.png`} widht={300} height={700} />
               </Col>
             </Row>
           </div>

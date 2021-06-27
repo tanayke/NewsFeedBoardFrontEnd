@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Field, getIn } from "formik";
+import { Row, Col } from "react-bootstrap";
 
 import { getAllLocations } from "../../services/locationService";
 
@@ -119,7 +120,6 @@ export const SelectLocation = ({ handleChange }) => {
           </Field>
           <ErrorMessage name="locality" />
         </div>
-
       </div>
     </>
   );

@@ -132,7 +132,7 @@ export const RegistrationPage = () => {
         }) => (
           <div>
             <Row>
-              <Col>
+              <Col sm={10}>
                 <Form
                   ref={registrationForm}
                   onSubmit={handleSubmit}
@@ -286,11 +286,11 @@ export const RegistrationPage = () => {
                   </div>
                 </Form>
               </Col>
-              <Col sm={4} className='mt-5'>
+              <Col sm={2} className='mt-5'>
                 <Image
                   src={`${BASE_URL}/login.png`}
                   widht={300}
-                  height={500}
+                  height={700}
                   responsive
                 />
               </Col>
