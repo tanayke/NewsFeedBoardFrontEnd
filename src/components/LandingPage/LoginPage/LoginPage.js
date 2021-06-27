@@ -47,6 +47,7 @@ export const LoginPage = () => {
               setAuthtoken(sessionStorage.getItem("x-auth-token"));
               getAuthUser().then((res) => {
                 if (res.status === 200) {
+                  sessionStorage.setItem("user", JSON.stringify(res.data));
                   authUserContext.setUser(res.data);
                   switch (res.data.role) {
                     case "ADMIN":

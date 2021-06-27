@@ -4,7 +4,7 @@ import { UserContext } from "./UserContext";
 // eslint-disable-next-line arrow-body-style
 // eslint-disable-next-line react/prop-types
 const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
 
   const value = {
     user,

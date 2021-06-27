@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Formik, Form, Field, getIn } from "formik";
 import * as Yup from "yup";
 // eslint-disable-next-line camelcase
@@ -16,6 +16,7 @@ import { SelectLocation } from "../sharedComponents";
 import { AllCards } from "./addCards";
 import { AddNewLocation } from "../sharedComponents/AddNewLocation";
 import { HOME } from "../../constants";
+import { UserContext } from "../context/UserContext/UserContext";
 
 const InitialValues = {
   title: "",
@@ -76,6 +77,8 @@ const ErrorMessage = ({ name }) => (
 );
 
 export const WritePage = () => {
+  const { user, setUser } = useContext(UserContext);
+  console.log(user);
   const history = useHistory();
   const [isNewLocation, setNewLocation] = useState(false);
   const myForm = useRef(null);

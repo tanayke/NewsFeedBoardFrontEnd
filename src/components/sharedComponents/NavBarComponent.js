@@ -23,6 +23,7 @@ export const NavBarComponent = () => {
   const history = useHistory();
   const handleOnClickLogOut = () => {
     sessionStorage.removeItem("x-auth-token");
+    sessionStorage.removeItem("user");
     setAuthtoken(sessionStorage.getItem("x-auth-token"));
     setUser({});
     history.push(LOGIN);
