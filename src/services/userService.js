@@ -24,6 +24,21 @@ export const getAllUsers = async (isApproved, role) => {
   }
 };
 
+export const updateIsApprovedStatus = async (isApproved, userId) => {
+  try {
+    console.log(isApproved, userId);
+    const response = await axios.patch(API_GET_ALL_USERS, {
+      isApproved,
+      userId,
+    });
+    console.log(response.data);
+    return response;
+  } catch (err) {
+    console.log(err.response);
+    return err.response;
+  }
+};
+
 export const postUser = async (formdata) => {
   try {
     const response = await axios.post(API_POST_USERS, formdata);

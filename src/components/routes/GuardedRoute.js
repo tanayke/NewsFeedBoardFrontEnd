@@ -2,8 +2,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 // eslint-disable-next-line camelcase
- import jwt_decode from 'jwt-decode';
-
+import jwt_decode from "jwt-decode";
 
 export const GuardedRoute = ({ component: Component, roles, ...rest }) => (
   <Route
