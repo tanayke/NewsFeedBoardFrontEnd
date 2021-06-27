@@ -27,7 +27,7 @@ export const ArticlesTab = () => {
           Your Feed
         </Button>
         <Button onClick={handleTrendingClick} variant="light">
-          Tredfing
+          Trending
         </Button>
       </ButtonGroup>
       <hr />

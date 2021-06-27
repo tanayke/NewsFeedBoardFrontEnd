@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Field, getIn } from "formik";
+import { Row, Col } from "react-bootstrap";
 
 import { getAllLocations } from "../../services/locationService";
 
@@ -59,67 +60,69 @@ export const SelectLocation = ({ handleChange, errors, touched }) => {
   return (
     <>
       <div className="form-row">
-        <div className="form-group mr-auto">
-          <Field
-            name="state"
-            value={formData.state}
-            as="select"
-            className="form-control"
-            onChange={(e) => {
-              handleChange(e);
-              handleInputChange(e);
-            }}
-          >
-            <option>Select State</option>
-            {stateLocation.map((s) => (
-              <option key={s.id}>{s.state}</option>
-            ))}
-          </Field>
-          <ErrorMessage name="state" />
-        </div>
+       
+            <div className="form-group col-md-4">
+              <Field
+                name="state"
+                value={formData.state}
+                as="select"
+                className="form-control"
+                onChange={(e) => {
+                  handleChange(e);
+                  handleInputChange(e);
+                }}
+              >
+                <option>Select State</option>
+                {stateLocation.map((s) => (
+                  <option key={s.id}>{s.state}</option>
+                ))}
+              </Field>
+              <ErrorMessage name="state" />
+            </div>
 
-        <div className="form-group mr-auto">
-          <Field
-            name="city"
-            value={formData.city}
-            as="select"
-            className="form-control"
-            onChange={(e) => {
-              handleChange(e);
-              handleInputChange(e);
-            }}
-          >
-            <option>Select City</option>
-            {filterdCities.map((c) => (
-              <option key={c.id}>{c.city}</option>
-            ))}
-          </Field>
-          <ErrorMessage name="city" />
-        </div>
+            <div className="form-group col-md-4">
+              <Field
+                name="city"
+                value={formData.city}
+                as="select"
+                className="form-control"
+                onChange={(e) => {
+                  handleChange(e);
+                  handleInputChange(e);
+                }}
+              >
+                <option>Select City</option>
+                {filterdCities.map((c) => (
+                  <option key={c.id}>{c.city}</option>
+                ))}
+              </Field>
+              <ErrorMessage name="city" />
+            </div>
+         
+            <div className="form-group col-md-4">
+              <Field
+                name="locality"
+                value={formData.locality}
+                as="select"
+                className="form-control"
+                onChange={(e) => {
+                  handleChange(e);
+                  handleInputChange(e);
+                }}
+              >
+                <option>Select Locality</option>
+                {cities
+                  .filter((c) => c.city === formData.city)
+                  .map((filteredLocality) => (
+                    <option key={filteredLocality.id} value={filteredLocality.id}>
+                      {filteredLocality.locality}
+                    </option>
+                  ))}
+              </Field>
+              <ErrorMessage name="locality" />
+            </div>
 
-        <div className="form-group mr-auto">
-          <Field
-            name="locality"
-            value={formData.locality}
-            as="select"
-            className="form-control"
-            onChange={(e) => {
-              handleChange(e);
-              handleInputChange(e);
-            }}
-          >
-            <option>Select Locality</option>
-            {cities
-              .filter((c) => c.city === formData.city)
-              .map((filteredLocality) => (
-                <option key={filteredLocality.id} value={filteredLocality.id}>
-                  {filteredLocality.locality}
-                </option>
-              ))}
-          </Field>
-          <ErrorMessage name="locality" />
-        </div>
-
+          
         {/*     
       
         <Form.Group controlId="state" as={Col}>

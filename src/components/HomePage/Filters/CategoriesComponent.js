@@ -22,7 +22,7 @@ export const CategoriesComponent = ({ categoryId, handleCategoryChange }) => {
   return (
     <div>
       <Form.Group>
-        <Form.Label>by Categories</Form.Label>
+        <Form.Label>By Categories</Form.Label>
         <Form.Control
           as="select"
           onChange={handleCategoryChange}
