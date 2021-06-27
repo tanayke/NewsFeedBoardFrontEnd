@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
-import { Form, Button, FloatingLabel } from "react-bootstrap";
+import { Form, Button, FloatingLabel, Row, Col, Image } from "react-bootstrap";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { postUser } from "../../../services/userService";
 
 import * as App from "../../../App";
-import { VAR_ARRAY_STATES, LOGIN } from "../../../constants/CONSTANTS";
+import {
+  VAR_ARRAY_STATES,
+  LOGIN,
+  BASE_URL,
+} from "../../../constants/CONSTANTS";
 import {
   getAllLocations,
   addLocation,
@@ -29,12 +33,15 @@ export const RegistrationPage = () => {
       .min(6, "Password must be atleat 6 characters long")
       .required("Password is Required"),
     role: Yup.string().default("READER"),
-    state:Yup.string().min(3, "Too Short!")
-  .max(25, "Too Long!").required("State Required!!"),
-  city:Yup.string().min(2, "Too Short!")
-  .max(60, "Too Long!").required("City Required!!"),
-  locality:Yup.string()
-  .max(60, "Too Long!").required("Locality Required!!"),
+    state: Yup.string()
+      .min(3, "Too Short!")
+      .max(25, "Too Long!")
+      .required("State Required!!"),
+    city: Yup.string()
+      .min(2, "Too Short!")
+      .max(60, "Too Long!")
+      .required("City Required!!"),
+    locality: Yup.string().max(60, "Too Long!").required("Locality Required!!"),
     // location: Yup.string().required("Location is Required"),
   });
 
@@ -102,8 +109,9 @@ export const RegistrationPage = () => {
             object.role = "REPORTER";
           }
           try {
-            const response = postUser(object);
-            if (response.status === 200) history.push(LOGIN);
+            postUser(object).then((response) => {
+              if (response.status === 200) history.push(LOGIN);
+            });
           } catch (error) {
             console.log(error.data);
           }
@@ -118,122 +126,150 @@ export const RegistrationPage = () => {
           touched,
         }) => (
           <div>
-            <Form
-              ref={registrationForm}
-              onSubmit={handleSubmit}
-              className="col-md-6"
-            >
-              <h2>Registration</h2>
+            <Row>
+              <Col>
+                <Form
+                  ref={registrationForm}
+                  onSubmit={handleSubmit}
+                  className="col-md-6"
+                >
+                  <h2 className="mt-5 mb-3">
+                    <span>REGISTRA</span>
+                    <span style={{ color: "#007bff" }}>TION</span>
+                  </h2>
 
-              <Form.Group
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                controlId="name"
-              >
-                <Form.Label>Full Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  placeholder="Enter your full name"
-                />
-                {touched.name && errors.name && (
-                  <div style={{ color: "red" }}>{errors.name}</div>
-                )}
-              </Form.Group>
-              <Form.Group
-                name="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                controlId="email"
-              >
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  name="email"
-                />
-                {/* <Form.Text className='text-muted'>
+                  <Form.Group
+                    name="name"
+                    value={values.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    controlId="name"
+                  >
+                    <Form.Label>Full Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      placeholder="Enter Your Full Name"
+                    />
+                    {touched.name && errors.name && (
+                      <div style={{ color: "red" }}>{errors.name}</div>
+                    )}
+                  </Form.Group>
+                  <Form.Group
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    controlId="email"
+                  >
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter Your Email"
+                      name="email"
+                    />
+                    {/* <Form.Text className='text-muted'>
                   We will never share your email with anyone else.
                 </Form.Text> */}
-                {touched.email && errors.email && (
-                  <div style={{ color: "red" }}>{errors.email}</div>
-                )}
-              </Form.Group>
-              <Form.Group
-                name="phone"
-                value={values.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                controlId="phone"
-              >
-                <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  type="phone"
-                  placeholder="Enter Mobile Number"
-                  name="phone"
-                />
-                {/* <Form.Text className='text-muted'>
+                    {touched.email && errors.email && (
+                      <div style={{ color: "red" }}>{errors.email}</div>
+                    )}
+                  </Form.Group>
+                  <Form.Group
+                    name="phone"
+                    value={values.phone}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    controlId="phone"
+                  >
+                    <Form.Label>Phone</Form.Label>
+                    <Form.Control
+                      type="phone"
+                      placeholder="Enter Mobile Number"
+                      name="phone"
+                    />
+                    {/* <Form.Text className='text-muted'>
                   We will never share your Mobile Number with anyone else.
                 </Form.Text> */}
-                {touched.phone && errors.phone && (
-                  <div className="validation" style={{ color: "red" }}>
-                    {errors.phone}
+                    {touched.phone && errors.phone && (
+                      <div className="validation" style={{ color: "red" }}>
+                        {errors.phone}
+                      </div>
+                    )}
+                  </Form.Group>
+                  <Form.Group
+                    name="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    controlId="password"
+                  >
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Enter Your Password"
+                      name="password"
+                    />
+                    {touched.password && errors.password && (
+                      <div style={{ color: "red" }}>{errors.password}</div>
+                    )}
+                  </Form.Group>
+
+                  <Form.Group
+                    name="isReporter"
+                    value={values.isReporter}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    controlId="role"
+                  >
+                    <Form.Label>
+                      Do you want to Post News Articles and Stories?{" "}
+                    </Form.Label>
+                    <Form.Check
+                      name="isReporter"
+                      type="checkbox"
+                      label="Check here"
+                    />
+                  </Form.Group>
+
+                  <Form.Group>
+                    {isNewLocation ? (
+                      <AddNewLocation
+                        handleChange={handleChange}
+                        errors={errors}
+                        touched={touched}
+                      />
+                    ) : (
+                      <SelectLocation
+                        handleChange={handleChange}
+                        errors={errors}
+                        touched={touched}
+                      />
+                    )}
+
+                    <Button onClick={addNewLocation}> Add New Location</Button>
+                  </Form.Group>
+
+                  <div className="mt-4">
+                    <Button className="btn" variant="primary" type="submit">
+                      Register
+                    </Button>
+
+                    <Link className="ml-3 mt-3" to={LOGIN}>
+                      Already a User? Login
+                    </Link>
                   </div>
-                )}
-              </Form.Group>
-              <Form.Group
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                controlId="password"
-              >
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  name="password"
+                </Form>
+              </Col>
+              <Col sm={4} className="mt-5">
+                <Image
+                  src={`${BASE_URL}/login.png`}
+                  width={400}
+                  height={700}
+                  responsive
                 />
-                {touched.password && errors.password && (
-                  <div style={{ color: "red" }}>{errors.password}</div>
-                )}
-              </Form.Group>
-
-              <Form.Group
-                name="isReporter"
-                value={values.isReporter}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                controlId="role"
-              >
-                <Form.Label>
-                  Do you want to Post News Articles and Stories?{" "}
-                </Form.Label>
-                <Form.Check
-                  name="isReporter"
-                  type="checkbox"
-                  label="Check here"
-                />
-              </Form.Group>
-
-              <Form.Group>
-                {isNewLocation ? <AddNewLocation handleChange={handleChange} errors={errors} touched={touched}/> : <SelectLocation handleChange={handleChange} errors={errors} touched={touched}/>}
-
-                <Button onClick={addNewLocation}> Add New Location</Button>
-              </Form.Group>
-
-              <Button className="btn mt-3" variant="primary" type="submit">
-                Submit
-              </Button>
-              <br />
-
-              <Link class=" ml-auto" to={LOGIN}>
-                Already a User? Login
-              </Link>
-            </Form>
+              </Col>
+            </Row>
           </div>
         )}
       </Formik>

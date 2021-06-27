@@ -46,7 +46,6 @@ export const ArticleReport = ({ articleId, userId }) => {
   }, [articleId, userId]);
   return isAbleToReport ? (
     <>
-      {/* <div style={{ display: "block", width: 700, padding: 30 }}> */}
       <OverlayTrigger
         placement="top"
         trigger="click"
@@ -115,7 +114,6 @@ export const ArticleReport = ({ articleId, userId }) => {
           <h6>Report Article</h6>
         </Button>
       </OverlayTrigger>
-      {/* </div> */}
     </>
   ) : (
     <Alert variant="warning">

@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
-import { Col, Row, Image } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import { FaFacebookF, FaWhatsapp, FaLinkedinIn } from "react-icons/fa";
 import { BASE_URL } from "../../constants";
 
 export const ArticleDescription = ({ article }) => {
@@ -34,42 +35,54 @@ export const ArticleDescription = ({ article }) => {
         </Col>
       </Row>
 
-      <Row className="mt-1">
-        <Col>
-          <Row className="mx-2">
-            <Col className="text-right mr-5">
-              <small>
-                {`${date.getDay()}th ${
-                  monthNames[date.getMonth()]
-                } ${date.getFullYear()}`}
-              </small>
-            </Col>
-          </Row>
-          <Row className="mx-2">
-            <Col className="text-capitalize text-left ml-5">
-              <small>
-                by, <strong>{article.reporter.name}</strong>
-              </small>
-            </Col>
-            <Col className="text-right mr-5">
-              <small>
-                {article.location.locality}
-                <strong>{`, ${article.location.city}`}</strong>
-              </small>
-            </Col>
-          </Row>
+      <Row className="mt-5">
+        <Col xs={1} />
+        <Col sm>
+          <small className="ml-3" style={{ fontSize: "20px" }}>
+            {article.reporter.name}
+          </small>
+          <small className="ml-3" style={{ fontSize: "20px" }}>{`${
+            monthNames[date.getMonth()]
+          } ${date.getDay()},${date.getFullYear()}`}</small>
+          <small className="ml-3" style={{ fontSize: "20px" }}>
+            {article.location.city}
+          </small>
         </Col>
+        <Row>
+          <small className="ml-3">
+            <FaFacebookF />
+          </small>
+          <small className="ml-3">
+            {" "}
+            <FaWhatsapp />
+          </small>
+          <small className="ml-3">
+            <FaLinkedinIn />
+          </small>
+        </Row>
+
+        <Col xs={1} />
       </Row>
       <br />
       <Row>
-        <Col className="text-center mt-5">
-          <Image src={BASE_URL + article.thumbnailImage} fluid />
+        <Col />
+        <Col className="ml-5">
+          <img
+            src={BASE_URL + article.thumbnailImage}
+            alt="img"
+            width={1000}
+            height={500}
+          />
         </Col>
+        <Col />
       </Row>
       <Row>
+        <Col xs={1} />
         <Col>
-          <h2 className=" text-center text-muted">{article.description}</h2>
+          <h4 className="ml-4 mt-2">{article.description}</h4>
+          <br />
         </Col>
+        <Col xs={1} />
       </Row>
     </>
   );

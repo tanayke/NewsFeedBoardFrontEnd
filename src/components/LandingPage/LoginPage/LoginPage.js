@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import { ADMIN, HOME, REGISTER, WRITE } from "../../../constants";
+import { ADMIN, HOME, REGISTER, WRITE, BASE_URL } from "../../../constants";
 import { authenticateUser, getAuthUser } from "../../../services/userService";
 import { UserContext } from "../../context/UserContext/UserContext";
 import { setAuthtoken } from "../../../utils/setAuthToken";
@@ -77,48 +77,63 @@ export const LoginPage = () => {
           touched,
         }) => (
           <div>
-            <Form onSubmit={handleSubmit} className='col-md-6'>
-              <h2>LogIn</h2>
+            <Row>
+              <Col sm={8}>
+                <Form onSubmit={handleSubmit} className="col-md-6">
+                  <h2 style={{ marginTop: "60%" }}>
+                    <span>LOG</span>
+                    <span style={{ color: "#007bff" }}>IN</span>
+                  </h2>
 
-              <Form.Group
-                name='email'
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                controlId='email'
-              >
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type='email' placeholder='Enter email' />
-                {/* <Form.Text className='text-muted'>
+                  <Form.Group
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    controlId="email"
+                  >
+                    <Form.Label>Email </Form.Label>
+                    <Form.Control type="email" placeholder="Enter Email" />
+                    {/* <Form.Text className='text-muted'>
                 We will never share your email with anyone else.
               </Form.Text> */}
-                {touched.email && errors.email && (
-                  <div style={{ color: "red" }}>{errors.email}</div>
-                )}
-              </Form.Group>
+                    {touched.email && errors.email && (
+                      <div style={{ color: "red" }}>{errors.email}</div>
+                    )}
+                  </Form.Group>
 
-              <Form.Group
-                name='password'
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                controlId='password'
-              >
-                <Form.Label>Password</Form.Label>
-                <Form.Control type='password' placeholder='Password' />
-                {touched.password && errors.password && (
-                  <div style={{ color: "red" }}>{errors.password}</div>
-                )}
-              </Form.Group>
+                  <Form.Group
+                    name="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    controlId="password"
+                  >
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Enter Password"
+                    />
+                    {touched.password && errors.password && (
+                      <div style={{ color: "red" }}>{errors.password}</div>
+                    )}
+                  </Form.Group>
 
-              <Button className='btn mt-3' variant='primary' type='submit'>
-                Submit
-              </Button>
+                  <div className="mt-4">
+                    <Button className="btn" variant="primary" type="submit">
+                      Login
+                    </Button>
 
-              <div>
-                <Link to={REGISTER}>New Here? Register</Link>
-              </div>
-            </Form>
+                    <Link to={REGISTER} className="ml-3">
+                      New Here? Register
+                    </Link>
+                  </div>
+                </Form>
+              </Col>
+              <Col sm={4} className="mt-5">
+                <Image src={`${BASE_URL}/login.png`} widht={400} height={700} />
+              </Col>
+            </Row>
           </div>
         )}
       </Formik>

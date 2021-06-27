@@ -26,7 +26,7 @@ export const postUser = async (formdata) => {
   try {
     const response = await axios.post(API_POST_USERS, formdata);
     console.log(response.data);
-    return response.data;
+    return response;
   } catch (err) {
     console.log(err.response.data);
     return err.reponse;
