@@ -17,6 +17,16 @@ export const getAllArticles = async (filters) => {
   }
 };
 
+export const getAllArticlesForAdmin = async () => {
+  try {
+    const response = await axios.get(`${API_GET_ALL_ARTICLES}/viewCount`);
+    console.log(response);
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 export const getAllArticlesForSearchInput = async (searchInput) => {
   try {
     const respone = await axios.get(`${API_GET_ALL_ARTICLES}/search`, {

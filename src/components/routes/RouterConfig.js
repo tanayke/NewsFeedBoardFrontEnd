@@ -7,7 +7,7 @@ import { WritePage } from "../writePage";
 import { RegistrationPage } from "../landingPage/RegistrationPage";
 import { LoginPage } from "../landingPage/LoginPage";
 import { SearchResultsComponent } from "../searchResultes/SearchResultsComponent";
-import {NotFoundPage} from '../notFoundPage/NotFoundPage';
+import { NotFoundPage } from "../notFoundPage/NotFoundPage";
 import {
   ADMIN,
   ARTICLE,
@@ -25,7 +25,7 @@ export const RouterConfig = () => (
       <Route exact path="/" component={HomePage} />
 
       <Route exact path={HOME} component={HomePage} />
-   
+
       <GuardedRoute path={ADMIN} component={AdminPage} roles={["ADMIN"]} />
       <GuardedRoute
         exact
@@ -43,7 +43,7 @@ export const RouterConfig = () => (
       <Route exact path={REGISTER} component={RegistrationPage} />
       <Route exact path={LOGIN} component={LoginPage} />
       <Route path={ROUTE_SEARCH} component={SearchResultsComponent} />
-         <Route  component={NotFoundPage} />
+      <Route component={NotFoundPage} />
     </Switch>
   </div>
 );
