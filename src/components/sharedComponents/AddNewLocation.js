@@ -16,7 +16,7 @@ const ErrorMessage = ({ name }) => (
   </div>
 );
 
-export const AddNewLocation = ({handleChange, errors, touched}) => {
+export const AddNewLocation = ({handleChange}) => {
     
   const [locationData, setLocationData] = useState({
     state: "",

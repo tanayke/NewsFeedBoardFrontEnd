@@ -29,6 +29,12 @@ export const RegistrationPage = () => {
       .min(6, "Password must be atleat 6 characters long")
       .required("Password is Required"),
     role: Yup.string().default("READER"),
+    state:Yup.string().min(3, "Too Short!")
+  .max(25, "Too Long!").required("State Required!!"),
+  city:Yup.string().min(2, "Too Short!")
+  .max(60, "Too Long!").required("City Required!!"),
+  locality:Yup.string()
+  .max(60, "Too Long!").required("Locality Required!!"),
     // location: Yup.string().required("Location is Required"),
   });
 
@@ -214,7 +220,7 @@ export const RegistrationPage = () => {
               </Form.Group>
 
               <Form.Group>
-                {isNewLocation ? <AddNewLocation /> : <SelectLocation />}
+                {isNewLocation ? <AddNewLocation handleChange={handleChange} errors={errors} touched={touched}/> : <SelectLocation handleChange={handleChange} errors={errors} touched={touched}/>}
 
                 <Button onClick={addNewLocation}> Add New Location</Button>
               </Form.Group>

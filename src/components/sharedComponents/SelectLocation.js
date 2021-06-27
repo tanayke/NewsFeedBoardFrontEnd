@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Form, Col } from "react-bootstrap";
 import { Field ,getIn} from "formik";
 
 import { getAllLocations } from "../../services/locationService";
