@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Card, Container, Row, Col } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { ArticlesContext } from "../../context/ArticlesContext/ArticlesContext";
 import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
 import { getAllArticles } from "../../../services";
+import { ARTICLE } from "../../../constants";
 
 const NewsCardsComponent = () => {
   const [articleFeed, setArticleFeed] = useState([]);
-
+  const history = useHistory();
   const { articleFilters } = useContext(ArticleFilterContext);
   const { articles, setArticles } = useContext(ArticlesContext);
 
   useEffect(() => {
-    console.log("hi");
     getAllArticles(articleFilters).then((data) => {
       setArticles(data);
       setArticleFeed(data);
@@ -20,10 +21,16 @@ const NewsCardsComponent = () => {
   useEffect(() => {
     console.log(articles);
   }, [articles]);
-
+  const handleCardClick = (articleId) => {
+    history.push(`${ARTICLE}/${articleId}`);
+  };
   return articleFeed.map((article) => (
     <Card key={article.id} style={{ width: "100%", margin: "1rem" }}>
-      <Card.Body>
+      <Card.Body
+        onClick={() => {
+          handleCardClick(article.id);
+        }}
+      >
         <Container>
           <Row>
             <Col md={7}>

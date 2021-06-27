@@ -62,7 +62,7 @@ export const ArticleDescription = ({ article }) => {
       </Row>
       <br />
       <Row>
-        <Col>
+        <Col className="text-center mt-5">
           <Image src={BASE_URL + article.thumbnailImage} fluid />
         </Col>
       </Row>
