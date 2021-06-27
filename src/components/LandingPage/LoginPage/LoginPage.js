@@ -79,21 +79,21 @@ export const LoginPage = () => {
           <div>
             <Row>
               <Col sm={8}>
-                <Form onSubmit={handleSubmit} className="col-md-6">
+                <Form onSubmit={handleSubmit} className='col-md-6'>
                   <h2 style={{ marginTop: "60%" }}>
                     <span>LOG</span>
                     <span style={{ color: "#007bff" }}>IN</span>
                   </h2>
 
                   <Form.Group
-                    name="email"
+                    name='email'
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    controlId="email"
+                    controlId='email'
                   >
                     <Form.Label>Email </Form.Label>
-                    <Form.Control type="email" placeholder="Enter Email" />
+                    <Form.Control type='email' placeholder='Enter Email' />
                     {/* <Form.Text className='text-muted'>
                 We will never share your email with anyone else.
               </Form.Text> */}
@@ -103,35 +103,35 @@ export const LoginPage = () => {
                   </Form.Group>
 
                   <Form.Group
-                    name="password"
+                    name='password'
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    controlId="password"
+                    controlId='password'
                   >
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                      type="password"
-                      placeholder="Enter Password"
+                      type='password'
+                      placeholder='Enter Password'
                     />
                     {touched.password && errors.password && (
                       <div style={{ color: "red" }}>{errors.password}</div>
                     )}
                   </Form.Group>
 
-                  <div className="mt-4">
-                    <Button className="btn" variant="primary" type="submit">
+                  <div className='mt-4'>
+                    <Button className='btn' variant='primary' type='submit'>
                       Login
                     </Button>
 
-                    <Link to={REGISTER} className="ml-3">
+                    <Link to={REGISTER} className='ml-3'>
                       New Here? Register
                     </Link>
                   </div>
                 </Form>
               </Col>
-              <Col sm={4} className="mt-5">
-                <Image src={`${BASE_URL}/login.png`} widht={300} height={500} />
+              <Col sm={4} className='mt-5'>
+                <Image src={`${BASE_URL}/login.png`} widht={400} height={700} />
               </Col>
             </Row>
           </div>
