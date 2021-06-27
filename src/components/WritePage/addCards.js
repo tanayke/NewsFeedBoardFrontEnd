@@ -129,7 +129,7 @@ export const AllCards = ({
                 return (
                   <div className="justify-content-md-center" key={index} style={{border:"1px solid black",padding:"5px",margin:"5px"}}>
                     <div className="row-justify-content-md-center">
-                      <div className="form-group">
+                      <div className="form-group" style={{textAlign:"right"}}>
                         <div className="col">
                           <Button
                             variant="danger"
@@ -137,7 +137,7 @@ export const AllCards = ({
                               console.log(index);
                               remove(index);
                             }}
-                          >
+                                                      >
                             X
                           </Button>
                         </div>

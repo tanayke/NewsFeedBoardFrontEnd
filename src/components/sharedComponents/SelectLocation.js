@@ -59,7 +59,7 @@ export const SelectLocation = ({ handleChange, errors, touched }) => {
   return (
     <>
       <div className="form-row">
-        <div className="form-group mr-auto">
+        <div className="form-group col-md-4">
           <Field
             name="state"
             value={formData.state}
@@ -78,7 +78,7 @@ export const SelectLocation = ({ handleChange, errors, touched }) => {
           <ErrorMessage name="state" />
         </div>
 
-        <div className="form-group mr-auto">
+        <div className="form-group col-md-4">
           <Field
             name="city"
             value={formData.city}
@@ -97,7 +97,7 @@ export const SelectLocation = ({ handleChange, errors, touched }) => {
           <ErrorMessage name="city" />
         </div>
 
-        <div className="form-group mr-auto">
+        <div className="form-group col-md-4">
           <Field
             name="locality"
             value={formData.locality}
