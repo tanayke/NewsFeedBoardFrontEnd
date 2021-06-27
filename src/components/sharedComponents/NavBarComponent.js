@@ -1,47 +1,74 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Navbar, Nav, Button } from "react-bootstrap";
+
 import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+  NAVBAR_ADMIN,
+  HOME,
+  REGISTER,
+  WRITE,
+  LOGIN,
+  NAVBAR_READER,
+  NAVBAR_REPORTER,
+  NAVBAR_GUEST,
+} from "../../constants";
+import { SearchButtonComponent } from "./SearchButtonComponent";
+import { setAuthtoken } from "../../utils/setAuthToken";
 
-import { HOME, LANDING, REGISTER, WRITE ,ADDRESS } from "../../constants";
+import { UserContext } from "../context/UserContext/UserContext";
 
-export const NavBarComponent = () => (
-  <Navbar bg="light" expand="lg">
-    <Navbar.Brand>
-      <Link to={LANDING}>News Board</Link>
-    </Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
-      <Nav className="mr-auto">
-        <Nav.Link>
-          <Link to={HOME}>Home</Link>
-        </Nav.Link>
-        <Nav.Link>
-          <Link to={WRITE}>Write</Link>
-        </Nav.Link>
-         <Nav.Link>
-          <Link to={ADDRESS}>Address</Link>
-        </Nav.Link>
-        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-          <NavDropdown.Item>
-            <Link to={REGISTER}>Register</Link>
-          </NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-        </NavDropdown>
-      </Nav>
-      <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-        <Button variant="outline-success">Search</Button>
-      </Form>
-    </Navbar.Collapse>
-  </Navbar>
-);
+export const NavBarComponent = () => {
+  const { user, setUser } = useContext(UserContext);
+  const [navBarArray, setNavBarArray] = useState([]);
+  const history = useHistory();
+  const handleOnClickLogOut = () => {
+    sessionStorage.removeItem("x-auth-token");
+    setAuthtoken(sessionStorage.getItem("x-auth-token"));
+    setUser({});
+    history.push(LOGIN);
+  };
+
+  useEffect(() => {
+    if (user.id) {
+      switch (user.role) {
+        case "READER":
+          setNavBarArray(NAVBAR_READER);
+          break;
+        case "REPORTER":
+          setNavBarArray(NAVBAR_REPORTER);
+          break;
+        case "ADMIN":
+          setNavBarArray(NAVBAR_ADMIN);
+          break;
+        default:
+      }
+    } else {
+      setNavBarArray(NAVBAR_GUEST);
+    }
+  }, [user]);
+  return (
+    <Navbar bg="light" expand="lg" fixed="top" sticky>
+      <Navbar.Brand>
+        <Link to={HOME}>News Board</Link>
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          {navBarArray.map((path) => (
+            <Nav.Link key={path}>
+              <Link to={path}>{path.substring(1).toUpperCase()}</Link>
+            </Nav.Link>
+          ))}
+          {user.id ? (
+            <Button onClick={handleOnClickLogOut} variant="danger">
+              LogOut
+            </Button>
+          ) : (
+            <div />
+          )}
+        </Nav>
+        <SearchButtonComponent />
+      </Navbar.Collapse>
+    </Navbar>
+  );
+};

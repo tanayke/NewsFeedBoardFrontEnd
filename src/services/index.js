@@ -1,3 +1,4 @@
 export { getAllLocations } from "./locationService";
 export { getAllCategories } from "./categoriesService";
-export { addCards } from "./cardsService";
+export { getAllArticles, getArticle } from "./articleService";
+export { getAllCardsByArticleId, addCards } from "./cardsService";
