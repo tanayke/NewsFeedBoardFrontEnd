@@ -45,7 +45,7 @@ export const SelectLocation = () => {
   return (
     <>
       <Form.Row>
-        <Form.Group controlId="state">
+        <Form.Group controlId="state" className='mr-3'>
           <Form.Control
             as="select"
             defaultValue="Choose"
@@ -60,7 +60,7 @@ export const SelectLocation = () => {
             ))}
           </Form.Control>
         </Form.Group>
-        <Form.Group controlId="city">
+        <Form.Group controlId="city" className='mr-3'>
           <Form.Control
             as="select"
             defaultValue="Choose"
@@ -76,7 +76,7 @@ export const SelectLocation = () => {
           </Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="locality">
+        <Form.Group controlId="locality"> 
           <Form.Control
             as="select"
             defaultValue="Choose"

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
-import { Form, Button, FloatingLabel } from "react-bootstrap";
+import { Form, Button, FloatingLabel,Row, Col, Image } from "react-bootstrap";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { postUser } from "../../../services/userService";
@@ -97,7 +97,7 @@ export const RegistrationPage = () => {
           }
           try {
             const response = postUser(object);
-            if (response.status === 200) history.push(LOGIN);
+             if (response.status === 200) history.push(LOGIN); 
           } catch (error) {
             console.log(error.data);
           }
@@ -112,12 +112,17 @@ export const RegistrationPage = () => {
           touched,
         }) => (
           <div>
-            <Form
+            <Row>
+              <Col>
+              <Form
               ref={registrationForm}
               onSubmit={handleSubmit}
               className="col-md-6"
             >
-              <h2>Registration</h2>
+              <h2 className='mt-5 mb-3'>
+              <span>REGISTRA</span>
+              <span style={{ color: "#007bff" }}>TION</span>
+              </h2>
 
               <Form.Group
                 name="name"
@@ -130,7 +135,7 @@ export const RegistrationPage = () => {
                 <Form.Control
                   type="text"
                   name="name"
-                  placeholder="Enter your full name"
+                  placeholder="Enter Your Full Name"
                 />
                 {touched.name && errors.name && (
                   <div style={{ color: "red" }}>{errors.name}</div>
@@ -146,7 +151,7 @@ export const RegistrationPage = () => {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="Enter Your Email"
                   name="email"
                 />
                 {/* <Form.Text className='text-muted'>
@@ -188,7 +193,7 @@ export const RegistrationPage = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Password"
+                  placeholder="Enter Your Password"
                   name="password"
                 />
                 {touched.password && errors.password && (
@@ -219,15 +224,23 @@ export const RegistrationPage = () => {
                 <Button onClick={addNewLocation}> Add New Location</Button>
               </Form.Group>
 
-              <Button className="btn mt-3" variant="primary" type="submit">
-                Submit
+              <div className="mt-4">
+              <Button className="btn" variant="primary" type="submit">
+                Register
               </Button>
-              <br />
 
-              <Link class=" ml-auto" to={LOGIN}>
+              <Link className="ml-3 mt-3" to={LOGIN}>
                 Already a User? Login
               </Link>
+              </div>
+              
             </Form>
+              </Col>
+              <Col sm={4} className="mt-5">
+                    <Image src="http://localhost:5500/login.png" width={400} height={700} />
+              </Col>
+            </Row>
+           
           </div>
         )}
       </Formik>

@@ -17,7 +17,7 @@ export const AddNewLocation = () => {
 
   return (
       <Form.Row>
-        <Form.Group>
+        <Form.Group className='mr-2'>
           <Form.Control
             as="input"
             type="text"
