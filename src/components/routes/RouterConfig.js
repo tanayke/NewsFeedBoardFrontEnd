@@ -17,6 +17,7 @@ import {
   ROUTE_SEARCH,
 } from "../../constants/CONSTANTS";
 import { GuardedRoute } from "./GuardedRoute";
+import { NotFoundComponent } from "../NotFoundComponent";
 
 export const RouterConfig = () => (
   <div>
@@ -41,6 +42,7 @@ export const RouterConfig = () => (
       <Route exact path={REGISTER} component={RegistrationPage} />
       <Route exact path={LOGIN} component={LoginPage} />
       <Route path={ROUTE_SEARCH} component={SearchResultsComponent} />
+      <Route component={NotFoundComponent} />
     </Switch>
   </div>
 );

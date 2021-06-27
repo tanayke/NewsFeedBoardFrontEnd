@@ -11,14 +11,16 @@ import {
 //   },
 // });
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (isApproved, role) => {
   try {
-    const response = await axios.get(API_GET_ALL_USERS);
+    const response = await axios.get(API_GET_ALL_USERS, {
+      params: { isApproved, role },
+    });
     console.log(response.data);
-    return response.data;
+    return response;
   } catch (err) {
-    console.log(err.response.data);
-    return err;
+    console.log(err.response);
+    return err.response;
   }
 };
 

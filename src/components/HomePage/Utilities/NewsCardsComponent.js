@@ -1,29 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { Card, Container, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { ArticlesContext } from "../../context/ArticlesContext/ArticlesContext";
-import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
-import { getAllArticles } from "../../../services";
 import { ARTICLE } from "../../../constants";
 
-const NewsCardsComponent = () => {
-  const [articleFeed, setArticleFeed] = useState([]);
+const NewsCardsComponent = ({ articleFeed }) => {
   const history = useHistory();
-  const { articleFilters } = useContext(ArticleFilterContext);
-  const { articles, setArticles } = useContext(ArticlesContext);
-
-  useEffect(() => {
-    getAllArticles(articleFilters).then((data) => {
-      setArticles(data);
-      setArticleFeed(data);
-    });
-  }, [articleFilters]);
-  useEffect(() => {
-    console.log(articles);
-  }, [articles]);
   const handleCardClick = (articleId) => {
     history.push(`${ARTICLE}/${articleId}`);
   };
+
   return articleFeed.map((article) => (
     <Card key={article.id} style={{ width: "100%", margin: "1rem" }}>
       <Card.Body
