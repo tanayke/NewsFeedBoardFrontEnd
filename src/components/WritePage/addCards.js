@@ -1,9 +1,8 @@
-
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable prefer-template */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
-import React from "react";
+import React,{useEffect} from "react";
 import { Field, FieldArray, getIn } from "formik";
 import { Button } from "react-bootstrap";
 
@@ -16,26 +15,28 @@ const ErrorMessage = ({ name }) => (
       const touch = getIn(form.touched, name);
       return touch && error ? error : null;
     }}
-    
   />
   </div>
 );
-let textContentLegth = 15;
-let wordlength=0;
 
+let textContentLegth=1500;
+let wordlength=0;
+let errorMessage=1500;
 
 export const AllCards = ({
   values,
   handleChange,
- 
 }) => {
-  let arrayIndex = null;
-  let isWordLegnthExceed=false;
+  
+  useEffect(() => () => {
+      textContentLegth=1500;
+      errorMessage=1500;
+    }, [])
 
+  let arrayIndex = null;
   const setMaxLength =()=>{
+    console.log(textContentLegth);
     console.log(textContentLegth-=wordlength);
-    if(textContentLegth<2)
-      isWordLegnthExceed=true;
   }
 
   const selectDisable = (index) => {
@@ -50,11 +51,12 @@ export const AllCards = ({
       const str =event.target.innerHTML;
       console.log(str.length);
       wordlength=str.length;
+      errorMessage=textContentLegth-wordlength;
   };
   return (
     <div>
       <FieldArray name="cards">
-        {({ remove, push }) => (
+        {({ push }) => (
           <div>
             {values.cards.length > 0 &&
               values.cards.map((card, index) => {
@@ -63,7 +65,7 @@ export const AllCards = ({
                   <div className="justify-content-md-center" key={index} style={{border:"1px solid black",padding:"5px",margin:"5px"}}>
                     <div className="row-justify-content-md-center">
                       <div className="form-group" style={{textAlign:"right"}}>
-                        <div className="col">
+                        {/* <div className="col">
                           <Button
                             variant="danger"
                             onClick={() => {
@@ -73,7 +75,7 @@ export const AllCards = ({
                           >
                             X
                           </Button>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="form-group">
                         <div className="col">
@@ -87,7 +89,7 @@ export const AllCards = ({
                             className="form-control"
                             onChnage={handleChange}
                           >
-                            {textContentLegth<2 ? 
+                            {textContentLegth<=1 ? 
                             (
                               <option value="TEXT" disabled>Text</option>
                             ):
@@ -147,10 +149,12 @@ export const AllCards = ({
               })}
              
               <div className="row-justify-content-md-center">
-                <div className="form-group" style={{textAlign:"center",color:"red"}}>
-                    {textContentLegth<2  ? (
-                     <span>Content type text words limit is Acheived</span> 
-                   ) :null 
+                <div className="form-group" style={{textAlign:"center"}}>
+                    {errorMessage<=1 ? (
+                     <span style={{color:"red"}}>Sorry,Maxword Count Reached</span> 
+                   ) :(
+                    <span style={{color:"blue"}}>{1500- errorMessage}/1500</span> 
+                   )
                    }
                
                 </div>

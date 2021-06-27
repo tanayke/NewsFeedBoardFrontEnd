@@ -1,4 +1,3 @@
-
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -29,7 +28,7 @@ const InitialValues = {
   reporterId: 0,
   cards: [
     {
-      type: "TEXT",
+      type: "IMAGE",
       content: "",
     },
   ],
@@ -39,26 +38,26 @@ const SignupSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, "Too Short!")
     .max(120, "Too Long!")
-    .required("Enter Title!!"),
+    .required("Enter Title!"),
   description: Yup.string()
     .min(2, "Too Short!")
-    .max(60, "Too Long!")
-    .required("Enter Description!!"),
+    .max(250, "Too Long!")
+    .required("Enter Description!"),
   categoryId: Yup.string().required("Select Category"),
   state: Yup.string()
     .min(3, "Too Short!")
     .max(25, "Too Long!")
-    .required("State Required!!"),
+    .required("State Required!"),
   city: Yup.string()
     .min(2, "Too Short!")
     .max(60, "Too Long!")
-    .required("City Required!!"),
-  locality: Yup.string().max(60, "Too Long!").required("Locality Required!!"),
+    .required("City Required!"),
+  locality: Yup.string().max(60, "Too Long!").required("Locality Required!"),
   thumbnailImage: Yup.mixed().required("Select Image"),
   cards: Yup.array().of(
     Yup.object().shape({
       type: Yup.string().required("Required"),
-      content: Yup.string().required("Card Content Required!!"),
+      content: Yup.string().required("Card Content Required!"),
     })
   ),
 });
@@ -122,7 +121,7 @@ export const WritePage = () => {
         onSubmit={handleSubmit}
       >
         {({ errors, touched, values, setFieldValue, handleChange }) => (
-          <Form ref={myForm} style={{margin:"10px 100px"}}>
+          <Form ref={myForm} style={{margin:"10px 150px"}}>
             <div className="form-group">
               <FormLabel>Title</FormLabel>
               <Field name="title" className="form-control" />

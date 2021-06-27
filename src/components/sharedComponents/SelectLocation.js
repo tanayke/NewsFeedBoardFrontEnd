@@ -16,7 +16,7 @@ const ErrorMessage = ({ name }) => (
   </div>
 );
 
-export const SelectLocation = ({ handleChange, errors, touched }) => {
+export const SelectLocation = ({ handleChange }) => {
   const [formData, setFormData] = useState({
     locality: "",
     city: "",
@@ -120,60 +120,6 @@ export const SelectLocation = ({ handleChange, errors, touched }) => {
           <ErrorMessage name="locality" />
         </div>
 
-        {/*     
-      
-        <Form.Group controlId="state" as={Col}>
-         <Field
-            as="select"
-            defaultValue="Choose"
-            value={formData.state}
-            name="state"
-            onChange={(e)=>{handleChange(e);handleInputChange(e)}}
-            className="form-control"
-          >
-          <option>Select State</option>
-            {stateLocation.map((s) => (
-              <option key={s.id}>{s.state}</option>
-            ))}
-          </Field>
-         
-        </Form.Group>
-          <Form.Group controlId="city" as={Col}>
-            <Form.Control
-              as="select"
-              defaultValue="Choose"
-              value={formData.city}
-              name="city"
-              onChange={handleInputChange}
-              required
-            >
-             <option >Select City</option>
-             {filterdCities
-               .map((c) => (
-                <option key={c.id}>{c.city}</option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId="locality" as={Col}>
-            <Form.Control
-              as="select"
-              defaultValue="Choose"
-              value={formData.locality}
-              name="locality"
-              onChange={handleInputChange}
-              required
-            >
-            <option>Select Locality</option>
-              {cities
-                .filter((c) => c.city === formData.city)
-                .map((filteredLocality) => (
-                  <option key={filteredLocality.id} value={filteredLocality.id}>
-                    {filteredLocality.locality}
-                  </option>
-                ))}
-            </Form.Control>
-          </Form.Group> */}
       </div>
     </>
   );
