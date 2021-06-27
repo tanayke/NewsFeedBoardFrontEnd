@@ -8,7 +8,7 @@ import { Formik, Form, Field, getIn } from "formik";
 import * as Yup from "yup";
 // eslint-disable-next-line camelcase
 import jwt_decode from "jwt-decode";
-import { Button, FormLabel } from "react-bootstrap";
+import { Button, FormLabel, Container, Alert, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
@@ -77,15 +77,12 @@ const ErrorMessage = ({ name }) => (
 );
 
 export const WritePage = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   console.log(user);
   const history = useHistory();
   const [isNewLocation, setNewLocation] = useState(false);
   const myForm = useRef(null);
   const [categories, setCategory] = useState([]);
-  const reporter = sessionStorage.getItem("x-auth-token")
-    ? jwt_decode(sessionStorage.getItem("x-auth-token")).user
-    : null;
   useEffect(() => {
     getAllCategories().then((data) => {
       setCategory(data);
@@ -99,7 +96,7 @@ export const WritePage = () => {
 
   function handleSubmit(d) {
     const data = new FormData(myForm.current);
-    data.append("reporterId", reporter.id);
+    data.append("reporterId", user.id);
     data.append("isNewlocation", isNewLocation);
     data.append("cards", JSON.stringify(d.cards));
 
@@ -113,7 +110,7 @@ export const WritePage = () => {
       });
   }
 
-  return (
+  return user.isApproved === 1 ? (
     <div>
       <h1 style={{ textAlign: "center", marginTop: "8px" }}>
         Create News Article
@@ -211,5 +208,17 @@ export const WritePage = () => {
         )}
       </Formik>
     </div>
+  ) : (
+    <Container className="d-flex">
+      <Row />
+      <Row />
+      <Row>
+        <Alert variant="warning" className="align-items-center">
+          <h1 className="justify-content-center  text-monospace">
+            Wait for Admin Approval before you can start Writing on our site
+          </h1>
+        </Alert>
+      </Row>
+    </Container>
   );
 };
