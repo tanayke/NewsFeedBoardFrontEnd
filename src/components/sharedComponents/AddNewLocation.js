@@ -30,7 +30,7 @@ export const AddNewLocation = ({ handleChange }) => {
   return (
     <>
       <div className="form-row">
-        <div className="form-group mr-auto">
+        <div className="form-group col-md-4">
           <Field
             value={locationData.state}
             name="state"
@@ -44,7 +44,7 @@ export const AddNewLocation = ({ handleChange }) => {
           <ErrorMessage name="state" />
         </div>
 
-        <div className="form-group mr-auto">
+        <div className="form-group col-md-4">
           <Field
             value={locationData.city}
             name="city"
@@ -58,7 +58,7 @@ export const AddNewLocation = ({ handleChange }) => {
           <ErrorMessage name="city" />
         </div>
 
-        <div className="form-group mr-auto">
+        <div className="form-group col-md-4">
           <Field
             value={locationData.locality}
             name="locality"

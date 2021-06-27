@@ -45,7 +45,7 @@ export const LocationFilterComponent = ({
   return (
     <>
       <div className="pt-3">
-        by Locality
+        By Locality
         <hr />
         <Container>
           <Row>
