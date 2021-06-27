@@ -28,7 +28,7 @@ export const ArticleDescription = ({ article }) => {
     <>
       <Row>
         <Col className="text-center mt-5">
-          <h1 className="text-capitalize font-weight-bolder">
+          <h1 className=" text-capitalize font-weight-bolder">
             {article.title}
           </h1>
         </Col>

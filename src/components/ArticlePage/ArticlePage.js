@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { FaFacebookF, FaWhatsapp, FaLinkedinIn } from "react-icons/fa";
 // eslint-disable-next-line camelcase
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 import { getAllCardsByArticleId, getArticle } from "../../services";
 import { ArticleCards } from "./ArticleCards";
 import { ArticleDescription } from "./ArticleDescription";
@@ -36,7 +36,7 @@ export const ArticlePage = ({ match: { params } }) => {
   return !article ? null : (
     <>
       <Container>
-        <Row className="mt-2" style={defStyles}>
+        <Row className="d-flex justify-content-center mt-2" style={defStyles}>
           <Row>
             {/* <Col md={1} /> */}
             <Col ms={10}>
@@ -58,7 +58,7 @@ export const ArticlePage = ({ match: { params } }) => {
           <Row>
             <Col md={1} />
 
-            <Col md={10} className="text-center">
+            <Col md={10} className="text-center my-3 p-2 ">
               <ArticleReport articleId={params.articleId} userId={user.id} />
             </Col>
             {/* <Col className="text-right ml-5">
