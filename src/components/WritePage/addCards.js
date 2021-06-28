@@ -33,10 +33,7 @@ export const AllCards = ({ values, handleChange }) => {
   );
 
   let arrayIndex = null;
-  const setMaxLength = () => {
-    console.log(textContentLegth);
-    console.log((textContentLegth -= wordlength));
-  };
+  const setMaxLength = () => {};
 
   const selectDisable = (index) => {
     if (index === null);
@@ -48,7 +45,6 @@ export const AllCards = ({ values, handleChange }) => {
 
   const handleInputChange = (event) => {
     const str = event.target.innerHTML;
-    console.log(str.length);
     wordlength = str.length;
     errorMessage = textContentLegth - wordlength;
   };

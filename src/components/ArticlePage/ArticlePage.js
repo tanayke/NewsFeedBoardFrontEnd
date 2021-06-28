@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
-import { FaFacebookF, FaWhatsapp, FaLinkedinIn } from "react-icons/fa";
 // eslint-disable-next-line camelcase
 import jwt_decode from "jwt-decode";
 import { getAllCardsByArticleId, getArticle } from "../../services";
@@ -28,11 +27,8 @@ export const ArticlePage = ({ match: { params } }) => {
   useEffect(() => {
     getArticle(params.articleId).then((data) => {
       setArticle(data);
-      console.log(data);
     });
-    updateViewCount(params.articleId).then((response) => {
-      if (response.status === 200) console.log(response.data);
-    });
+    updateViewCount(params.articleId).then((response) => {});
   }, []);
   return !article ? null : (
     <>

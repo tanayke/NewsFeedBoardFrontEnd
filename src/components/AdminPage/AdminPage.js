@@ -57,22 +57,18 @@ export const AdminPage = () => {
   };
   useEffect(() => {
     getAllArticlesForAdmin().then((response) => {
-      console.log(response.data);
       setTopArticlesArray(response.data);
     });
     getAllUsers(0, "REPORTER").then((response) => {
-      console.log(response.data);
       setPendingApprovalArray(response.data);
     });
     getAllPendingReports().then((response) => {
-      console.log(response.data);
       setReportsArray(response.data);
     });
   }, []);
 
   useEffect(() => {
     getAllUsers(0, "REPORTER").then((response) => {
-      console.log(response.data);
       setPendingApprovalArray(response.data);
     });
   }, [toggleRender]);

@@ -39,7 +39,6 @@ export const LocationFilterComponent = ({
       ...articleFilters,
       locationId,
     });
-    console.log(locationId);
   }, [address, locationId]);
 
   useEffect(() => {

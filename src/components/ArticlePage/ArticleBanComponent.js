@@ -11,7 +11,6 @@ export const ArticleBanComponent = ({ articleId }) => {
       if (response.status === 200) {
         history.push(ADMIN);
       }
-      console.log(response.data);
     });
   };
   return (

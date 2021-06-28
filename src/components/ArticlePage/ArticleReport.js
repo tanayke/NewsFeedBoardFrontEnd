@@ -29,7 +29,6 @@ export const ArticleReport = ({ articleId, userId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addReport(newReport).then((response) => {
-      console.log(response.data);
       if (response.status === 201) {
         setReport(response.data);
         setIsAbleToReport(false);
@@ -40,11 +39,8 @@ export const ArticleReport = ({ articleId, userId }) => {
   };
   useEffect(() => {
     getAllReports(articleId, userId).then((response) => {
-      console.log(articleId, userId);
-      console.log(response.status);
       if (response.status === 200) {
         setIsAbleToReport(false);
-        console.log(response.data);
         setReport(response.data[0]);
       } else if (response.status === 204) {
         setIsAbleToReport(true);
