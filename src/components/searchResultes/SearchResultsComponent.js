@@ -7,13 +7,20 @@ export const SearchResultsComponent = () => {
   const { articleFilters } = useContext(ArticleFilterContext);
   return (
     <>
-      <div className='pt-5'>
-        <Container>
+      <div className="pt-5">
+        <Container className="d-flex justify-content-center">
           <Row>
+            <Col md={2} />
             <Col md={8}>
-              <h3>search Resultes for :{articleFilters.search}</h3>
+              <h3 className="font-weight-normal">
+                Search Resultes For :{" "}
+                <span className="font-weight-bolder">
+                  {articleFilters.search}
+                </span>
+              </h3>
               <ArticleFeedComponent />
             </Col>
+            <Col md={2} />
           </Row>
         </Container>
       </div>

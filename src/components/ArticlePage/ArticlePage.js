@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
 import { FaFacebookF, FaWhatsapp, FaLinkedinIn } from "react-icons/fa";
 // eslint-disable-next-line camelcase
 import jwt_decode from "jwt-decode";
@@ -48,11 +48,15 @@ export const ArticlePage = ({ match: { params } }) => {
           <Row className="mt-5 p-1">
             <Col md={1} />
             <Col md={10}>
-              {cards.map((data) => (
-                <Row key={data.id}>
-                  <ArticleCards card={data} />
-                </Row>
-              ))}
+              {!cards ? (
+                <Spinner animation="border" variant="info" />
+              ) : (
+                cards.map((data) => (
+                  <Row key={data.id}>
+                    <ArticleCards card={data} />
+                  </Row>
+                ))
+              )}
             </Col>
             <Col md={1} />
           </Row>

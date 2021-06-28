@@ -21,7 +21,10 @@ export const HomePage = () => {
     <div className="pt-5">
       <Container>
         <Row>
-          <Col md={8}>
+          <Col
+            md={8}
+            style={{ maxHeight: "calc(100vh - 9rem)", overflowY: "auto" }}
+          >
             <ArticlesTab />
           </Col>
           <Col md={4}>

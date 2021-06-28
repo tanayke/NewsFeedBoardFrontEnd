@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { Pie } from "react-chartjs-2";
 import { ARTICLE } from "../../constants";
 import { getAllPendingReports } from "../../services/articleReportsService";
 import { getAllArticlesForAdmin } from "../../services/articleService";
@@ -8,6 +9,43 @@ import { getAllUsers } from "../../services/userService";
 import { UserApprovalListComponent } from "./UserApprovalListComponent";
 import { ReportsComponent } from "./ReportsComponent";
 
+const state = {
+  labels: [
+    "Politics",
+    "Entertainment",
+    "Business",
+    "Sports",
+    "Covid-19",
+    "Education",
+    "Technology",
+    "StartUps",
+    "Fashion",
+  ],
+  datasets: [
+    {
+      label: "News",
+      backgroundColor: [
+        "#B21F00",
+        "#C9DE00",
+        "#2FDE00",
+        "#00A6B4",
+        "#6800B4",
+        "#23431H",
+        "#B34567",
+        "#696969",
+        "#484848",
+      ],
+      hoverBackgroundColor: [
+        "#501800",
+        "#4B5000",
+        "#175000",
+        "#003350",
+        "#35014F",
+      ],
+      data: [265, 591, 80, 181, 156, 323, 123, 12, 343],
+    },
+  ],
+};
 export const AdminPage = () => {
   const [reportsArray, setReportsArray] = useState();
   const [pendingApprovalArray, setPendingApprovalArray] = useState();
@@ -41,25 +79,46 @@ export const AdminPage = () => {
 
   return (
     <div>
-      <Container style={{ heigth: "500" }}>
-        <Row className="h-50 mt-5">
-          <Col md={9} className="scrollbar scrollbar-primary overflow-auto">
+      <Container>
+        <Row className="mt-5">
+          <Col md={8}>
             <h2>List Of Reports</h2>
-            <ReportsComponent
-              className="row text-center"
-              reportsArray={reportsArray}
+            <Row style={{ maxHeight: "calc(40vh)", overflowY: "auto" }}>
+              <ReportsComponent
+                className="row text-center"
+                reportsArray={reportsArray}
+              />
+            </Row>
+          </Col>
+          <Col md={4}>
+            {" "}
+            <Pie
+              data={state}
+              options={{
+                title: {
+                  display: true,
+                  fontSize: 20,
+                },
+                legend: {
+                  display: true,
+                  position: "right",
+                },
+              }}
             />
           </Col>
-          <Col md={3}>{` `}</Col>
         </Row>
         <hr />
-        <Row className="">
-          <h2>User List To Approve</h2>
-          <UserApprovalListComponent
-            pendingApprovalArray={pendingApprovalArray}
-            toggleRender={toggleRender}
-            setToggleRender={setToggleRender}
-          />
+        <Row>
+          <Row>
+            <h2>User List To Approve</h2>
+          </Row>
+          <Row style={{ maxHeight: "calc(30vh)", overflowY: "auto" }}>
+            <UserApprovalListComponent
+              pendingApprovalArray={pendingApprovalArray}
+              toggleRender={toggleRender}
+              setToggleRender={setToggleRender}
+            />
+          </Row>
         </Row>
       </Container>
     </div>

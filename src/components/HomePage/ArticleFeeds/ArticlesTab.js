@@ -22,7 +22,7 @@ export const ArticlesTab = () => {
     });
   };
   return (
-    <>
+    <div className="mt-2">
       <Tabs
         id="controlled-tab-example"
         activeKey={key}
@@ -48,6 +48,6 @@ export const ArticlesTab = () => {
         </Button>
       </ButtonGroup> */}
       <hr />
-    </>
+    </div>
   );
 };

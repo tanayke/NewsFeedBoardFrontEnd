@@ -17,7 +17,9 @@ export const ArticleFilterComponent = ({ filterArticles }) => {
 
   return (
     <div>
-      Filters
+      <h3>
+        <strong>Filters</strong>
+      </h3>
       <hr />
       <Form>
         <CategoriesComponent

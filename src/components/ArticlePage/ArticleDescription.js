@@ -1,30 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
+import moment from "moment";
 import React, { useState, useEffect } from "react";
-import { Col, Row, Image } from "react-bootstrap";
+import { Col, Row, Image, Spinner } from "react-bootstrap";
 import { BASE_URL } from "../../constants";
 
-export const ArticleDescription = ({ article }) => {
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const date = new Date(article.uploadDateTime);
-  console.log(JSON.stringify(date));
-  console.log(article);
-
-  return !article ? null : (
+export const ArticleDescription = ({ article }) =>
+  !article ? (
+    <Spinner animation="border" variant="info" />
+  ) : (
     <>
       <Row>
         <Col className="text-center mt-5">
@@ -39,9 +23,7 @@ export const ArticleDescription = ({ article }) => {
           <Row className="mx-2">
             <Col className="text-right mr-5">
               <small>
-                {`${date.getDay()}th ${
-                  monthNames[date.getMonth()]
-                } ${date.getFullYear()}`}
+                {moment(article.uploadDateTime).format("MMM Do YYYY")}
               </small>
             </Col>
           </Row>
@@ -54,7 +36,7 @@ export const ArticleDescription = ({ article }) => {
             <Col className="text-right mr-5">
               <small>
                 {article.location.locality}
-                <strong>{`, ${article.location.city}`}</strong>
+                <strong className="text-capitalize">{`, ${article.location.city}`}</strong>
               </small>
             </Col>
           </Row>
@@ -73,4 +55,3 @@ export const ArticleDescription = ({ article }) => {
       </Row>
     </>
   );
-};

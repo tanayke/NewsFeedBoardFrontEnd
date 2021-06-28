@@ -16,7 +16,7 @@ export const ReportsComponent = ({ reportsArray }) => {
     <Spinner animation="border" variant="info" />
   ) : (
     reportsArray.map((report) => (
-      <Card key={report.id} style={{ width: "70%", margin: "1rem" }}>
+      <Card key={report.id} style={{ width: "100%", margin: "1rem" }}>
         <Card.Body>
           <Container>
             <Row>

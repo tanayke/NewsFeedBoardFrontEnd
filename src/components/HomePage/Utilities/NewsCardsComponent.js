@@ -33,10 +33,12 @@ const NewsCardsComponent = ({ articleFeed }) => {
                     {article.location.city}
                   </span>
                 </Card.Text>
-                <Card.Title className="font-weight-bolder">
+                <Card.Title className="font-weight-bolder  col-12 text-truncate text-wrap">
                   {article.title}
                 </Card.Title>
-                <Card.Text>{article.description}</Card.Text>
+                <Card.Text className="col-12 text-truncate text-wrap">
+                  {article.description}
+                </Card.Text>
               </Col>
               <Col md={5}>
                 <Card.Img

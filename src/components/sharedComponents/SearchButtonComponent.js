@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { ROUTE_SEARCH } from "../../constants/CONSTANTS";
@@ -17,8 +17,10 @@ export const SearchButtonComponent = () => {
       ...articleFilters,
       search: searchText,
     });
+    setSearchText("");
     history.push(ROUTE_SEARCH);
   };
+
   return (
     <Form inline>
       <Form.Control

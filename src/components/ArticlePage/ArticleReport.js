@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Popover, Button, OverlayTrigger, Form, Alert } from "react-bootstrap";
+import {
+  Popover,
+  Button,
+  OverlayTrigger,
+  Form,
+  Alert,
+  Spinner,
+} from "react-bootstrap";
 import { addReport, getAllReports } from "../../services/articleReportsService";
 
 export const ArticleReport = ({ articleId, userId }) => {
