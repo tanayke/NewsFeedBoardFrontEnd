@@ -17,6 +17,20 @@ export const getAllArticles = async (filters) => {
   }
 };
 
+export const updateIsActiveStatus = async (isActive, articleId) => {
+  try {
+    console.log(isActive, articleId);
+    const response = await axios.patch(API_GET_ALL_ARTICLES, {
+      isActive,
+      articleId,
+    });
+    console.log(response.data);
+    return response;
+  } catch (err) {
+    console.log(err.response);
+    return err.response;
+  }
+};
 export const getAllArticlesForAdmin = async () => {
   try {
     const response = await axios.get(`${API_GET_ALL_ARTICLES}/viewCount`);

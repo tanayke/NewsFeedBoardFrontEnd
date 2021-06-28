@@ -1,12 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Prompt } from "react-router-dom";
 import { Navbar, Nav, Button } from "react-bootstrap";
 
 import {
   NAVBAR_ADMIN,
   HOME,
-  REGISTER,
-  WRITE,
   LOGIN,
   NAVBAR_READER,
   NAVBAR_REPORTER,
@@ -22,11 +20,14 @@ export const NavBarComponent = () => {
   const [navBarArray, setNavBarArray] = useState([]);
   const history = useHistory();
   const handleOnClickLogOut = () => {
-    sessionStorage.removeItem("x-auth-token");
-    sessionStorage.removeItem("user");
-    setAuthtoken(sessionStorage.getItem("x-auth-token"));
-    setUser();
-    history.push(LOGIN);
+    const logout = prompt("Really wanna log out?", "Yes");
+    if (logout) {
+      sessionStorage.removeItem("x-auth-token");
+      sessionStorage.removeItem("user");
+      setAuthtoken(sessionStorage.getItem("x-auth-token"));
+      setUser();
+      history.push(LOGIN);
+    }
   };
 
   useEffect(() => {
@@ -52,24 +53,35 @@ export const NavBarComponent = () => {
       <Navbar.Brand>
         <Link to={HOME}>News Board</Link>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          {navBarArray.map((path) => (
-            <Nav.Link key={path}>
-              <Link to={path}>{path.substring(1).toUpperCase()}</Link>
-            </Nav.Link>
-          ))}
-          {user ? (
-            <Button onClick={handleOnClickLogOut} variant="danger">
-              LogOut
-            </Button>
-          ) : (
-            <div />
-          )}
-        </Nav>
+
+      <Nav i className="mr-auto">
+        {navBarArray.map((path) => (
+          <Nav.Link key={path}>
+            <Link to={path}>{path.substring(1).toUpperCase()}</Link>
+          </Nav.Link>
+        ))}
         <SearchButtonComponent />
-      </Navbar.Collapse>
+      </Nav>
+      <Nav className="ml-auto">
+        {user ? (
+          <>
+            {" "}
+            <Nav.Link>
+              <h4>{user.name}</h4>
+            </Nav.Link>
+            <Button
+              className="m-1"
+              onClick={handleOnClickLogOut}
+              variant="danger"
+              size="sm"
+            >
+              LOGOUT
+            </Button>
+          </>
+        ) : (
+          <div />
+        )}
+      </Nav>
     </Navbar>
   );
 };

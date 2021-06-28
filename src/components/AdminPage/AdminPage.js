@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { ARTICLE } from "../../constants";
+import { getAllPendingReports } from "../../services/articleReportsService";
 import { getAllArticlesForAdmin } from "../../services/articleService";
 import { getAllUsers } from "../../services/userService";
-import NewsCardsComponent from "../homePage/Utilities/NewsCardsComponent";
 import { UserApprovalListComponent } from "./UserApprovalListComponent";
+import { ReportsComponent } from "./ReportsComponent";
 
 export const AdminPage = () => {
   const [reportsArray, setReportsArray] = useState();
@@ -25,6 +26,10 @@ export const AdminPage = () => {
       console.log(response.data);
       setPendingApprovalArray(response.data);
     });
+    getAllPendingReports().then((response) => {
+      console.log(response.data);
+      setReportsArray(response.data);
+    });
   }, []);
 
   useEffect(() => {
@@ -36,16 +41,20 @@ export const AdminPage = () => {
 
   return (
     <div>
-      <h1>Admin Page</h1>
-      <Container>
-        <Row>
-          <Col md={9}>
-            {/* <NewsCardsComponent articleFeed={topArticlesArray} /> */}
+      <Container style={{ heigth: "500" }}>
+        <Row className="h-50 mt-5">
+          <Col md={9} className="scrollbar scrollbar-primary overflow-auto">
+            <h2>List Of Reports</h2>
+            <ReportsComponent
+              className="row text-center"
+              reportsArray={reportsArray}
+            />
           </Col>
-          <Col md={3}>New Reporter Approval requests</Col>
+          <Col md={3}>{` `}</Col>
         </Row>
-        <Row>
-          <h2>User List to Approve</h2>
+        <hr />
+        <Row className="">
+          <h2>User List To Approve</h2>
           <UserApprovalListComponent
             pendingApprovalArray={pendingApprovalArray}
             toggleRender={toggleRender}

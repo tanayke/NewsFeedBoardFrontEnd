@@ -2,42 +2,41 @@
 /* eslint-disable prefer-template */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { Field, FieldArray, getIn } from "formik";
 import { Button } from "react-bootstrap";
 
 const ErrorMessage = ({ name }) => (
-  <div  style={{color:"red"}}>
-  <Field
-    name={name}
-    render={({ form }) => {
-      const error = getIn(form.errors, name);
-      const touch = getIn(form.touched, name);
-      return touch && error ? error : null;
-    }}
-  />
+  <div style={{ color: "red" }}>
+    <Field
+      name={name}
+      render={({ form }) => {
+        const error = getIn(form.errors, name);
+        const touch = getIn(form.touched, name);
+        return touch && error ? error : null;
+      }}
+    />
   </div>
 );
 
-let textContentLegth=1500;
-let wordlength=0;
-let errorMessage=1500;
+let textContentLegth = 1500;
+let wordlength = 0;
+let errorMessage = 1500;
 
-export const AllCards = ({
-  values,
-  handleChange,
-}) => {
-  
-  useEffect(() => () => {
-      textContentLegth=1500;
-      errorMessage=1500;
-    }, [])
+export const AllCards = ({ values, handleChange }) => {
+  useEffect(
+    () => () => {
+      textContentLegth = 1500;
+      errorMessage = 1500;
+    },
+    []
+  );
 
   let arrayIndex = null;
-  const setMaxLength =()=>{
+  const setMaxLength = () => {
     console.log(textContentLegth);
-    console.log(textContentLegth-=wordlength);
-  }
+    console.log((textContentLegth -= wordlength));
+  };
 
   const selectDisable = (index) => {
     if (index === null);
@@ -48,10 +47,10 @@ export const AllCards = ({
   };
 
   const handleInputChange = (event) => {
-      const str =event.target.innerHTML;
-      console.log(str.length);
-      wordlength=str.length;
-      errorMessage=textContentLegth-wordlength;
+    const str = event.target.innerHTML;
+    console.log(str.length);
+    wordlength = str.length;
+    errorMessage = textContentLegth - wordlength;
   };
   return (
     <div>
@@ -62,21 +61,16 @@ export const AllCards = ({
               values.cards.map((card, index) => {
                 arrayIndex = index;
                 return (
-                  <div className="justify-content-md-center" key={index} style={{border:"1px solid black",padding:"5px",margin:"5px"}}>
+                  <div
+                    className="justify-content-md-center"
+                    key={index}
+                    style={{
+                      border: "1px solid black",
+                      padding: "5px",
+                      margin: "5px",
+                    }}
+                  >
                     <div className="row-justify-content-md-center">
-                      <div className="form-group" style={{textAlign:"right"}}>
-                        {/* <div className="col">
-                          <Button
-                            variant="danger"
-                            onClick={() => {
-                              console.log(index);
-                              remove(index);
-                            }}
-                          >
-                            X
-                          </Button>
-                        </div> */}
-                      </div>
                       <div className="form-group">
                         <div className="col">
                           <label htmlFor={`cards.${index}.type`}>
@@ -89,14 +83,14 @@ export const AllCards = ({
                             className="form-control"
                             onChnage={handleChange}
                           >
-                            {textContentLegth<=1 ? 
-                            (
-                              <option value="TEXT" disabled>Text</option>
-                            ):
-                            (
+                            {textContentLegth <= 1 ? (
+                              <option value="TEXT" disabled>
+                                Text
+                              </option>
+                            ) : (
                               <option value="TEXT">Text</option>
-                            )} 
-                            
+                            )}
+
                             <option value="IMAGE">Image</option>
                             <option value="VIDEO">Video</option>
                           </Field>
@@ -147,18 +141,20 @@ export const AllCards = ({
                   </div>
                 );
               })}
-             
-              <div className="row-justify-content-md-center">
-                <div className="form-group" style={{textAlign:"center"}}>
-                    {errorMessage<=1 ? (
-                     <span style={{color:"red"}}>Sorry,Maxword Count Reached</span> 
-                   ) :(
-                    <span style={{color:"blue"}}>{1500- errorMessage}/1500</span> 
-                   )
-                   }
-               
-                </div>
+
+            <div className="row-justify-content-md-center">
+              <div className="form-group" style={{ textAlign: "center" }}>
+                {errorMessage <= 1 ? (
+                  <span style={{ color: "red" }}>
+                    Sorry,Maxword Count Reached
+                  </span>
+                ) : (
+                  <span style={{ color: "blue" }}>
+                    {1500 - errorMessage}/1500
+                  </span>
+                )}
               </div>
+            </div>
             <Button
               variant="primary"
               onClick={() => {

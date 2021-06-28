@@ -11,8 +11,10 @@ export const HomePage = () => {
 
   useEffect(() => {
     setArticleFilters({
-      ...articleFilters,
+      locationId: undefined,
+      categoryId: undefined,
       search: undefined,
+      isTrending: undefined,
     });
   }, []);
   return (

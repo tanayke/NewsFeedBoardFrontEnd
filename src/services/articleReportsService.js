@@ -12,6 +12,14 @@ export const getAllReports = async (articleId, userId) => {
   }
 };
 
+export const getAllPendingReports = async () => {
+  try {
+    const response = await axios.get(`${API_ALL_REPORTS}/unresolved`);
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
 export const addReport = async (report) => {
   try {
     const respone = await axios.post(API_ALL_REPORTS, report);

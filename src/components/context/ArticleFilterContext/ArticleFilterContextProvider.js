@@ -8,7 +8,7 @@ const ArticlesContextProvider = ({ children }) => {
     locationId: undefined,
     categoryId: undefined,
     search: undefined,
-    isTrending: false,
+    isTrending: undefined,
   });
 
   const value = {

@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { Form, Container, Row, Col } from "react-bootstrap";
-import { VAR_ARRAY_STATES } from "../../../constants";
 import { getAllLocations } from "../../../services";
 import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
 
@@ -13,11 +12,11 @@ export const LocationFilterComponent = ({
   setLocationId,
 }) => {
   const [address, setAddress] = useState({
-    state: VAR_ARRAY_STATES[0],
+    state: "",
     city: "",
     locality: "",
   });
-
+  const [statesOfIndia, setStatesOfIndia] = useState([]);
   const [locations, setLocations] = useState([]);
   const { articleFilters, setArticleFilters } =
     useContext(ArticleFilterContext);
@@ -35,6 +34,7 @@ export const LocationFilterComponent = ({
     getAllLocations(address.state).then((data) => {
       setLocations(data);
     });
+
     setArticleFilters({
       ...articleFilters,
       locationId,
@@ -42,6 +42,15 @@ export const LocationFilterComponent = ({
     console.log(locationId);
   }, [address, locationId]);
 
+  useEffect(() => {
+    getAllLocations(address.state).then((data) => {
+      setStatesOfIndia(
+        data.filter(
+          (v, i) => data.map((val) => val.state).indexOf(v.state) === i
+        )
+      );
+    });
+  }, []);
   return (
     <>
       <div className="pt-3">
@@ -57,9 +66,10 @@ export const LocationFilterComponent = ({
                   onChange={handleStateChange}
                   value={address.state}
                 >
-                  {VAR_ARRAY_STATES.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
+                  <option>All</option>
+                  {statesOfIndia.map((state) => (
+                    <option key={state.id} value={state.state}>
+                      {state.state}
                     </option>
                   ))}
                 </Form.Control>

@@ -8,6 +8,7 @@ import { ArticleCards } from "./ArticleCards";
 import { ArticleDescription } from "./ArticleDescription";
 import { ArticleReport } from "./ArticleReport";
 import { updateViewCount } from "../../services/articleService";
+import { ArticleBanComponent } from "./ArticleBanComponent";
 
 export const ArticlePage = ({ match: { params } }) => {
   const [article, setArticle] = useState();
@@ -59,7 +60,11 @@ export const ArticlePage = ({ match: { params } }) => {
             <Col md={1} />
 
             <Col md={10} className="text-center my-3 p-2 ">
-              <ArticleReport articleId={params.articleId} userId={user.id} />
+              {user.role === "ADMIN" ? (
+                <ArticleBanComponent articleId={params.articleId} />
+              ) : (
+                <ArticleReport articleId={params.articleId} userId={user.id} />
+              )}
             </Col>
             {/* <Col className="text-right ml-5">
               <small className=" ml-3 ">
