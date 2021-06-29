@@ -1,17 +1,26 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { Card, Button, Spinner, Container, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
+import { getAllPendingReports } from "../../services/articleReportsService";
 import { ARTICLE } from "../../constants";
 
-export const ReportsComponent = ({ reportsArray }) => {
-  const [value, setValue] = useState();
+export const ReportsComponent = () => {
+  const [reportsArray, setReportsArray] = useState();
+
   const history = useHistory();
   const handleReportClick = (articleId) => {
     history.push(`${ARTICLE}/${articleId}`);
   };
 
+  useEffect(() => {
+    getAllPendingReports().then((response) => {
+      console.log(response.data);
+      console.log(reportsArray);
+      setReportsArray(response.data);
+    });
+  }, []);
+  // eslint-disable-next-line no-nested-ternary
   return !reportsArray ? (
     <Spinner animation="border" variant="info" />
   ) : (

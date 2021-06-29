@@ -9,3 +9,12 @@ export const getAllCategories = async () => {
     return err;
   }
 };
+
+export const getAllCategoryViews = async () => {
+  try {
+    const response = await axios.get(`${API_GET_ALL_CATEGORIES}/views`);
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};

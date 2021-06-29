@@ -1,17 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button, Spinner } from "react-bootstrap";
-import { updateIsApprovedStatus } from "../../services/userService";
+import {
+  updateIsApprovedStatus,
+  getAllUsers,
+} from "../../services/userService";
 
-export const UserApprovalListComponent = ({
-  pendingApprovalArray,
-  toggleRender,
-  setToggleRender,
-}) => {
+export const UserApprovalListComponent = () => {
+  const [pendingApprovalArray, setPendingApprovalArray] = useState();
+  const [toggleRender, setToggleRender] = useState();
+
   const handleAprrovalOrReject = (isApproved, userId) => {
     updateIsApprovedStatus(isApproved, userId).then((response) => {
       setToggleRender(!toggleRender);
     });
   };
+  useEffect(() => {
+    getAllUsers(0, "REPORTER").then((response) => {
+      setPendingApprovalArray(response.data);
+    });
+  }, [toggleRender]);
+
   useEffect(() => {}, [toggleRender]);
   return (
     <Table striped bordered hover>
