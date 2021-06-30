@@ -4,22 +4,19 @@ import { NavBarComponent } from "../sharedComponents/NavBarComponent";
 import { RouterConfig } from "../routes/RouterConfig";
 import UserContextProvider from "../context/UserContext/UserContextProvider";
 import ArticleFilterContextProvider from "../context/ArticleFilterContext/ArticleFilterContextProvider";
-import ArticlesContextProvider from "../context/ArticlesContext/ArticlesContextProvider";
 
 export const UserLayout = () => (
   <div>
     <UserContextProvider>
       <ArticleFilterContextProvider>
-        <ArticlesContextProvider>
-          <NavBarComponent />
-          <Container fluid="md" className="mt-5">
-            <Row>
-              <Col>
-                <RouterConfig />
-              </Col>
-            </Row>
-          </Container>
-        </ArticlesContextProvider>
+        <NavBarComponent />
+        <Container fluid="md" className="mt-5">
+          <Row>
+            <Col>
+              <RouterConfig />
+            </Col>
+          </Row>
+        </Container>
       </ArticleFilterContextProvider>
     </UserContextProvider>
   </div>

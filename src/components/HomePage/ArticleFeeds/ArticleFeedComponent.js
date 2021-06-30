@@ -1,28 +1,29 @@
-// import React, { useContext, useEffect, useState } from "react";
-// import { ArticlesContext } from "../../context/ArticlesContext/ArticlesContext";
-// import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
-// import NewsCardsComponent from "../Utilities/NewsCardsComponent";
-// import { getAllArticles } from "../../../services";
+import React, { useContext, useEffect, useState } from "react";
+import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
+import NewsCardsComponent from "../Utilities/NewsCardsComponent";
+import { getAllArticles } from "../../../services";
+import { PaginationComponent } from "../Utilities/PaginationComponent";
 
-// // eslint-disable-next-line arrow-body-style
-// export const ArticleFeedComponent = () => {
-//   const [articleFeed, setArticleFeed] = useState([]);
-//   const { articleFilters } = useContext(ArticleFilterContext);
-//   const { articles, setArticles } = useContext(ArticlesContext);
+// eslint-disable-next-line arrow-body-style
+export const ArticleFeedComponent = () => {
+  const [articleFeed, setArticleFeed] = useState([]);
+  const { articleFilters } = useContext(ArticleFilterContext);
 
-//   useEffect(() => {
-//     getAllArticles({...articleFilters, page, size}).then((data) => {
-//       setArticles(data);
-//       setArticleFeed(data);
-//     });
-//   }, [articleFilters]);
-//   useEffect(() => {
-//     console.log(articles);
-//   }, [articles]);
+  useEffect(() => {
+    getAllArticles(articleFilters).then((data) => {
+      setArticleFeed(data.items);
+      console.log(data);
+    });
+  }, [articleFilters]);
 
-//   return (
-//     <div className="p-3">
-//       <NewsCardsComponent articleFeed={articleFeed} />
-//     </div>
-//   );
-// };
+  useEffect(() => {
+    console.log(articleFeed);
+  }, [articleFeed]);
+
+  return (
+    <div className="p-3">
+      <NewsCardsComponent articleFeed={articleFeed} />
+      <PaginationComponent setArticleFeed={setArticleFeed} />
+    </div>
+  );
+};

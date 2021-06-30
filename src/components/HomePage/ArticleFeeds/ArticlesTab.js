@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useState } from "react";
-import { ButtonGroup, Button, Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
 import { ArticleFeedComponent } from "./ArticleFeedComponent";
 import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
-import { PaginationComponent } from "../Utilities/PaginationComponent";
 
 export const ArticlesTab = () => {
   const [key, setKey] = useState("home");
@@ -34,10 +33,10 @@ export const ArticlesTab = () => {
         }}
       >
         <Tab eventKey="home" title="Your Feed" onClick={handleYourFeedClick}>
-          <PaginationComponent />
+          <ArticleFeedComponent />
         </Tab>
         <Tab eventKey="Trending" title="Trending" onClick={handleTrendingClick}>
-          <PaginationComponent />
+          <ArticleFeedComponent />
         </Tab>
       </Tabs>
       {/* <ButtonGroup>
