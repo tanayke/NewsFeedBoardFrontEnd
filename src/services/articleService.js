@@ -3,13 +3,13 @@ import { API_GET_ALL_ARTICLES } from "../constants";
 
 export const getAllArticles = async (filters) => {
   // eslint-disable-next-line prefer-const
-  let { categoryId, locationId, search, isTrending } = filters;
-  console.log(categoryId, locationId, search, isTrending);
+  let { categoryId, locationId, search, isTrending, page, size } = filters;
+  console.log(categoryId, locationId, search, isTrending, page);
   if (categoryId === "All") categoryId = undefined;
   if (locationId === "All") locationId = undefined;
   try {
     const respone = await axios.get(API_GET_ALL_ARTICLES, {
-      params: { categoryId, locationId, search, isTrending },
+      params: { categoryId, locationId, search, isTrending, page, size },
     });
     return respone.data;
   } catch (err) {
@@ -29,18 +29,6 @@ export const updateIsActiveStatus = async (isActive, articleId) => {
   } catch (err) {
     console.log(err.response);
     return err.response;
-  }
-};
-
-export const getAllArticlesForSearchInput = async (searchInput) => {
-  try {
-    const respone = await axios.get(`${API_GET_ALL_ARTICLES}/search`, {
-      params: { search: searchInput },
-    });
-    console.log(respone.data);
-    return respone.data;
-  } catch (err) {
-    return err;
   }
 };
 
