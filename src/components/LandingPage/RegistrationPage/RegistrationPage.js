@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
-import { Form, Button, FloatingLabel, Row, Col, Image } from "react-bootstrap";
+import { Form, Button, Alert, Row, Col, Image } from "react-bootstrap";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { postUser } from "../../../services/userService";
@@ -46,18 +46,18 @@ export const RegistrationPage = () => {
       .max(60, "Too Long!")
       .required("City Required!!"),
     locality: Yup.string().max(60, "Too Long!").required("Locality Required!!"),
-
     // location: Yup.string().required("Location is Required"),
   });
 
   const [locations, setLocations] = useState([]);
+  const [err, setErr] = useState("");
 
   useEffect(() => {
     getAllLocations().then((data) => {
       setLocations(data);
     });
   }, []);
-
+  useEffect(() => {}, [err]);
   let formData;
 
   function getFormData() {
@@ -76,6 +76,7 @@ export const RegistrationPage = () => {
 
   return (
     <div>
+      {err === "" ? <Alert variant="danger">{err}</Alert> : <span>Hi bro</span>}
       <Formik
         initialValues={{
           name: "",
@@ -113,13 +114,16 @@ export const RegistrationPage = () => {
           if (object.isReporter) {
             object.role = "REPORTER";
           }
-          try {
-            postUser(object).then((response) => {
+
+          postUser(object)
+            .then((response) => {
+              console.log(response);
               if (response.status === 200) history.push(LOGIN);
+            })
+            .catch((error) => {
+              console.log(error.sg);
+              setErr(error.msg);
             });
-          } catch (error) {
-            console.log(error.data);
-          }
         }}
       >
         {({

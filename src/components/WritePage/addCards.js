@@ -19,7 +19,7 @@ const ErrorMessage = ({ name }) => (
   </div>
 );
 
- let textContentLegth = 1500;
+let textContentLegth = 1500;
 let wordlength = 0;
 let errorMessage = 1500;
 
@@ -27,13 +27,15 @@ export const AllCards = ({ values, handleChange }) => {
   useEffect(
     () => () => {
       textContentLegth = 1500;
-       errorMessage = 1500;
+      errorMessage = 1500;
     },
     []
   );
 
   let arrayIndex = null;
-  const setMaxLength = () => {};
+  const setMaxLength = () => {
+    textContentLegth -= wordlength;
+  };
 
   const selectDisable = (index) => {
     if (index === null);

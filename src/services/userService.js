@@ -42,11 +42,11 @@ export const updateIsApprovedStatus = async (isApproved, userId) => {
 export const postUser = async (formdata) => {
   try {
     const response = await axios.post(API_POST_USERS, formdata);
-    console.log(response.data);
+    console.log(response);
     return response;
   } catch (err) {
-    console.log(err.response.data);
-    return err.reponse;
+    console.log(err.response.data.msg);
+    return err.response.data;
   }
 };
 

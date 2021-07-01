@@ -5,13 +5,13 @@ import { PageItem, Pagination } from "react-bootstrap";
 import { getAllArticles } from "../../../services";
 import { ArticleFilterContext } from "../../context/ArticleFilterContext/ArticleFilterContext";
 
-export const PaginationComponent = ({ setArticleFeed }) => {
-  const [pageLimit, setPageLimit] = useState(1);
+export const PaginationComponent = ({
+  fetchAndSetDataForPageChange,
+  pageLimit,
+}) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const { articleFilters } = useContext(ArticleFilterContext);
 
   const goToNextPage = () => {
-    console.log(currentPage, pageLimit);
     if (currentPage !== pageLimit) setCurrentPage(currentPage + 1);
   };
   const goToPreviousPage = () => {
@@ -19,11 +19,7 @@ export const PaginationComponent = ({ setArticleFeed }) => {
   };
 
   useEffect(() => {
-    getAllArticles({ ...articleFilters, page: currentPage }).then((data) => {
-      console.log(data);
-      setArticleFeed(data.items);
-      setPageLimit(data.totalPages - 1);
-    });
+    fetchAndSetDataForPageChange(currentPage);
   }, [currentPage]);
 
   return (
