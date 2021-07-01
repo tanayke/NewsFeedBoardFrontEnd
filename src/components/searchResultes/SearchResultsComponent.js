@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { ArticleFilterContext } from "../context/ArticleFilterContext/ArticleFilterContext";
-import { ArticleFeedComponent } from "../homePage/ArticleFeeds/ArticleFeedComponent";
+import { ArticleFeedComponent } from "../HomePage/ArticleFeeds/ArticleFeedComponent";
 
 export const SearchResultsComponent = () => {
   const { articleFilters } = useContext(ArticleFilterContext);

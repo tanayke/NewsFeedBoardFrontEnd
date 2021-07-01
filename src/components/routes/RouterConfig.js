@@ -1,11 +1,11 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { AdminPage } from "../adminPage/AdminPage";
-import { ArticlePage } from "../articlePage/ArticlePage";
-import { HomePage } from "../homePage/HomePage";
-import { WritePage } from "../writePage";
-import { RegistrationPage } from "../landingPage/RegistrationPage";
-import { LoginPage } from "../landingPage/LoginPage";
+import { AdminPage } from '../AdminPage/AdminPage';
+import { ArticlePage } from "../ArticlePage/ArticlePage";
+import { HomePage } from "../HomePage/HomePage";
+import { WritePage } from "../WritePage";
+import { RegistrationPage } from "../LandingPage/RegistrationPage";
+import { LoginPage } from "../LandingPage/LoginPage";
 import { SearchResultsComponent } from "../searchResultes/SearchResultsComponent";
 import { NotFoundPage } from "../notFoundPage/NotFoundPage";
 import {
