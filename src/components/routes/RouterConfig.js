@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { AdminPage } from "../adminPage/AdminPage";
+import { AdminPage } from '../adminPage/AdminPage';
 import { ArticlePage } from "../articlePage/ArticlePage";
 import { HomePage } from "../homePage/HomePage";
 import { WritePage } from "../writePage";
