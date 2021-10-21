@@ -18,9 +18,9 @@ export const AdminPage = () => (
         </Col>
       </Row>
       <hr />
-      <Row className="d-flex justify-content-center">
+      <Row className="d-flex justify-content-start">
         <h2 className="text-center">User List To Approve</h2>
-        <Row className="mt-3" style={{ maxHeight: "30vh", overflowY: "auto" }}>
+        <Row className="mt-3">
           <UserApprovalListComponent />
         </Row>
       </Row>

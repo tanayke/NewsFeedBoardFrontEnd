@@ -6,9 +6,15 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { Formik, Form, Field, getIn } from "formik";
 import * as Yup from "yup";
-// eslint-disable-next-line camelcase
-import jwt_decode from "jwt-decode";
-import { Button, FormLabel, Container, Alert, Row ,Toast} from "react-bootstrap";
+import "./writePage.css";
+import {
+  Button,
+  FormLabel,
+  Container,
+  Alert,
+  Row,
+  Toast,
+} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { getAllCategories } from "../../services/categoriesService";
 import { addArticle } from "../../services/articleService";
@@ -17,7 +23,7 @@ import { AllCards } from "./addCards";
 import { AddNewLocation } from "../sharedComponents/AddNewLocation";
 import { HOME } from "../../constants";
 import { UserContext } from "../context/UserContext/UserContext";
-import {ValidationSchemaExample} from "./form";
+import { ValidationSchemaExample } from "./form";
 
 const InitialValues = {
   title: "",
@@ -60,7 +66,6 @@ const SignupSchema = Yup.object().shape({
     Yup.object().shape({
       type: Yup.string().required("Required"),
       content: Yup.string().required("Card Content Required!"),
-      
     })
   ),
 });
@@ -79,7 +84,6 @@ const ErrorMessage = ({ name }) => (
 );
 
 export const WritePage = () => {
-
   const { user } = useContext(UserContext);
   console.log(user);
   const history = useHistory();
@@ -112,8 +116,6 @@ export const WritePage = () => {
         console.log(error);
       });
   }
-
- 
 
   return user.isApproved === 1 ? (
     <div>
@@ -214,9 +216,7 @@ export const WritePage = () => {
       </Formik>
     </div>
   ) : (
-    <Container className="d-flex">
-      <Row />
-      <Row />
+    <Container id="not-approved-message" className="d-flex">
       <Row>
         <Alert variant="warning" className="align-items-center">
           <h1 className="justify-content-center  text-monospace">
@@ -226,5 +226,4 @@ export const WritePage = () => {
       </Row>
     </Container>
   );
-
 };
