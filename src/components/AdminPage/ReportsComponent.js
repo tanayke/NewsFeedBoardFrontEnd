@@ -16,7 +16,7 @@ export const ReportsComponent = () => {
   };
 
   useEffect(() => {
-    getAllPendingReports(currPage, 2).then((response) => {
+    getAllPendingReports(currPage, 4).then((response) => {
       console.log(response.data);
       console.log(reportsArray);
       setReportsArray(response.data.items);
@@ -31,7 +31,7 @@ export const ReportsComponent = () => {
     // eslint-disable-next-line no-param-reassign
     page -= 1;
     try {
-      getAllPendingReports(page, 2).then((response) => {
+      getAllPendingReports(page, 4).then((response) => {
         console.log(response.data);
         console.log(reportsArray);
         setReportsArray(response.data.items);
@@ -45,56 +45,55 @@ export const ReportsComponent = () => {
     <Spinner animation="border" variant="info" />
   ) : (
     <>
-      {reportsArray.map((report) => (
-        <Card key={report.id} style={{ width: "100%", margin: "1rem" }}>
-          <Card.Body>
-            <Container>
-              <Row>
-                <Col>
-                  <Card.Title>#{report.id}</Card.Title>
-                </Col>
-                <Col>
-                  {" "}
-                  <Card.Text>
-                    <strong> {report.reason}</strong>{" "}
-                    {report.otherReason ? `: ${report.otherReason}` : ` `}
-                  </Card.Text>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  {" "}
-                  <Card.Text>
-                    by: <strong>{report.user.email}</strong>
-                  </Card.Text>
-                </Col>
-                <Col>
-                  {" "}
-                  <Button
-                    variant="outline-primary"
-                    className="col-12 text-truncate"
-                    onClick={() => {
-                      handleReportClick(report.article.id);
-                    }}
-                  >
-                    View News Article
-                  </Button>
-                </Col>
-              </Row>
-            </Container>
-          </Card.Body>
-          <Card.Footer className="text-muted">
-            {moment(report.createdAt).fromNow()}
-          </Card.Footer>
-        </Card>
-      ))}
-      <PaginationComponent
-        totPages={totPages}
-        currentPage={currPage + 1}
-        pageClicked={(ele) => {
-          afterPageClicked(ele);
-        }}
-      />
+      <Row style={{ maxHeight: "60vh", overflowY: "auto", cursor: "pointer" }}>
+        {reportsArray.map((report) => (
+          <Card
+            className="reports"
+            onClick={() => {
+              handleReportClick(report.article.id);
+            }}
+            key={report.id}
+            style={{ width: "100%", height: "120px", margin: "1rem" }}
+          >
+            <Card.Body>
+              <Container>
+                <Row>
+                  <Col>
+                    <Card.Title>#{report.id}</Card.Title>
+                  </Col>
+                  <Col>
+                    {" "}
+                    <Card.Text>
+                      <strong style={{ color: "red" }}> {report.reason}</strong>{" "}
+                      {report.otherReason ? `: ${report.otherReason}` : ` `}
+                    </Card.Text>
+                  </Col>
+
+                  <Col>
+                    {" "}
+                    <Card.Text>
+                      by: <strong>{report.user.email}</strong>
+                    </Card.Text>
+                  </Col>
+                </Row>
+              </Container>
+            </Card.Body>
+            <Card.Footer className="text-muted">
+              {moment(report.createdAt).fromNow()}
+            </Card.Footer>
+          </Card>
+        ))}
+      </Row>
+
+      <Row className="d-flex justify-content-center">
+        <PaginationComponent
+          totPages={totPages}
+          currentPage={currPage + 1}
+          pageClicked={(ele) => {
+            afterPageClicked(ele);
+          }}
+        />
+      </Row>
     </>
   );
 };

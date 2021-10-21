@@ -1,4 +1,5 @@
 import React from "react";
+import "./adminPage.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { UserApprovalListComponent } from "./UserApprovalListComponent";
 import { ReportsComponent } from "./ReportsComponent";
@@ -10,9 +11,7 @@ export const AdminPage = () => (
       <Row className="mt-5">
         <Col md={8}>
           <h2>List Of Reports</h2>
-          <Row style={{ maxHeight: "60vh", overflowY: "auto" }}>
-            <ReportsComponent className="row text-center" />
-          </Row>
+          <ReportsComponent className="row text-center" />
         </Col>
         <Col md={4}>
           <CategoryViewsStatComponent />
