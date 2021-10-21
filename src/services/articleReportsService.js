@@ -12,9 +12,11 @@ export const getAllReports = async (articleId, userId) => {
   }
 };
 
-export const getAllPendingReports = async () => {
+export const getAllPendingReports = async (page, size) => {
   try {
-    const response = await axios.get(`${API_ALL_REPORTS}/unresolved`);
+    const response = await axios.get(`${API_ALL_REPORTS}/unresolved`, {
+      params: { page, size },
+    });
     return response;
   } catch (err) {
     return err.response;

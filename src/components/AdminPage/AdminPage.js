@@ -10,7 +10,7 @@ export const AdminPage = () => (
       <Row className="mt-5">
         <Col md={8}>
           <h2>List Of Reports</h2>
-          <Row style={{ maxHeight: "40vh", overflowY: "auto" }}>
+          <Row style={{ maxHeight: "60vh", overflowY: "auto" }}>
             <ReportsComponent className="row text-center" />
           </Row>
         </Col>
