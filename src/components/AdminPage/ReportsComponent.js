@@ -42,7 +42,7 @@ export const ReportsComponent = () => {
   };
   // eslint-disable-next-line no-nested-ternary
   return !reportsArray ? (
-    <Spinner animation="border" variant="info" />
+    <Spinner className="spinner" animation="border" variant="info" />
   ) : (
     <>
       <Row style={{ maxHeight: "60vh", overflowY: "auto", cursor: "pointer" }}>

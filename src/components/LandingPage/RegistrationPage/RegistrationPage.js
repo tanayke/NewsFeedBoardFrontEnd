@@ -6,11 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { postUser } from "../../../services/userService";
 
 import * as App from "../../../App";
-import {
-  VAR_ARRAY_STATES,
-  LOGIN,
-  BASE_URL,
-} from "../../../constants/CONSTANTS";
+import { LOGIN, BASE_URL } from "../../../constants/CONSTANTS";
 import {
   getAllLocations,
   addLocation,
@@ -57,7 +53,9 @@ export const RegistrationPage = () => {
       setLocations(data);
     });
   }, []);
-  useEffect(() => {}, [err]);
+  useEffect(() => {
+    console.log(err);
+  }, [err]);
   let formData;
 
   function getFormData() {
@@ -76,7 +74,8 @@ export const RegistrationPage = () => {
 
   return (
     <div>
-      {err === "" ? <Alert variant="danger">{err}</Alert> : <span>Hi bro</span>}
+      {err === "" ? <span /> : <Alert variant="danger">{err}</Alert>}
+
       <Formik
         initialValues={{
           name: "",
@@ -118,10 +117,16 @@ export const RegistrationPage = () => {
           postUser(object)
             .then((response) => {
               console.log(response);
+              setErr(response.msg);
               if (response.status === 200) history.push(LOGIN);
+              if (response.status === 409) {
+                setErr(response.msg);
+                console.log(response.msg);
+                window.scrollTo(0, 0);
+              }
             })
             .catch((error) => {
-              console.log(error.sg);
+              console.log(error.msg);
               setErr(error.msg);
             });
         }}

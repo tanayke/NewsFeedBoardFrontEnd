@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 // import userContextProvider from "./components/context/userContext/userContextProvider";
 import { UserLayout } from "./components/userLayout";
+import "./App.css";
 
 function App() {
   // const contextUser = LoginPage();

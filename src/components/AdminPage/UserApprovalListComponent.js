@@ -35,7 +35,7 @@ export const UserApprovalListComponent = () => {
       </thead>
       <tbody>
         {!pendingApprovalArray ? (
-          <Spinner animation="border" variant="info" />
+          <Spinner className="spinner" animation="border" variant="info" />
         ) : (
           pendingApprovalArray.map((user, i) => (
             <tr key={user.id}>

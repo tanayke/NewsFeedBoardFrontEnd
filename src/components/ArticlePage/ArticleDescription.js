@@ -7,7 +7,7 @@ import { BASE_URL } from "../../constants";
 
 export const ArticleDescription = ({ article }) =>
   !article ? (
-    <Spinner animation="border" variant="info" />
+    <Spinner className="spinner" animation="border" variant="info" />
   ) : (
     <>
       <Row>

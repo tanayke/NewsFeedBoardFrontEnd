@@ -45,7 +45,11 @@ export const ArticlePage = ({ match: { params } }) => {
             <Col md={1} />
             <Col md={10}>
               {!cards ? (
-                <Spinner animation="border" variant="info" />
+                <Spinner
+                  className="spinner"
+                  animation="border"
+                  variant="info"
+                />
               ) : (
                 cards.map((data) => (
                   <Row key={data.id}>

@@ -11,7 +11,7 @@ const NewsCardsComponent = ({ articleFeed }) => {
   };
 
   return !articleFeed ? (
-    <Spinner animation="border" variant="info" />
+    <Spinner className="spinner" animation="border" variant="info" />
   ) : (
     articleFeed.map((article) => (
       <Card key={article.id} style={{ width: "100%", margin: "1rem" }}>

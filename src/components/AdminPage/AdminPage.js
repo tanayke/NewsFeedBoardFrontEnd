@@ -17,10 +17,11 @@ export const AdminPage = () => (
           <CategoryViewsStatComponent />
         </Col>
       </Row>
+      <br />
       <hr />
       <Row className="d-flex justify-content-start">
         <h2 className="text-center">User List To Approve</h2>
-        <Row className="mt-3">
+        <Row className="mt-3 container user-approval">
           <UserApprovalListComponent />
         </Row>
       </Row>
